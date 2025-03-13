@@ -215,6 +215,8 @@ body {
   border: 1px solid;
   outline: none;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-sizing: border-box;
+  font-size: 16px; /* Dimensione sicura per iOS */
 }
 
 .light .form-select {
@@ -306,6 +308,8 @@ body {
   outline: none;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: center;
+  box-sizing: border-box; /* Assicura che padding e bordo siano inclusi nella larghezza */
+  font-size: 16px; /* Dimensione sicura per iOS */
 }
 
 .form-input:focus {
@@ -541,16 +545,24 @@ body {
   .dark .control-button {
     background-color: rgba(31, 41, 55, 0.9);
   }
+  
+  /* Assicurarsi che tutti gli elementi del form abbiano la stessa larghezza */
+  .select-container, .form-input, .direction-toggle {
+    width: 100%;
+    max-width: none;
+  }
+  
+  /* Fix specifico per lo zoom */
+  input, select, textarea, button {
+    font-size: 16px !important; /* Impedisce lo zoom automatico su iOS */
+    touch-action: manipulation; /* Migliora l'interazione touch */
+  }
 }
 
 /* Fix per lo zoom automatico su iOS */
 @media screen and (max-width: 768px) {
-  input, select, textarea {
+  input, select, textarea, button {
     font-size: 16px !important; /* Impedisce lo zoom automatico su iOS */
-  }
-  
-  .form-input, .form-select {
-    padding: 0.85rem; /* Aumenta leggermente il padding per migliorare l'usabilità su touch */
   }
   
   /* Per le schermate molto piccole (iPhone SE, etc.) */
@@ -573,4 +585,5 @@ body {
 /* Garantisce che la dimensione del testo non venga alterata dal browser */
 html {
   -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
 }

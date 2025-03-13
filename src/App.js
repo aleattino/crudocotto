@@ -62,6 +62,43 @@ const CrudoCottoApp = () => {
   const [isCalcolando, setIsCalcolando] = useState(false);
   
   const risultatoRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // Previene lo zoom su iOS quando si fa focus sull'input
+  useEffect(() => {
+    const preventZoom = () => {
+      document.documentElement.style.touchAction = 'manipulation';
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.documentElement.style.webkitTextSizeAdjust = '100%';
+      }
+      
+      // Assicuriamoci che il viewport sia impostato correttamente
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      if (viewportMeta) {
+        viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+      }
+    };
+
+    // Chiamiamo preventZoom all'inizio e anche quando si tocca l'input
+    preventZoom();
+    
+    // Aggiungiamo listener per il focus sull'input
+    const handleInputInteraction = () => {
+      preventZoom();
+    };
+    
+    if (inputRef.current) {
+      inputRef.current.addEventListener('focus', handleInputInteraction);
+      inputRef.current.addEventListener('touchstart', handleInputInteraction);
+      
+      return () => {
+        if (inputRef.current) {
+          inputRef.current.removeEventListener('focus', handleInputInteraction);
+          inputRef.current.removeEventListener('touchstart', handleInputInteraction);
+        }
+      };
+    }
+  }, []);
 
   // Aggiorna il fattore di conversione quando l'alimento cambia
   useEffect(() => {
@@ -236,7 +273,9 @@ const CrudoCottoApp = () => {
             Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
           </label>
           <input 
-            type="text" 
+            type="text"
+            inputMode="decimal"
+            ref={inputRef}
             value={quantita} 
             onChange={handleQuantitaChange}
             placeholder="Inserisci la quantità in grammi" 
