@@ -288,28 +288,13 @@ const CrudoCottoApp = () => {
           onClick={calcolaRisultato}
           disabled={!quantita || isCalcolando}
           className="calc-button"
-          style={{ 
-            position: 'relative',
-            overflow: 'hidden'
-          }}
         >
           {isCalcolando ? 
             "Calcolando..." :
             "Calcola"}
             
           {isCalcolando && (
-            <span 
-              style={{ 
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%)',
-                backgroundSize: '200% 100%',
-                animation: 'shimmer 1s infinite'
-              }}
-            ></span>
+            <span className="shimmer"></span>
           )}
         </button>
         
