@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/crudocotto/static/css/main.9819a2d8.chunk.css",
-    "main.js": "/crudocotto/static/js/main.837e5250.chunk.js",
-    "main.js.map": "/crudocotto/static/js/main.837e5250.chunk.js.map",
-    "runtime-main.js": "/crudocotto/static/js/runtime-main.847bde66.js",
-    "runtime-main.js.map": "/crudocotto/static/js/runtime-main.847bde66.js.map",
-    "static/js/2.8c51a011.chunk.js": "/crudocotto/static/js/2.8c51a011.chunk.js",
-    "static/js/2.8c51a011.chunk.js.map": "/crudocotto/static/js/2.8c51a011.chunk.js.map",
+    "main.css": "/crudocotto/static/css/main.0fb8eb1f.css",
+    "main.js": "/crudocotto/static/js/main.94e70834.js",
     "index.html": "/crudocotto/index.html",
-    "static/css/main.9819a2d8.chunk.css.map": "/crudocotto/static/css/main.9819a2d8.chunk.css.map",
-    "static/js/2.8c51a011.chunk.js.LICENSE.txt": "/crudocotto/static/js/2.8c51a011.chunk.js.LICENSE.txt"
+    "main.0fb8eb1f.css.map": "/crudocotto/static/css/main.0fb8eb1f.css.map",
+    "main.94e70834.js.map": "/crudocotto/static/js/main.94e70834.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.847bde66.js",
-    "static/js/2.8c51a011.chunk.js",
-    "static/css/main.9819a2d8.chunk.css",
-    "static/js/main.837e5250.chunk.js"
+    "static/css/main.0fb8eb1f.css",
+    "static/js/main.94e70834.js"
   ]
 }
