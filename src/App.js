@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FiSun, FiMoon, FiRotateCcw } from 'react-icons/fi';
+import './styles.css';
 
 const CrudoCottoApp = () => {
   // Dati delle tabelle di conversione
@@ -56,6 +58,10 @@ const CrudoCottoApp = () => {
   const [direzione, setDirezione] = useState('crudoCotto'); // 'crudoCotto' o 'cottoCrudo'
   const [risultato, setRisultato] = useState(null);
   const [fattore, setFattore] = useState(conversionData[Object.keys(conversionData)[0]][0].fattore);
+  const [tema, setTema] = useState('light');
+  const [isCalcolando, setIsCalcolando] = useState(false);
+  
+  const risultatoRef = useRef(null);
 
   // Aggiorna il fattore di conversione quando l'alimento cambia
   useEffect(() => {
@@ -63,7 +69,15 @@ const CrudoCottoApp = () => {
     if (alimentoScelto) {
       setFattore(alimentoScelto.fattore);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alimento, categoria]);
+  
+  // Effetto di scrolling
+  useEffect(() => {
+    if (risultato && risultatoRef.current) {
+      risultatoRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [risultato]);
 
   // Gestisce il cambio di categoria
   const handleCategoriaChange = (e) => {
@@ -90,68 +104,125 @@ const CrudoCottoApp = () => {
     setDirezione(dir);
   };
 
-  // Calcola il risultato della conversione
+  // Calcola il risultato della conversione con animazione
   const calcolaRisultato = () => {
     if (!quantita) return;
 
-    const q = parseFloat(quantita);
-    let result;
+    setIsCalcolando(true);
+    
+    // Simula un breve ritardo per l'effetto di calcolo
+    setTimeout(() => {
+      const q = parseFloat(quantita);
+      let result;
 
-    if (direzione === 'crudoCotto') {
-      result = q * fattore;
-    } else {
-      result = q / fattore;
-    }
+      if (direzione === 'crudoCotto') {
+        result = q * fattore;
+      } else {
+        result = q / fattore;
+      }
 
-    setRisultato(result.toFixed(1));
+      setRisultato(result.toFixed(1));
+      setIsCalcolando(false);
+    }, 300);
+  };
+
+  // Cambia il tema
+  const toggleTema = () => {
+    setTema(tema === 'light' ? 'dark' : 'light');
+  };
+
+  // Reset del form
+  const resetForm = () => {
+    setCategoria(Object.keys(conversionData)[0]);
+    setAlimento(conversionData[Object.keys(conversionData)[0]][0].alimento);
+    setQuantita('');
+    setRisultato(null);
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-6 bg-gradient-to-b from-blue-50 to-purple-50">
-      <div className="w-full max-w-md p-8 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl border border-white border-opacity-25">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">CrudoCotto</h1>
-        <p className="text-center text-gray-600 mb-8">Converti i pesi degli alimenti da crudi a cotti e viceversa</p>
+    <div className={`app-container ${tema}`}>
+      {/* Toggle tema e reset */}
+      <div className="control-panel">
+        <button 
+          onClick={resetForm}
+          className="control-button"
+          aria-label="Reimposta"
+        >
+          <FiRotateCcw />
+        </button>
+        <button
+          onClick={toggleTema}
+          className="control-button"
+          aria-label="Cambia tema"
+        >
+          {tema === 'light' ? <FiMoon /> : <FiSun />}
+        </button>
+      </div>
+      
+      <div className="main-card">
+        <h1 className="main-title">CrudoCotto</h1>
+        <p className="subtitle">
+          Converti i pesi degli alimenti da crudi a cotti e viceversa
+        </p>
         
         {/* Selezione categoria */}
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-medium mb-2">Categoria</label>
-          <select 
-            value={categoria} 
-            onChange={handleCategoriaChange}
-            className="w-full p-3 bg-white bg-opacity-70 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {Object.keys(conversionData).map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
+        <div className="form-group">
+          <label className="form-label">Categoria</label>
+          <div className="select-container">
+            <select 
+              value={categoria} 
+              onChange={handleCategoriaChange}
+              className="form-select"
+            >
+              {Object.keys(conversionData).map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            <div className="select-arrow">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
         </div>
         
         {/* Selezione alimento */}
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-medium mb-2">Alimento</label>
-          <select 
-            value={alimento} 
-            onChange={handleAlimentoChange}
-            className="w-full p-3 bg-white bg-opacity-70 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {conversionData[categoria].map((item) => (
-              <option key={item.alimento} value={item.alimento}>{item.alimento}</option>
-            ))}
-          </select>
+        <div className="form-group">
+          <label className="form-label">Alimento</label>
+          <div className="select-container">
+            <select 
+              value={alimento} 
+              onChange={handleAlimentoChange}
+              className="form-select"
+            >
+              {conversionData[categoria].map((item) => (
+                <option key={item.alimento} value={item.alimento}>
+                  {item.alimento}
+                </option>
+              ))}
+            </select>
+            <div className="select-arrow">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
         </div>
         
         {/* Direzione della conversione */}
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-medium mb-2">Conversione</label>
-          <div className="flex bg-white bg-opacity-70 rounded-xl overflow-hidden border border-gray-300">
+        <div className="form-group">
+          <label className="form-label">Conversione</label>
+          <div className="direction-toggle">
             <button 
-              className={`flex-1 py-3 px-4 text-center ${direzione === 'crudoCotto' ? 'bg-blue-500 text-white' : 'text-gray-700'}`}
+              className={`direction-button ${direzione === 'crudoCotto' ? 'active' : ''}`}
               onClick={() => handleDirezioneChange('crudoCotto')}
             >
               Da crudo a cotto
             </button>
             <button 
-              className={`flex-1 py-3 px-4 text-center ${direzione === 'cottoCrudo' ? 'bg-blue-500 text-white' : 'text-gray-700'}`}
+              className={`direction-button ${direzione === 'cottoCrudo' ? 'active' : ''}`}
               onClick={() => handleDirezioneChange('cottoCrudo')}
             >
               Da cotto a crudo
@@ -160,8 +231,8 @@ const CrudoCottoApp = () => {
         </div>
         
         {/* Inserimento quantità */}
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-medium mb-2">
+        <div className="form-group">
+          <label className="form-label">
             Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
           </label>
           <input 
@@ -169,38 +240,59 @@ const CrudoCottoApp = () => {
             value={quantita} 
             onChange={handleQuantitaChange}
             placeholder="Inserisci la quantità in grammi" 
-            className="w-full p-3 bg-white bg-opacity-70 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="form-input"
           />
         </div>
         
         {/* Pulsante calcola */}
         <button 
           onClick={calcolaRisultato}
-          disabled={!quantita}
-          className={`w-full py-3 px-4 rounded-xl font-medium text-white ${!quantita ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} transition-colors shadow-md mb-6`}
+          disabled={!quantita || isCalcolando}
+          className="calc-button"
+          style={{ 
+            position: 'relative',
+            overflow: 'hidden'
+          }}
         >
-          Calcola
+          {isCalcolando ? 
+            "Calcolando..." :
+            "Calcola"}
+            
+          {isCalcolando && (
+            <span 
+              style={{ 
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 1s infinite'
+              }}
+            ></span>
+          )}
         </button>
         
         {/* Risultato */}
         {risultato && (
-          <div className="bg-white bg-opacity-70 p-6 rounded-xl border border-gray-200 text-center">
-            <p className="text-gray-500 text-sm">Risultato della conversione</p>
-            <div className="flex items-center justify-center gap-4 mt-2">
-              <div className="text-xl font-bold text-gray-800">{risultato} g</div>
-              <div className="text-sm text-gray-600">
+          <div className="result-box" ref={risultatoRef}>
+            <p className="result-label">Risultato della conversione</p>
+            <div className="result-value-container">
+              <div className="result-value">{risultato} g</div>
+              <div className="result-unit">
                 {direzione === 'crudoCotto' ? 'cotto' : 'crudo'}
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="factor-info">
               Fattore di conversione: {fattore}
             </p>
           </div>
         )}
         
-        <div className="mt-8 text-center text-gray-500 text-xs">
+        <div className="footer">
           CrudoCotto &copy; {new Date().getFullYear()} | 
-          <a href="https://github.com/aleattino" className="ml-1 text-blue-500 hover:underline">
+          <a href="https://github.com/aleattino">
             aleattino
           </a>
         </div>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Sfondo circolare con gradiente -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bgGradient)" />
+  
+  <!-- Icona di una pentola (rappresenta il cibo cotto) -->
+  <path d="M160 230 L160 300 Q160 350, 256 350 Q352 350, 352 300 L352 230" fill="none" stroke="white" stroke-width="20" stroke-linecap="round" />
+  
+  <!-- Manici della pentola -->
+  <path d="M140 230 L160 230" fill="none" stroke="white" stroke-width="18" stroke-linecap="round" />
+  <path d="M352 230 L372 230" fill="none" stroke="white" stroke-width="18" stroke-linecap="round" />
+  
+  <!-- Coperchio della pentola (sollevato) -->
+  <path d="M180 210 Q256 140, 332 210" fill="none" stroke="white" stroke-width="20" stroke-linecap="round" />
+  
+  <!-- Vapore (rappresenta la cottura) -->
+  <path d="M190 140 Q190 120, 210 120" fill="none" stroke="white" stroke-width="10" stroke-linecap="round" opacity="0.8" />
+  <path d="M240 110 Q240 90, 260 90" fill="none" stroke="white" stroke-width="10" stroke-linecap="round" opacity="0.8" />
+  <path d="M290 140 Q290 120, 270 120" fill="none" stroke="white" stroke-width="10" stroke-linecap="round" opacity="0.8" />
+  
+  <!-- Freccia di conversione -->
+  <path d="M180 380 L332 380" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" />
+  <path d="M310 360 L332 380 L310 400" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M202 360 L180 380 L202 400" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
