@@ -542,3 +542,35 @@ body {
     background-color: rgba(31, 41, 55, 0.9);
   }
 }
+
+/* Fix per lo zoom automatico su iOS */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important; /* Impedisce lo zoom automatico su iOS */
+  }
+  
+  .form-input, .form-select {
+    padding: 0.85rem; /* Aumenta leggermente il padding per migliorare l'usabilità su touch */
+  }
+  
+  /* Per le schermate molto piccole (iPhone SE, etc.) */
+  @media screen and (max-width: 375px) {
+    .main-card {
+      padding: 1.25rem;
+    }
+    
+    .main-title {
+      font-size: 2rem;
+    }
+    
+    .direction-button {
+      font-size: 0.8rem;
+      padding: 0.65rem 0.3rem;
+    }
+  }
+}
+
+/* Garantisce che la dimensione del testo non venga alterata dal browser */
+html {
+  -webkit-text-size-adjust: 100%;
+}
