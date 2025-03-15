@@ -19,18 +19,18 @@ html {
   touch-action: manipulation;
 }
 
-/* Theme styles */
+/* Theme styles - Migliorato per Fluent Design */
 .theme-light {
-  --bg-gradient-from: #e0f2fe;
-  --bg-gradient-via: #ede9fe;
-  --bg-gradient-to: #dbeafe;
+  --bg-gradient-from: #f0f5ff;
+  --bg-gradient-via: #f5f7ff;
+  --bg-gradient-to: #f0f9ff;
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
   --text-muted: #6b7280;
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(229, 231, 235, 1);
-  --input-bg: rgba(249, 250, 251, 0.7);
-  --input-border: rgba(209, 213, 219, 1);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(229, 231, 235, 0.8);
+  --input-bg: rgba(249, 250, 251, 0.8);
+  --input-border: rgba(209, 213, 219, 0.8);
   --button-bg: #3b82f6;
   --button-hover: #2563eb;
   --button-text: white;
@@ -43,11 +43,11 @@ html {
   --result-badge-text: #1e40af;
   --close-btn-bg: #f3f4f6;
   --close-btn-icon: #6b7280;
-  --blur-circle-1: rgba(186, 230, 253, 0.4);
-  --blur-circle-2: rgba(196, 181, 253, 0.4);
-  --blur-circle-3: rgba(147, 197, 253, 0.4);
-  --tooltip-bg: rgba(255, 255, 255, 0.85);
-  --tooltip-border: rgba(229, 231, 235, 0.5);
+  --blur-circle-1: rgba(186, 230, 253, 0.3);
+  --blur-circle-2: rgba(191, 219, 254, 0.3);
+  --blur-circle-3: rgba(147, 197, 253, 0.3);
+  --tooltip-bg: rgba(255, 255, 255, 0.7);
+  --tooltip-border: rgba(229, 231, 235, 0.3);
   --tooltip-title: #3b82f6;
   --tooltip-text: #1f2937;
   --info-button-bg: #f3f4f6;
@@ -56,15 +56,15 @@ html {
 
 .theme-dark {
   --bg-gradient-from: #111827;
-  --bg-gradient-via: #0f172a;
-  --bg-gradient-to: #111827;
+  --bg-gradient-via: #111827;
+  --bg-gradient-to: #0f172a;
   --text-primary: #f9fafb;
   --text-secondary: #e5e7eb;
   --text-muted: #9ca3af;
-  --card-bg: rgba(31, 41, 55, 0.5);
-  --card-border: rgba(55, 65, 81, 1);
-  --input-bg: rgba(17, 24, 39, 0.7);
-  --input-border: rgba(75, 85, 99, 1);
+  --card-bg: rgba(31, 41, 55, 0.7);
+  --card-border: rgba(55, 65, 81, 0.5);
+  --input-bg: rgba(17, 24, 39, 0.6);
+  --input-border: rgba(75, 85, 99, 0.5);
   --button-bg: #3b82f6;
   --button-hover: #2563eb;
   --button-text: white;
@@ -77,11 +77,11 @@ html {
   --result-badge-text: #93c5fd;
   --close-btn-bg: rgba(55, 65, 81, 0.8);
   --close-btn-icon: #e5e7eb;
-  --blur-circle-1: rgba(37, 99, 235, 0.2);
-  --blur-circle-2: rgba(17, 24, 39, 0.2);
-  --blur-circle-3: rgba(30, 58, 138, 0.2);
-  --tooltip-bg: rgba(31, 41, 55, 0.85);
-  --tooltip-border: rgba(55, 65, 81, 0.5);
+  --blur-circle-1: rgba(37, 99, 235, 0.15);
+  --blur-circle-2: rgba(17, 24, 39, 0.15);
+  --blur-circle-3: rgba(30, 58, 138, 0.15);
+  --tooltip-bg: rgba(31, 41, 55, 0.7);
+  --tooltip-border: rgba(55, 65, 81, 0.3);
   --tooltip-title: #60a5fa;
   --tooltip-text: #e5e7eb;
   --info-button-bg: #374151;
@@ -340,7 +340,7 @@ html {
   height: 1.25rem;
 }
 
-/* Tooltip styles */
+/* Tooltip styles - Migliorato con vero glassmorphism */
 .info-tooltip {
   position: absolute;
   z-index: 10;
@@ -351,8 +351,8 @@ html {
   border-radius: 0.5rem;
   background-color: var(--tooltip-bg);
   border: 1px solid var(--tooltip-border);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   animation: fade-in 0.2s ease-out;
 }
@@ -367,6 +367,8 @@ html {
   border-left: 1px solid var(--tooltip-border);
   border-top: 1px solid var(--tooltip-border);
   transform: rotate(45deg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .tooltip-close-btn {
