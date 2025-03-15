@@ -19,11 +19,9 @@ html {
   touch-action: manipulation;
 }
 
-/* Theme styles - Migliorato per Fluent Design */
+/* Theme styles - Colori corretti e sfondo uniforme */
 .theme-light {
-  --bg-gradient-from: #f0f5ff;
-  --bg-gradient-via: #f5f7ff;
-  --bg-gradient-to: #f0f9ff;
+  --bg-primary: #f0f7ff;
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
   --text-muted: #6b7280;
@@ -43,9 +41,8 @@ html {
   --result-badge-text: #1e40af;
   --close-btn-bg: #f3f4f6;
   --close-btn-icon: #6b7280;
-  --blur-circle-1: rgba(186, 230, 253, 0.3);
-  --blur-circle-2: rgba(191, 219, 254, 0.3);
-  --blur-circle-3: rgba(147, 197, 253, 0.3);
+  --title-gradient-from: #2563eb;
+  --title-gradient-to: #3b82f6;
   --tooltip-bg: rgba(255, 255, 255, 0.7);
   --tooltip-border: rgba(229, 231, 235, 0.3);
   --tooltip-title: #3b82f6;
@@ -55,9 +52,7 @@ html {
 }
 
 .theme-dark {
-  --bg-gradient-from: #111827;
-  --bg-gradient-via: #111827;
-  --bg-gradient-to: #0f172a;
+  --bg-primary: #000000;
   --text-primary: #f9fafb;
   --text-secondary: #e5e7eb;
   --text-muted: #9ca3af;
@@ -77,9 +72,8 @@ html {
   --result-badge-text: #93c5fd;
   --close-btn-bg: rgba(55, 65, 81, 0.8);
   --close-btn-icon: #e5e7eb;
-  --blur-circle-1: rgba(37, 99, 235, 0.15);
-  --blur-circle-2: rgba(17, 24, 39, 0.15);
-  --blur-circle-3: rgba(30, 58, 138, 0.15);
+  --title-gradient-from: #60a5fa;
+  --title-gradient-to: #3b82f6;
   --tooltip-bg: rgba(31, 41, 55, 0.7);
   --tooltip-border: rgba(55, 65, 81, 0.3);
   --tooltip-title: #60a5fa;
@@ -88,49 +82,13 @@ html {
   --info-button-text: #60a5fa;
 }
 
-/* Background and decorative elements */
+/* Background e decorazioni rimosse */
 .theme-light, .theme-dark {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, var(--bg-gradient-from), var(--bg-gradient-via), var(--bg-gradient-to));
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   position: relative;
   transition: all 0.3s ease;
-}
-
-.decorative-elements {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.blur-circle {
-  position: absolute;
-  width: 20rem;
-  height: 20rem;
-  border-radius: 9999px;
-  filter: blur(50px);
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-}
-
-.blur-circle.top-right {
-  top: -5rem;
-  right: -5rem;
-  background-color: var(--blur-circle-1);
-}
-
-.blur-circle.mid-left {
-  top: 33%;
-  left: -5rem;
-  background-color: var(--blur-circle-2);
-}
-
-.blur-circle.bottom-mid {
-  bottom: -5rem;
-  left: 33%;
-  background-color: var(--blur-circle-3);
 }
 
 /* Layout */
@@ -154,7 +112,7 @@ html {
 .app-title {
   font-size: 1.875rem;
   font-weight: 700;
-  background: linear-gradient(to right, #3b82f6, #6366f1);
+  background: linear-gradient(to right, var(--title-gradient-from), var(--title-gradient-to));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -268,12 +226,14 @@ html {
   margin-bottom: 0.5rem;
 }
 
+/* Correzione bottone info */
 .info-button {
-  width: 1rem;
-  height: 1rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
   font-size: 0.65rem;
   font-weight: 600;
   color: var(--info-button-text);
@@ -281,10 +241,10 @@ html {
   border: none;
   border-radius: 50%;
   margin-left: 0.5rem;
-  padding: 0;
   cursor: pointer;
-  line-height: 1;
   transition: all 0.2s ease;
+  position: relative;
+  top: 0;
 }
 
 .info-button:hover {
@@ -340,12 +300,12 @@ html {
   height: 1.25rem;
 }
 
-/* Tooltip styles - Migliorato con vero glassmorphism */
+/* Tooltip più grande e leggibile */
 .info-tooltip {
   position: absolute;
   z-index: 10;
-  width: 18rem;
-  padding: 1rem;
+  width: 20rem; /* Aumentato da 18rem */
+  padding: 1.25rem; /* Aumentato da 1rem */
   top: 2.5rem;
   left: 0;
   border-radius: 0.5rem;
@@ -394,17 +354,17 @@ html {
 }
 
 .tooltip-title {
-  font-size: 0.875rem;
+  font-size: 1rem; /* Aumentato da 0.875rem */
   font-weight: 600;
   color: var(--tooltip-title);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem; /* Aumentato da 0.5rem */
   padding-right: 1rem;
 }
 
 .tooltip-content {
-  font-size: 0.8125rem;
+  font-size: 0.875rem; /* Aumentato da 0.8125rem */
   color: var(--tooltip-text);
-  line-height: 1.4;
+  line-height: 1.5; /* Aumentato da 1.4 */
 }
 
 /* Button styles */
@@ -538,7 +498,7 @@ html {
   text-decoration: underline;
 }
 
-/* Responsive styles */
+/* Responsive styles - Migliorati per tooltip mobile */
 @media (max-width: 640px) {
   .app-title {
     font-size: 1.5rem;
@@ -558,7 +518,13 @@ html {
   
   .info-tooltip {
     width: calc(100vw - 2rem);
-    max-width: 18rem;
+    max-width: 20rem;
+    font-size: 1rem;
+  }
+  
+  .tooltip-content {
+    font-size: 0.9375rem;
+    line-height: 1.5;
   }
 }
 
