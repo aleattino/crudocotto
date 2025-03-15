@@ -647,4 +647,5 @@ const CrudoCottoApp = () => {
     </div>
    );
 };
-  
+
+export default CrudoCottoApp;
