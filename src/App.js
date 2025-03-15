@@ -646,5 +646,5 @@ const CrudoCottoApp = () => {
       </div>
     </div>
    );
-  };
+};
   
