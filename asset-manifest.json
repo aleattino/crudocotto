@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/crudocotto/static/css/main.675b40ad.css",
-    "main.js": "/crudocotto/static/js/main.6af18c62.js",
+    "main.css": "/crudocotto/static/css/main.652481dc.css",
+    "main.js": "/crudocotto/static/js/main.7551ccf0.js",
     "index.html": "/crudocotto/index.html",
-    "main.675b40ad.css.map": "/crudocotto/static/css/main.675b40ad.css.map",
-    "main.6af18c62.js.map": "/crudocotto/static/js/main.6af18c62.js.map"
+    "main.652481dc.css.map": "/crudocotto/static/css/main.652481dc.css.map",
+    "main.7551ccf0.js.map": "/crudocotto/static/js/main.7551ccf0.js.map"
   },
   "entrypoints": [
-    "static/css/main.675b40ad.css",
-    "static/js/main.6af18c62.js"
+    "static/css/main.652481dc.css",
+    "static/js/main.7551ccf0.js"
   ]
 }
