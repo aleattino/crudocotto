@@ -556,3 +556,38 @@ option {
 .font-figtree {
   font-family: 'Figtree', sans-serif;
 }
+
+/* Cooking Tip styles */
+.cooking-tip {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--tooltip-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  animation: fade-in 0.4s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.tip-icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  color: var(--tooltip-title);
+}
+
+.tip-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--tooltip-text);
+}
+
+@media (max-width: 640px) {
+  .tip-text {
+    font-size: 0.8125rem;
+  }
+}
