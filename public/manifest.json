@@ -1,0 +1,8 @@
+{
+  "short_name": "CrudoCotto",
+  "name": "CrudoCotto - Convertitore alimenti",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4F46E5",
+  "background_color": "#ffffff"
+}
