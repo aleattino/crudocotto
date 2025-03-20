@@ -280,9 +280,6 @@ const NeoBrutalismCrudoCotto = () => {
       
       <header className="nb-header">
         <div className="nb-logo">
-          <div className="nb-logo-icon">
-            <span>🥘</span>
-          </div>
           <h1>CrudoCotto</h1>
         </div>
         
