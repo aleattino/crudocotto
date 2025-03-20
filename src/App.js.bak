@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
-import OfflineNotice from './components/OfflineNotice';
-import InstallPrompt from './components/InstallPrompt';
-import SplashScreen from './components/SplashScreen';
 
 // Versione semplificata del componente per il debug
 const NeoBrutalismCrudoCotto = () => {
@@ -83,134 +80,7 @@ const NeoBrutalismCrudoCotto = () => {
         info: "I cardi hanno un'elevata perdita di acqua durante la cottura, mantenendo solo il 60% del peso originale.",
         tip: "Prima della cottura, immergi i cardi in acqua acidulata per evitare l'imbrunimento. La prebollitura con un cucchiaio di farina riduce l'amarezza prima della cottura finale."
       }
-    ,
-      {
-  alimento: "Carote",
-  fattore: 0.85,
-  info: "Le carote perdono circa il 15% del loro peso durante la cottura. Il calore rompe le pareti cellulari, causando la fuoriuscita di acqua.",
-  tip: "La cottura al vapore delle carote preserva meglio le vitamine rispetto alla bollitura. Per massimizzare l'assorbimento del betacarotene, consumale con un po' di olio."
-},
-      {
-  alimento: "Cavolfiore",
-  fattore: 0.9,
-  info: "Il cavolfiore mantiene il 90% del suo peso durante la cottura. La sua struttura compatta aiuta a trattenere l'umidità interna.",
-  tip: "Per preservare il colore bianco, aggiungi un cucchiaino di latte o succo di limone all'acqua di cottura. La cottura al vapore per 5-6 minuti mantiene la consistenza croccante."
-},
-      {
-  alimento: "Cavoli di Bruxelles",
-  fattore: 0.9,
-  info: "I cavoli di Bruxelles perdono circa il 10% del loro peso durante la cottura grazie alla loro struttura compatta che trattiene bene l'umidità.",
-  tip: "Per ridurre l'amarezza, fai un taglio a croce alla base. La tostatura in forno a 200°C con un filo d'olio esalta la dolcezza naturale dei cavoli di Bruxelles."
-},
-      {
-  alimento: "Cavolo broccolo verde ramoso",
-  fattore: 0.6,
-  info: "Il cavolo broccolo verde ramoso perde circa il 40% del suo peso durante la cottura a causa della sua struttura porosa che rilascia molta acqua.",
-  tip: "Per mantenere il colore brillante del cavolo broccolo, immergilo in acqua ghiacciata subito dopo la cottura. La sbollentatura per soli 2-3 minuti preserva i nutrienti."
-},
-      {
-  alimento: "Cavolo cappuccio verde",
-  fattore: 1,
-  info: "Il cavolo cappuccio verde mantiene praticamente invariato il suo peso durante la cottura grazie alla struttura densa e compatta.",
-  tip: "Per una cottura veloce, tagliare il cavolo cappuccio a listarelle sottili. L'aggiunta di un cucchiaino di aceto di mele durante la cottura ne mantiene il colore e riduce l'odore."
-},
-      {
-  alimento: "Cavolo verza",
-  fattore: 1,
-  info: "Il cavolo verza mantiene il suo peso durante la cottura. La struttura delle foglie, più delicate rispetto al cappuccio, compensa l'acqua persa.",
-  tip: "Le foglie esterne più dure richiedono tempi di cottura più lunghi rispetto a quelle interne più tenere. Separale e aggiungi prima quelle esterne per una cottura uniforme."
-},
-      {
-  alimento: "Cicoria di campo",
-  fattore: 1,
-  info: "La cicoria di campo non subisce variazioni significative di peso durante la cottura, mantenendo la sua consistenza.",
-  tip: "La cottura rapida della cicoria di campo preserva il suo caratteristico sapore leggermente amarognolo. Completa con olio a crudo per esaltarne il gusto."
-},
-      {
-  alimento: "Cicoria di taglio coltivata",
-  fattore: 0.8,
-  info: "La cicoria di taglio coltivata perde circa il 20% del suo peso durante la cottura per via della fuoriuscita di acqua dalle foglie.",
-  tip: "Saltare la cicoria rapidamente in padella con aglio e peperoncino ne esalta il sapore e mantiene la consistenza croccante. Le foglie più giovani possono essere consumate anche crude."
-},
-      {
-  alimento: "Cipolle",
-  fattore: 0.7,
-  info: "Le cipolle perdono circa il 30% del loro peso durante la cottura. Il calore rompe le cellule vegetali, liberando l'acqua contenuta e gli zuccheri naturali.",
-  tip: "La cottura lenta a bassa temperatura caramellizza gli zuccheri della cipolla, creando un sapore dolce e ricco. Per evitare lacrimazione durante il taglio, raffredda prima le cipolle."
-},
-      {
-  alimento: "Finocchi",
-  fattore: 0.85,
-  info: "I finocchi perdono circa il 15% del loro peso in cottura. La struttura stratificata delle foglie aiuta a trattenere parte dell'umidità.",
-  tip: "Per un finocchio tenero, rimuovi la parte esterna più fibrosa e cuoci solo il cuore. La cottura al forno con un filo d'olio esalta la dolcezza naturale."
-},
-      {
-  alimento: "Funghi",
-  fattore: 0.6,
-  info: "I funghi perdono circa il 40% del loro peso durante la cottura a causa dell'alto contenuto di acqua che viene rilasciata rapidamente.",
-  tip: "Per ottenere funghi dorati, cuoci a fuoco alto in padella senza sovraffollare e senza aggiungere sale fino a fine cottura. Il sale estrattrebbe l'acqua troppo rapidamente."
-},
-      {
-  alimento: "Patata con buccia",
-  fattore: 1,
-  info: "La patata con buccia mantiene il suo peso durante la cottura. La buccia agisce come barriera, trattenendo l'umidità interna.",
-  tip: "La cottura con buccia preserva i nutrienti e riduce l'assorbimento di acqua. Cuoci a vapore o in forno per ottenere un sapore più intenso rispetto alla bollitura."
-},
-      {
-  alimento: "Patata pelata",
-  fattore: 0.85,
-  info: "La patata pelata perde circa il 15% del suo peso durante la cottura. Senza la protezione della buccia, parte dell'amido e dell'acqua viene persa.",
-  tip: "Per patate lesse che non si sfaldano, inizia la cottura con acqua fredda. Per purè soffice, usa patate farinose e schiacciale quando sono ancora calde."
-},
-      {
-  alimento: "Porri",
-  fattore: 1,
-  info: "I porri mantengono il loro peso durante la cottura. La loro struttura stratificata permette di trattenere l'umidità interna bilanciando le perdite.",
-  tip: "Per pulire efficacemente i porri, taglia la base e la parte verde più dura, quindi incidi longitudinalmente e risciacqua sotto acqua corrente per eliminare residui di terra."
-},
-      {
-  alimento: "Rape",
-  fattore: 0.9,
-  info: "Le rape perdono circa il 10% del loro peso durante la cottura. La loro polpa densa e compatta trattiene bene l'umidità.",
-  tip: "Le rape giovani hanno un sapore più delicato e richiedono tempi di cottura più brevi. Per ridurre l'amarezza, sbollentale brevemente prima della cottura finale."
-},
-      {
-  alimento: "Spinaci",
-  fattore: 0.8,
-  info: "Gli spinaci perdono circa il 20% del loro peso durante la cottura, rilasciando parte dell'acqua contenuta nelle foglie.",
-  tip: "Gli spinaci riducono drasticamente il volume durante la cottura. Per preservare vitamine e minerali, saltali in padella per pochi secondi anziché bollirli."
-},
-      {
-  alimento: "Topinabur",
-  fattore: 1,
-  info: "Il topinabur mantiene il suo peso originale durante la cottura. La sua polpa compatta trattiene efficacemente l'umidità.",
-  tip: "Il topinabur può essere cucinato come le patate. Per ridurre l'effetto flatulento, aggiungi semi di finocchio o cumino durante la cottura."
-},
-      {
-  alimento: "Zucchine e zucca",
-  fattore: 0.9,
-  info: "Le zucchine e la zucca perdono circa il 10% del loro peso durante la cottura. La loro polpa porosa rilascia parte dell'acqua contenuta.",
-  tip: "Per zucchine non acquose, cuocile rapidamente a fuoco alto. La zucca si presta a cotture lunghe che ne caramellizzano gli zuccheri, esaltandone il sapore dolce."
-}
-    ,
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      ],
+    ],
     "Legumi freschi": [
       { 
         alimento: "Fagiolini", 
@@ -265,10 +135,10 @@ const NeoBrutalismCrudoCotto = () => {
         tip: "Per un petto di pollo perfettamente cotto, utilizzare la tecnica della doratura seguita da cottura a fuoco medio-basso. Interrompere la cottura quando la temperatura interna raggiunge 73°C per evitare che diventi secco."
       },
       { 
-        alimento: "Pollo (coscia)", 
+        alimento: "Pollo (coscio)", 
         fattore: 0.76,
-        info: "Il coscia di pollo perde circa il 24% del suo peso durante la cottura. La maggiore perdita rispetto al petto è dovuta al più elevato contenuto di grasso e collagene che si sciolgono con il calore.",
-        tip: "La cottura lenta e a temperatura moderata (150-160°C) permette al collagene di trasformarsi in gelatina, rendendo il coscia di pollo tenero e succoso. Ideale la cottura con pelle per mantenere l'umidità."
+        info: "Il coscio di pollo perde circa il 24% del suo peso durante la cottura. La maggiore perdita rispetto al petto è dovuta al più elevato contenuto di grasso e collagene che si sciolgono con il calore.",
+        tip: "La cottura lenta e a temperatura moderata (150-160°C) permette al collagene di trasformarsi in gelatina, rendendo il coscio di pollo tenero e succoso. Ideale la cottura con pelle per mantenere l'umidità."
       },
       { 
         alimento: "Tacchino (petto)", 
@@ -277,9 +147,9 @@ const NeoBrutalismCrudoCotto = () => {
         tip: "Per evitare che il petto di tacchino diventi secco, considerare la marinatura con olio e acidi (limone, yogurt) per almeno 2 ore prima della cottura. Questo aiuta a denaturare parzialmente le proteine, migliorando la ritenzione di umidità."
       },
       { 
-        alimento: "Tacchino (coscia)", 
+        alimento: "Tacchino (coscio)", 
         fattore: 0.70,
-        info: "Il coscia di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure della carne.",
+        info: "Il coscio di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure della carne.",
         tip: "La cottura a bassa temperatura (140-150°C) per tempi prolungati permette al collagene di trasformarsi in gelatina senza eccessiva perdita di umidità. Spennellare periodicamente con i succhi di cottura per mantenere la superficie idratata."
       }
     ],
@@ -620,207 +490,194 @@ const NeoBrutalismCrudoCotto = () => {
   };
 
   return (
-    <>
-      {/* Schermata di splash */}
-      <SplashScreen />
+    <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
+      <div className="nb-noise-overlay"></div>
       
-      <div className="nb-app">
-        <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
-          <div className="nb-noise-overlay"></div>
-          
-          <header className="nb-header">
-            <div className="nb-logo">
-              <h1>CrudoCotto</h1>
-            </div>
-            
-            <button 
-              onClick={toggleTema}
-              className="nb-theme-toggle" 
-              aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
-            >
-              {isDark ? '☀️' : '🌙'}
-            </button>
-          </header>
-          
-          <main className="nb-main">
-            <div className="nb-card nb-main-card">
-              {/* Toggle direction conversion */}
-              <div className="nb-toggle-container">
-                <div className="nb-toggle-track">
-                  <button 
-                    onClick={() => handleDirezioneChange('crudoCotto')}
-                    className={`nb-toggle-option ${direzione === 'crudoCotto' ? 'active' : ''}`}
-                  >
-                    Da crudo a cotto
-                  </button>
-                  <button 
-                    onClick={() => handleDirezioneChange('cottoCrudo')}
-                    className={`nb-toggle-option ${direzione === 'cottoCrudo' ? 'active' : ''}`}
-                  >
-                    Da cotto a crudo
-                  </button>
-                </div>
-              </div>
-              
-              {/* Category Selection */}
-              <div className="nb-field">
-                <label className="nb-label">
-                  Categoria
-                </label>
-                <div className="nb-select-wrapper">
-                  <select 
-                    value={categoria}
-                    onChange={handleCategoriaChange}
-                    className="nb-select"
-                  >
-                    {/* Accesso sicuro alle chiavi */}
-                    {Object.keys(conversionData || {}).map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                  <span className="nb-select-arrow">↓</span>
-                </div>
-              </div>
-              
-              {/* Food Selection with Info Button */}
-              <div className="nb-field">
-                <div className="nb-label-row">
-                  <label className="nb-label">
-                    Alimento
-                  </label>
-                  <button 
-                    ref={infoButtonRef}
-                    onClick={showInfo}
-                    className="nb-info-btn"
-                    aria-label="Informazioni sull'alimento"
-                  >
-                    i
-                  </button>
-                </div>
-                <div className="nb-select-wrapper">
-                  <select 
-                    value={alimento}
-                    onChange={handleAlimentoChange}
-                    className="nb-select"
-                  >
-                    {/* Sicurezza nel mappare gli alimenti */}
-                    {conversionData && categoria && conversionData[categoria] && 
-                     Array.isArray(conversionData[categoria]) 
-                      ? conversionData[categoria].map(item => (
-                        <option key={item.alimento} value={item.alimento}>
-                          {item.alimento}
-                        </option>
-                      )) 
-                      : null
-                    }
-                  </select>
-                  <span className="nb-select-arrow">↓</span>
-                </div>
-                
-                {/* Info Tooltip */}
-                {infoVisible && (
-                  <div ref={infoRef} className="nb-info-tooltip">
-                    <button 
-                      onClick={() => setInfoVisible(false)}
-                      className="nb-tooltip-close-btn"
-                      aria-label="Chiudi informazioni"
-                    >
-                      ✕
-                    </button>
-                    
-                    <h4 className="nb-tooltip-title">{alimento}</h4>
-                    <p className="nb-tooltip-content">{infoText}</p>
-                  </div>
-                )}
-              </div>
-              
-              {/* Quantity Input */}
-              <div className="nb-field">
-                <label className="nb-label">
-                  Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
-                </label>
-                <div className="nb-input-wrapper">
-                  <input 
-                    ref={inputRef}
-                    type="text" 
-                    inputMode="decimal"
-                    value={quantita}
-                    onChange={handleQuantitaChange}
-                    placeholder="Inserisci la quantità in grammi" 
-                    className="nb-input"
-                  />
-                  <span className="nb-input-suffix">g</span>
-                </div>
-              </div>
-              
-              {/* Action Button */}
+      <header className="nb-header">
+        <div className="nb-logo">
+          <h1>CrudoCotto</h1>
+        </div>
+        
+        <button 
+          onClick={toggleTema}
+          className="nb-theme-toggle" 
+          aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
+        >
+          {isDark ? '☀️' : '🌙'}
+        </button>
+      </header>
+      
+      <main className="nb-main">
+        <div className="nb-card nb-main-card">
+          {/* Toggle direction conversion */}
+          <div className="nb-toggle-container">
+            <div className="nb-toggle-track">
               <button 
-                onClick={calcolaRisultato}
-                disabled={!quantita || isCalcolando}
-                className={!quantita || isCalcolando ? 'nb-button disabled' : 'nb-button'}
+                onClick={() => handleDirezioneChange('crudoCotto')}
+                className={`nb-toggle-option ${direzione === 'crudoCotto' ? 'active' : ''}`}
               >
-                {isCalcolando ? 'Calcolando...' : 'Calcola'}
+                Da crudo a cotto
+              </button>
+              <button 
+                onClick={() => handleDirezioneChange('cottoCrudo')}
+                className={`nb-toggle-option ${direzione === 'cottoCrudo' ? 'active' : ''}`}
+              >
+                Da cotto a crudo
               </button>
             </div>
-            
-            {/* Result Card */}
-            {risultato && (
-              <div 
-                ref={risultatoRef}
-                className="nb-card nb-result-card"
+          </div>
+          
+          {/* Category Selection */}
+          <div className="nb-field">
+            <label className="nb-label">
+              Categoria
+            </label>
+            <div className="nb-select-wrapper">
+              <select 
+                value={categoria}
+                onChange={handleCategoriaChange}
+                className="nb-select"
               >
-                {/* Close button */}
+                {/* Accesso sicuro alle chiavi */}
+                {Object.keys(conversionData || {}).map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <span className="nb-select-arrow">↓</span>
+            </div>
+          </div>
+          
+          {/* Food Selection with Info Button */}
+          <div className="nb-field">
+            <div className="nb-label-row">
+              <label className="nb-label">
+                Alimento
+              </label>
+              <button 
+                ref={infoButtonRef}
+                onClick={showInfo}
+                className="nb-info-btn"
+                aria-label="Informazioni sull'alimento"
+              >
+                i
+              </button>
+            </div>
+            <div className="nb-select-wrapper">
+              <select 
+                value={alimento}
+                onChange={handleAlimentoChange}
+                className="nb-select"
+              >
+                {/* Sicurezza nel mappare gli alimenti */}
+                {conversionData && categoria && conversionData[categoria] && 
+                 Array.isArray(conversionData[categoria]) 
+                  ? conversionData[categoria].map(item => (
+                    <option key={item.alimento} value={item.alimento}>
+                      {item.alimento}
+                    </option>
+                  )) 
+                  : null
+                }
+              </select>
+              <span className="nb-select-arrow">↓</span>
+            </div>
+            
+            {/* Info Tooltip */}
+            {infoVisible && (
+              <div ref={infoRef} className="nb-info-tooltip">
                 <button 
-                  onClick={resetForm}
-                  className="nb-close-btn"
-                  aria-label="Chiudi risultato"
+                  onClick={() => setInfoVisible(false)}
+                  className="nb-tooltip-close-btn"
+                  aria-label="Chiudi informazioni"
                 >
                   ✕
                 </button>
                 
-                <h3 className="nb-card-title">
-                  Risultato della conversione
-                </h3>
-                
-                <div className="nb-result">
-                  <div className="nb-result-value">
-                    {risultato} g
-                  </div>
-                  <div className="nb-result-unit">
-                    {direzione === 'crudoCotto' ? 'cotto' : 'crudo'}
-                  </div>
-                </div>
-                
-                <div className="nb-factor-badge">
-                  Fattore di conversione: {fattore.toFixed(2)}
-                </div>
-                
-                {/* Cooking Tip */}
-                {tipText && (
-                  <div className="nb-cooking-tip">
-                    <div className="nb-tip-icon">💡</div>
-                    <p className="nb-tip-text">{tipText}</p>
-                  </div>
-                )}
+                <h4 className="nb-tooltip-title">{alimento}</h4>
+                <p className="nb-tooltip-content">{infoText}</p>
               </div>
             )}
-          </main>
+          </div>
           
-          <footer className="nb-footer">
-            CrudoCotto &copy; {new Date().getFullYear()} | 
-            <a href="https://github.com/aleattino" className="nb-link">
-              aleattino
-            </a>
-          </footer>
+          {/* Quantity Input */}
+          <div className="nb-field">
+            <label className="nb-label">
+              Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
+            </label>
+            <div className="nb-input-wrapper">
+              <input 
+                ref={inputRef}
+                type="text" 
+                inputMode="decimal"
+                value={quantita}
+                onChange={handleQuantitaChange}
+                placeholder="Inserisci la quantità in grammi" 
+                className="nb-input"
+              />
+              <span className="nb-input-suffix">g</span>
+            </div>
+          </div>
           
-          {/* Notifica offline */}
-          <OfflineNotice />
-          
-          {/* Prompt di installazione */}
-          <InstallPrompt />
+          {/* Action Button */}
+          <button 
+            onClick={calcolaRisultato}
+            disabled={!quantita || isCalcolando}
+            className={!quantita || isCalcolando ? 'nb-button disabled' : 'nb-button'}
+          >
+            {isCalcolando ? 'Calcolando...' : 'Calcola'}
+          </button>
         </div>
-      </div>
-    </>
+        
+        {/* Result Card */}
+        {risultato && (
+          <div 
+            ref={risultatoRef}
+            className="nb-card nb-result-card"
+          >
+            {/* Close button */}
+            <button 
+              onClick={resetForm}
+              className="nb-close-btn"
+              aria-label="Chiudi risultato"
+            >
+              ✕
+            </button>
+            
+            <h3 className="nb-card-title">
+              Risultato della conversione
+            </h3>
+            
+            <div className="nb-result">
+              <div className="nb-result-value">
+                {risultato} g
+              </div>
+              <div className="nb-result-unit">
+                {direzione === 'crudoCotto' ? 'cotto' : 'crudo'}
+              </div>
+            </div>
+            
+            <div className="nb-factor-badge">
+              Fattore di conversione: {fattore.toFixed(2)}
+            </div>
+            
+            {/* Cooking Tip */}
+            {tipText && (
+              <div className="nb-cooking-tip">
+                <div className="nb-tip-icon">💡</div>
+                <p className="nb-tip-text">{tipText}</p>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
+      
+      <footer className="nb-footer">
+        CrudoCotto &copy; {new Date().getFullYear()} | 
+        <a href="https://github.com/aleattino" className="nb-link">
+          aleattino
+        </a>
+      </footer>
+    </div>
   );
 };
 

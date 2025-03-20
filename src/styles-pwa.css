@@ -1,0 +1,83 @@
+/* Stili e animazioni specifici per la PWA */
+
+/* Animazione per la notifica offline */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Stile per l'installazione dell'app */
+.pwa-install-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideUpFull 0.3s forwards;
+}
+
+.pwa-install-prompt button {
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.pwa-install-prompt button.dismiss {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+@keyframes slideUpFull {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Stile per la schermata di splash all'avvio */
+.pwa-splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.pwa-splash-screen img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+
+.pwa-splash-screen h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+} 

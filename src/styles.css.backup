@@ -1,0 +1,593 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap');
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Figtree', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+/* Theme styles - Colori corretti e sfondo uniforme */
+.theme-light {
+  --bg-primary: #f0f7ff;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(229, 231, 235, 0.8);
+  --input-bg: rgba(249, 250, 251, 0.8);
+  --input-border: rgba(209, 213, 219, 0.8);
+  --button-bg: #3b82f6;
+  --button-hover: #2563eb;
+  --button-text: white;
+  --disabled-bg: #d1d5db;
+  --disabled-text: #6b7280;
+  --toggle-bg: #f3f4f6;
+  --toggle-active: #3b82f6;
+  --toggle-inactive: #6b7280;
+  --result-badge-bg: #dbeafe;
+  --result-badge-text: #1e40af;
+  --close-btn-bg: #f3f4f6;
+  --close-btn-icon: #6b7280;
+  --title-gradient-from: #2563eb;
+  --title-gradient-to: #3b82f6;
+  --tooltip-bg: rgba(255, 255, 255, 0.7);
+  --tooltip-border: rgba(229, 231, 235, 0.3);
+  --tooltip-title: #3b82f6;
+  --tooltip-text: #1f2937;
+  --info-button-bg: #f3f4f6;
+  --info-button-text: #3b82f6;
+}
+
+.theme-dark {
+  --bg-primary: #000000;
+  --text-primary: #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --card-bg: rgba(31, 41, 55, 0.7);
+  --card-border: rgba(55, 65, 81, 0.5);
+  --input-bg: rgba(17, 24, 39, 0.6);
+  --input-border: rgba(75, 85, 99, 0.5);
+  --button-bg: #3b82f6;
+  --button-hover: #2563eb;
+  --button-text: white;
+  --disabled-bg: #4b5563;
+  --disabled-text: #9ca3af;
+  --toggle-bg: rgba(31, 41, 55, 0.7);
+  --toggle-active: #3b82f6;
+  --toggle-inactive: #9ca3af;
+  --result-badge-bg: rgba(30, 58, 138, 0.3);
+  --result-badge-text: #93c5fd;
+  --close-btn-bg: rgba(55, 65, 81, 0.8);
+  --close-btn-icon: #e5e7eb;
+  --title-gradient-from: #60a5fa;
+  --title-gradient-to: #3b82f6;
+  --tooltip-bg: rgba(31, 41, 55, 0.7);
+  --tooltip-border: rgba(55, 65, 81, 0.3);
+  --tooltip-title: #60a5fa;
+  --tooltip-text: #e5e7eb;
+  --info-button-bg: #374151;
+  --info-button-text: #60a5fa;
+}
+
+/* Background e decorazioni rimosse */
+.theme-light, .theme-dark {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Layout */
+.container {
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header styles */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.app-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--title-gradient-from), var(--title-gradient-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.25rem;
+}
+
+.app-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.theme-toggle-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* Card styles */
+.main-card, .result-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Toggle switch */
+.toggle-container {
+  margin-bottom: 1.5rem;
+}
+
+.direction-toggle {
+  display: flex;
+  background-color: var(--toggle-bg);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.direction-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--toggle-inactive);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.direction-btn.active {
+  color: white;
+}
+
+.direction-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle-active);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.label-with-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Correzione bottone info */
+.info-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--info-button-text);
+  background-color: var(--info-button-bg);
+  border: none;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  top: 0;
+}
+
+.info-button:hover {
+  transform: scale(1.05);
+}
+
+.info-button:active {
+  transform: scale(0.95);
+}
+
+.select-wrapper, .input-wrapper {
+  position: relative;
+  border: 1px solid var(--input-border);
+  border-radius: 0.75rem;
+  background-color: var(--input-bg);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.select-wrapper:focus-within, .input-wrapper:focus-within {
+  border-color: var(--button-bg);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.form-select, .form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  appearance: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.select-arrow, .input-suffix {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.select-arrow svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Tooltip più grande e leggibile */
+.info-tooltip {
+  position: absolute;
+  z-index: 10;
+  width: 20rem; /* Aumentato da 18rem */
+  padding: 1.25rem; /* Aumentato da 1rem */
+  top: 2.5rem;
+  left: 0;
+  border-radius: 0.5rem;
+  background-color: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  animation: fade-in 0.2s ease-out;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  top: -0.375rem;
+  left: 1rem;
+  background-color: var(--tooltip-bg);
+  border-left: 1px solid var(--tooltip-border);
+  border-top: 1px solid var(--tooltip-border);
+  transform: rotate(45deg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tooltip-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--tooltip-bg);
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tooltip-close-btn:hover {
+  background-color: var(--card-border);
+  color: var(--text-primary);
+}
+
+.tooltip-title {
+  font-size: 1rem; /* Aumentato da 0.875rem */
+  font-weight: 600;
+  color: var(--tooltip-title);
+  margin-bottom: 0.75rem; /* Aumentato da 0.5rem */
+  padding-right: 1rem;
+}
+
+.tooltip-content {
+  font-size: 0.875rem; /* Aumentato da 0.8125rem */
+  color: var(--tooltip-text);
+  line-height: 1.5; /* Aumentato da 1.4 */
+}
+
+/* Button styles */
+.calc-btn {
+  display: block;
+  width: 100%;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 0.75rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.calc-btn:hover:not(.disabled) {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(59, 130, 246, 0.4);
+}
+
+.calc-btn:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.calc-btn.disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Result styles */
+.result-card {
+  position: relative;
+  text-align: center;
+  animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--close-btn-bg);
+  color: var(--close-btn-icon);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: var(--button-bg);
+  color: white;
+  transform: scale(1.1);
+}
+
+.close-btn:active {
+  transform: scale(0.95);
+}
+
+.result-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.result-value-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.75rem 0;
+}
+
+.result-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.result-unit {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.conversion-factor {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--result-badge-bg);
+  color: var(--result-badge-text);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.factor-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
+.footer-link {
+  color: var(--button-bg);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles - Migliorati per tooltip mobile */
+@media (max-width: 640px) {
+  .app-title {
+    font-size: 1.5rem;
+  }
+  
+  .main-card, .result-card {
+    padding: 1.25rem;
+  }
+  
+  .form-select, .form-input, .calc-btn {
+    padding: 0.75rem;
+  }
+  
+  .result-value {
+    font-size: 1.875rem;
+  }
+  
+  .info-tooltip {
+    width: calc(100vw - 2rem);
+    max-width: 20rem;
+    font-size: 1rem;
+  }
+  
+  .tooltip-content {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+}
+
+/* Add smooth animations for all interactive elements */
+button, input, select, a {
+  transition: all 0.2s ease;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+option {
+  background-color: #1f2937;
+  color: white;
+}
+
+.theme-light option {
+  background-color: white;
+  color: #1f2937;
+}
+
+.font-figtree {
+  font-family: 'Figtree', sans-serif;
+}
+
+/* Cooking Tip styles */
+.cooking-tip {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--tooltip-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  animation: fade-in 0.4s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.tip-icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  color: var(--tooltip-title);
+}
+
+.tip-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--tooltip-text);
+}
+
+@media (max-width: 640px) {
+  .tip-text {
+    font-size: 0.8125rem;
+  }
+}
