@@ -1,6 +1,7 @@
 [build]
-  command = "CI=false npm run build"
+  command = "npm install && SKIP_PREFLIGHT_CHECK=true CI=false npm run build"
   publish = "build"
 
 [build.environment]
   NODE_VERSION = "16"
+  NETLIFY_USE_YARN = "false"
