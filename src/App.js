@@ -4,6 +4,122 @@ import './styles.css';
 const NeoBrutalismCrudoCotto = () => {
   // Dati delle tabelle di conversione
   const conversionData = {
+    "Cereali e derivati": [
+      { 
+        alimento: "Pasta di semola corta", 
+        fattore: 2.00,
+        info: "Durante la cottura, l'amido della pasta assorbe acqua, aumentando il suo peso di circa il doppio. Questo processo, chiamato gelatinizzazione dell'amido, è responsabile della consistenza morbida della pasta cotta.",
+        tip: "Per una cottura ottimale, cuoci in abbondante acqua salata (10g di sale per litro). La pasta al dente trattiene meglio i condimenti e ha un indice glicemico più basso."
+      },
+      { 
+        alimento: "Pasta di semola lunga", 
+        fattore: 2.40,
+        info: "La pasta lunga, come spaghetti e linguine, tende ad assorbire più acqua rispetto alla pasta corta a causa della maggiore superficie esposta. L'amido presente assorbe l'acqua durante la cottura, aumentando il peso di circa 2,4 volte.",
+        tip: "Per evitare che si attacchi, immergi la pasta lunga in acqua bollente e mescola nei primi 30 secondi. Non spezzarla: si cuocerà uniformemente piegandosi naturalmente nel liquido."
+      },
+      { 
+        alimento: "Pasta all'uovo secca", 
+        fattore: 3.00,
+        info: "La pasta all'uovo contiene proteine aggiuntive che, insieme all'amido, assorbono una quantità maggiore di acqua durante la cottura, triplicando il peso originale.",
+        tip: "La pasta all'uovo richiede tempi di cottura più brevi rispetto alla pasta di semola. Controlla la consistenza 1-2 minuti prima del tempo indicato sulla confezione."
+      },
+      { 
+        alimento: "Riso", 
+        fattore: 2.50,
+        info: "Il riso assorbe significativamente l'acqua durante la cottura. I granelli si espandono quando l'amido assorbe l'umidità, aumentando il peso di circa 2,5 volte rispetto al crudo.",
+        tip: "Per un riso perfettamente cotto, rispetta il rapporto 1:2 (una parte di riso, due di acqua). Dopo l'ebollizione, cuoci a fuoco lento con coperchio senza mescolare per ottenere chicchi separati."
+      },
+      { 
+        alimento: "Tortellini ravioli freschi", 
+        fattore: 2.00,
+        info: "La pasta ripiena fresca contiene già umidità, quindi l'aumento di peso durante la cottura è minore rispetto alla pasta secca. L'incremento è dovuto principalmente all'assorbimento di acqua nell'involucro di pasta.",
+        tip: "I tortellini sono cotti quando risalgono in superficie. Scolali entro 20-30 secondi da questo momento per evitare che il ripieno perda sapore e la pasta si sfalsi."
+      }
+    ],
+    "Verdure e ortaggi": [
+      { 
+        alimento: "Agretti", 
+        fattore: 0.80,
+        info: "Gli agretti perdono parte dell'acqua contenuta durante la cottura, riducendo il loro peso all'80% del valore iniziale. Questo è dovuto alla rottura delle cellule vegetali che rilasciano acqua.",
+        tip: "Per preservare il sapore caratteristico, cuoci gli agretti in poca acqua salata per soli 3-4 minuti. Completare la cottura in padella conserva meglio nutrienti e consistenza."
+      },
+      { 
+        alimento: "Asparagi", 
+        fattore: 0.90,
+        info: "La struttura fibrosa degli asparagi trattiene buona parte dell'acqua durante la cottura, con una perdita limitata di peso, circa il 10% del peso originale.",
+        tip: "Cuoci gli asparagi in posizione verticale con le punte fuori dall'acqua per una cottura uniforme. Le punte cuociono più velocemente dei gambi e vanno protette dall'eccessivo calore."
+      },
+      { 
+        alimento: "Bieta", 
+        fattore: 0.80,
+        info: "La bieta, come molte verdure a foglia, perde circa il 20% dell'acqua durante la cottura per via della rottura delle pareti cellulari.",
+        tip: "Per massimizzare il contenuto di antiossidanti, cuoci la bieta a vapore invece che in acqua bollente. Mantiene così più nutrienti e una consistenza migliore."
+      },
+      { 
+        alimento: "Broccoletti a testa", 
+        fattore: 0.90,
+        info: "I broccoletti a testa mantengono gran parte della loro massa durante la cottura grazie alla struttura compatta dei tessuti.",
+        tip: "Per mantenere il colore verde brillante e massimizzare l'assimilazione dei nutrienti, scottali in acqua bollente per 3-4 minuti e poi raffreddali rapidamente in acqua ghiacciata."
+      },
+      { 
+        alimento: "Broccoletti di rapa", 
+        fattore: 0.90,
+        info: "Con una buona capacità di trattenere l'acqua, i broccoletti di rapa perdono solo il 10% del loro peso durante la cottura.",
+        tip: "Per ridurre l'amarezza, sbollenta brevemente in acqua salata e completa la cottura in padella. L'aggiunta di un pizzico di bicarbonato all'acqua di cottura mantiene il colore vivace."
+      },
+      { 
+        alimento: "Carciofi", 
+        fattore: 0.75,
+        info: "I carciofi perdono una quantità significativa di acqua durante la cottura, riducendosi a circa il 75% del peso originale.",
+        tip: "Per evitare l'ossidazione, immergili subito in acqua acidulata con limone. La cottura al vapore per 20-30 minuti mantiene intatti più aromi rispetto alla bollitura."
+      },
+      { 
+        alimento: "Cardi", 
+        fattore: 0.60,
+        info: "I cardi hanno un'elevata perdita di acqua durante la cottura, mantenendo solo il 60% del peso originale.",
+        tip: "Prima della cottura, immergi i cardi in acqua acidulata per evitare l'imbrunimento. La prebollitura con un cucchiaio di farina riduce l'amarezza prima della cottura finale."
+      }
+    ],
+    "Legumi freschi": [
+      { 
+        alimento: "Fagiolini", 
+        fattore: 0.95,
+        info: "I fagiolini mantengono buona parte del loro peso durante la cottura grazie alla buccia resistente che impedisce una eccessiva perdita d'acqua.",
+        tip: "La cottura al vapore per 4-5 minuti mantiene la croccantezza e il colore vivace. Il raffreddamento rapido in acqua ghiacciata ferma immediatamente la cottura preservando consistenza e nutrienti."
+      },
+      { 
+        alimento: "Fave", 
+        fattore: 0.80,
+        info: "Le fave fresche perdono circa il 20% del loro peso durante la cottura per via del rilascio di acqua contenuta all'interno dei semi.",
+        tip: "Rimuovi la pellicina esterna dopo la cottura per una consistenza più morbida e digeribile. Le fave giovani richiedono solo 3-4 minuti di cottura per preservare dolcezza e colore."
+      },
+      { 
+        alimento: "Piselli", 
+        fattore: 0.87,
+        info: "I piselli freschi perdono parte dell'umidità durante la cottura, mantenendo comunque una buona percentuale della loro massa originale grazie alla buccia protettiva.",
+        tip: "I piselli freschi necessitano solo di 3-4 minuti di cottura. Tempi più lunghi degradano la clorofilla, causando perdita di colore e nutrienti. Il congelamento rapido preserva meglio i nutrienti."
+      }
+    ],
+    "Legumi secchi": [
+      { 
+        alimento: "Ceci", 
+        fattore: 3.00,
+        info: "I ceci secchi assorbono molta acqua durante l'ammollo e la cottura, aumentando il loro peso di circa tre volte. Questo è dovuto alla reidratazione delle proteine e dell'amido presenti.",
+        tip: "L'ammollo con bicarbonato (1/2 cucchiaino per litro) riduce i tempi di cottura del 25% e migliora la digeribilità. L'aggiunta di foglie di alloro previene la formazione di schiuma durante la cottura."
+      },
+      { 
+        alimento: "Fagioli", 
+        fattore: 2.50,
+        info: "I fagioli secchi, durante ammollo e cottura, assorbono acqua che viene incorporata nelle cellule precedentemente disidratate, aumentando il peso di 2,5 volte.",
+        tip: "Non salare i fagioli durante la cottura ma solo negli ultimi 10 minuti: il sale rallenta l'assorbimento dell'acqua e indurisce la buccia, allungando i tempi di cottura."
+      },
+      { 
+        alimento: "Lenticchie", 
+        fattore: 2.50,
+        info: "Le lenticchie secche raddoppiano e mezzo il loro peso durante la cottura grazie all'assorbimento di acqua. Hanno una capacità di assorbimento simile ai fagioli ma richiedono tempi minori.",
+        tip: "Le lenticchie rosse decorticate cuociono in soli 15-20 minuti e non richiedono ammollo. Le lenticchie verdi e marroni mantengono meglio la forma durante la cottura, ideali per insalate."
+      }
+    ],
     "Carne": [
       { 
         alimento: "Bovino adulto magro", 
@@ -128,122 +244,6 @@ const NeoBrutalismCrudoCotto = () => {
         fattore: 0.80,
         info: "La spigola e l'orata surgelate mantengono l'80% del loro peso dopo la cottura. La perdita del 20% è causata dalla combinazione del danneggiamento cellulare durante il congelamento e dalla normale contrazione proteica in cottura.",
         tip: "Per spigola e orata surgelate, la cottura con pelle mantiene meglio l'umidità. La tecnica della cottura en papillote (in cartoccio) con l'aggiunta di liquidi aromatici crea un ambiente umido che preserva la morbidezza della carne."
-      }
-    ],
-    "Cereali e derivati": [
-      { 
-        alimento: "Pasta di semola corta", 
-        fattore: 2.00,
-        info: "Durante la cottura, l'amido della pasta assorbe acqua, aumentando il suo peso di circa il doppio. Questo processo, chiamato gelatinizzazione dell'amido, è responsabile della consistenza morbida della pasta cotta.",
-        tip: "Per una cottura ottimale, cuoci in abbondante acqua salata (10g di sale per litro). La pasta al dente trattiene meglio i condimenti e ha un indice glicemico più basso."
-      },
-      { 
-        alimento: "Pasta di semola lunga", 
-        fattore: 2.40,
-        info: "La pasta lunga, come spaghetti e linguine, tende ad assorbire più acqua rispetto alla pasta corta a causa della maggiore superficie esposta. L'amido presente assorbe l'acqua durante la cottura, aumentando il peso di circa 2,4 volte.",
-        tip: "Per evitare che si attacchi, immergi la pasta lunga in acqua bollente e mescola nei primi 30 secondi. Non spezzarla: si cuocerà uniformemente piegandosi naturalmente nel liquido."
-      },
-      { 
-        alimento: "Pasta all'uovo secca", 
-        fattore: 3.00,
-        info: "La pasta all'uovo contiene proteine aggiuntive che, insieme all'amido, assorbono una quantità maggiore di acqua durante la cottura, triplicando il peso originale.",
-        tip: "La pasta all'uovo richiede tempi di cottura più brevi rispetto alla pasta di semola. Controlla la consistenza 1-2 minuti prima del tempo indicato sulla confezione."
-      },
-      { 
-        alimento: "Riso", 
-        fattore: 2.50,
-        info: "Il riso assorbe significativamente l'acqua durante la cottura. I granelli si espandono quando l'amido assorbe l'umidità, aumentando il peso di circa 2,5 volte rispetto al crudo.",
-        tip: "Per un riso perfettamente cotto, rispetta il rapporto 1:2 (una parte di riso, due di acqua). Dopo l'ebollizione, cuoci a fuoco lento con coperchio senza mescolare per ottenere chicchi separati."
-      },
-      { 
-        alimento: "Tortellini ravioli freschi", 
-        fattore: 2.00,
-        info: "La pasta ripiena fresca contiene già umidità, quindi l'aumento di peso durante la cottura è minore rispetto alla pasta secca. L'incremento è dovuto principalmente all'assorbimento di acqua nell'involucro di pasta.",
-        tip: "I tortellini sono cotti quando risalgono in superficie. Scolali entro 20-30 secondi da questo momento per evitare che il ripieno perda sapore e la pasta si sfalsi."
-      }
-    ],
-    "Verdure e ortaggi": [
-      { 
-        alimento: "Agretti", 
-        fattore: 0.80,
-        info: "Gli agretti perdono parte dell'acqua contenuta durante la cottura, riducendo il loro peso all'80% del valore iniziale. Questo è dovuto alla rottura delle cellule vegetali che rilasciano acqua.",
-        tip: "Per preservare il sapore caratteristico, cuoci gli agretti in poca acqua salata per soli 3-4 minuti. Completare la cottura in padella conserva meglio nutrienti e consistenza."
-      },
-      { 
-        alimento: "Asparagi", 
-        fattore: 0.90,
-        info: "La struttura fibrosa degli asparagi trattiene buona parte dell'acqua durante la cottura, con una perdita limitata di peso, circa il 10% del peso originale.",
-        tip: "Cuoci gli asparagi in posizione verticale con le punte fuori dall'acqua per una cottura uniforme. Le punte cuociono più velocemente dei gambi e vanno protette dall'eccessivo calore."
-      },
-      { 
-        alimento: "Bieta", 
-        fattore: 0.80,
-        info: "La bieta, come molte verdure a foglia, perde circa il 20% dell'acqua durante la cottura per via della rottura delle pareti cellulari.",
-        tip: "Per massimizzare il contenuto di antiossidanti, cuoci la bieta a vapore invece che in acqua bollente. Mantiene così più nutrienti e una consistenza migliore."
-      },
-      { 
-        alimento: "Broccoletti a testa", 
-        fattore: 0.90,
-        info: "I broccoletti a testa mantengono gran parte della loro massa durante la cottura grazie alla struttura compatta dei tessuti.",
-        tip: "Per mantenere il colore verde brillante e massimizzare l'assimilazione dei nutrienti, scottali in acqua bollente per 3-4 minuti e poi raffreddali rapidamente in acqua ghiacciata."
-      },
-      { 
-        alimento: "Broccoletti di rapa", 
-        fattore: 0.90,
-        info: "Con una buona capacità di trattenere l'acqua, i broccoletti di rapa perdono solo il 10% del loro peso durante la cottura.",
-        tip: "Per ridurre l'amarezza, sbollenta brevemente in acqua salata e completa la cottura in padella. L'aggiunta di un pizzico di bicarbonato all'acqua di cottura mantiene il colore vivace."
-      },
-      { 
-        alimento: "Carciofi", 
-        fattore: 0.75,
-        info: "I carciofi perdono una quantità significativa di acqua durante la cottura, riducendosi a circa il 75% del peso originale.",
-        tip: "Per evitare l'ossidazione, immergili subito in acqua acidulata con limone. La cottura al vapore per 20-30 minuti mantiene intatti più aromi rispetto alla bollitura."
-      },
-      { 
-        alimento: "Cardi", 
-        fattore: 0.60,
-        info: "I cardi hanno un'elevata perdita di acqua durante la cottura, mantenendo solo il 60% del peso originale.",
-        tip: "Prima della cottura, immergi i cardi in acqua acidulata per evitare l'imbrunimento. La prebollitura con un cucchiaio di farina riduce l'amarezza prima della cottura finale."
-      }
-    ],
-    "Legumi freschi": [
-      { 
-        alimento: "Fagiolini", 
-        fattore: 0.95,
-        info: "I fagiolini mantengono buona parte del loro peso durante la cottura grazie alla buccia resistente che impedisce una eccessiva perdita d'acqua.",
-        tip: "La cottura al vapore per 4-5 minuti mantiene la croccantezza e il colore vivace. Il raffreddamento rapido in acqua ghiacciata ferma immediatamente la cottura preservando consistenza e nutrienti."
-      },
-      { 
-        alimento: "Fave", 
-        fattore: 0.80,
-        info: "Le fave fresche perdono circa il 20% del loro peso durante la cottura per via del rilascio di acqua contenuta all'interno dei semi.",
-        tip: "Rimuovi la pellicina esterna dopo la cottura per una consistenza più morbida e digeribile. Le fave giovani richiedono solo 3-4 minuti di cottura per preservare dolcezza e colore."
-      },
-      { 
-        alimento: "Piselli", 
-        fattore: 0.87,
-        info: "I piselli freschi perdono parte dell'umidità durante la cottura, mantenendo comunque una buona percentuale della loro massa originale grazie alla buccia protettiva.",
-        tip: "I piselli freschi necessitano solo di 3-4 minuti di cottura. Tempi più lunghi degradano la clorofilla, causando perdita di colore e nutrienti. Il congelamento rapido preserva meglio i nutrienti."
-      }
-    ],
-    "Legumi secchi": [
-      { 
-        alimento: "Ceci", 
-        fattore: 3.00,
-        info: "I ceci secchi assorbono molta acqua durante l'ammollo e la cottura, aumentando il loro peso di circa tre volte. Questo è dovuto alla reidratazione delle proteine e dell'amido presenti.",
-        tip: "L'ammollo con bicarbonato (1/2 cucchiaino per litro) riduce i tempi di cottura del 25% e migliora la digeribilità. L'aggiunta di foglie di alloro previene la formazione di schiuma durante la cottura."
-      },
-      { 
-        alimento: "Fagioli", 
-        fattore: 2.50,
-        info: "I fagioli secchi, durante ammollo e cottura, assorbono acqua che viene incorporata nelle cellule precedentemente disidratate, aumentando il peso di 2,5 volte.",
-        tip: "Non salare i fagioli durante la cottura ma solo negli ultimi 10 minuti: il sale rallenta l'assorbimento dell'acqua e indurisce la buccia, allungando i tempi di cottura."
-      },
-      { 
-        alimento: "Lenticchie", 
-        fattore: 2.50,
-        info: "Le lenticchie secche raddoppiano e mezzo il loro peso durante la cottura grazie all'assorbimento di acqua. Hanno una capacità di assorbimento simile ai fagioli ma richiedono tempi minori.",
-        tip: "Le lenticchie rosse decorticate cuociono in soli 15-20 minuti e non richiedono ammollo. Le lenticchie verdi e marroni mantengono meglio la forma durante la cottura, ideali per insalate."
       }
     ]
   };
