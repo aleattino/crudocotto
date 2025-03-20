@@ -249,12 +249,13 @@ const NeoBrutalismCrudoCotto = () => {
   };
 
   // Stati per l'applicazione
-  const [categoria, setCategoria] = useState(Object.keys(conversionData)[0]);
-  const [alimento, setAlimento] = useState(conversionData[Object.keys(conversionData)[0]][0].alimento);
+  const firstCategory = Object.keys(conversionData)[0];
+  const [categoria, setCategoria] = useState(firstCategory);
+  const [alimento, setAlimento] = useState(conversionData[firstCategory][0]?.alimento || '');
   const [quantita, setQuantita] = useState('');
   const [direzione, setDirezione] = useState('crudoCotto'); // 'crudoCotto' o 'cottoCrudo'
   const [risultato, setRisultato] = useState(null);
-  const [fattore, setFattore] = useState(conversionData[Object.keys(conversionData)[0]][0].fattore);
+  const [fattore, setFattore] = useState(conversionData[firstCategory][0]?.fattore || 1);
   const [tema, setTema] = useState('light'); // 'light', 'dark'
   const [isCalcolando, setIsCalcolando] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
@@ -306,11 +307,13 @@ const NeoBrutalismCrudoCotto = () => {
 
   // Aggiorna il fattore di conversione quando l'alimento cambia
   useEffect(() => {
-    const alimentoScelto = conversionData[categoria].find(item => item.alimento === alimento);
-    if (alimentoScelto) {
-      setFattore(alimentoScelto.fattore);
-      setInfoText(alimentoScelto.info || '');
-      setTipText(alimentoScelto.tip || '');
+    if (categoria && alimento && conversionData[categoria]) {
+      const alimentoScelto = conversionData[categoria].find(item => item.alimento === alimento);
+      if (alimentoScelto) {
+        setFattore(alimentoScelto.fattore);
+        setInfoText(alimentoScelto.info || '');
+        setTipText(alimentoScelto.tip || '');
+      }
     }
   }, [alimento, categoria]);
   
@@ -340,7 +343,9 @@ const NeoBrutalismCrudoCotto = () => {
   const handleCategoriaChange = (e) => {
     const nuovaCategoria = e.target.value;
     setCategoria(nuovaCategoria);
-    setAlimento(conversionData[nuovaCategoria][0].alimento);
+    if (conversionData[nuovaCategoria] && conversionData[nuovaCategoria].length > 0) {
+      setAlimento(conversionData[nuovaCategoria][0].alimento);
+    }
   };
 
   // Gestisce il cambio di alimento
