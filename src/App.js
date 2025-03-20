@@ -249,18 +249,23 @@ const NeoBrutalismCrudoCotto = () => {
   };
 
   // Stati per l'applicazione
-  const firstCategory = Object.keys(conversionData)[0];
+  const defaultCategoryKeys = Object.keys(conversionData || {});
+  const firstCategory = defaultCategoryKeys.length > 0 ? defaultCategoryKeys[0] : '';
+  const firstFoodItem = firstCategory && Array.isArray(conversionData[firstCategory]) && conversionData[firstCategory].length > 0 
+    ? conversionData[firstCategory][0] 
+    : { alimento: '', fattore: 1, info: '', tip: '' };
+    
   const [categoria, setCategoria] = useState(firstCategory);
-  const [alimento, setAlimento] = useState(conversionData[firstCategory][0]?.alimento || '');
+  const [alimento, setAlimento] = useState(firstFoodItem.alimento || '');
   const [quantita, setQuantita] = useState('');
   const [direzione, setDirezione] = useState('crudoCotto'); // 'crudoCotto' o 'cottoCrudo'
   const [risultato, setRisultato] = useState(null);
-  const [fattore, setFattore] = useState(conversionData[firstCategory][0]?.fattore || 1);
+  const [fattore, setFattore] = useState(firstFoodItem.fattore || 1);
   const [tema, setTema] = useState('light'); // 'light', 'dark'
   const [isCalcolando, setIsCalcolando] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
-  const [infoText, setInfoText] = useState('');
-  const [tipText, setTipText] = useState('');
+  const [infoText, setInfoText] = useState(firstFoodItem.info || '');
+  const [tipText, setTipText] = useState(firstFoodItem.tip || '');
   
   const isDark = tema === 'dark';
   
@@ -307,13 +312,23 @@ const NeoBrutalismCrudoCotto = () => {
 
   // Aggiorna il fattore di conversione quando l'alimento cambia
   useEffect(() => {
-    if (categoria && alimento && conversionData[categoria]) {
-      const alimentoScelto = conversionData[categoria].find(item => item.alimento === alimento);
+    if (!categoria || !alimento || !conversionData || !Array.isArray(conversionData[categoria])) {
+      return;
+    }
+    
+    try {
+      const alimentoScelto = conversionData[categoria].find(item => item && item.alimento === alimento);
       if (alimentoScelto) {
-        setFattore(alimentoScelto.fattore);
+        setFattore(alimentoScelto.fattore || 1);
         setInfoText(alimentoScelto.info || '');
         setTipText(alimentoScelto.tip || '');
       }
+    } catch (error) {
+      console.error('Errore nell\'aggiornamento dei dati:', error);
+      // In caso di errore, impostiamo valori di default sicuri
+      setFattore(1);
+      setInfoText('');
+      setTipText('');
     }
   }, [alimento, categoria]);
   
@@ -341,10 +356,19 @@ const NeoBrutalismCrudoCotto = () => {
 
   // Gestisce il cambio di categoria
   const handleCategoriaChange = (e) => {
-    const nuovaCategoria = e.target.value;
-    setCategoria(nuovaCategoria);
-    if (conversionData[nuovaCategoria] && conversionData[nuovaCategoria].length > 0) {
-      setAlimento(conversionData[nuovaCategoria][0].alimento);
+    try {
+      const nuovaCategoria = e.target.value;
+      setCategoria(nuovaCategoria);
+      if (conversionData && nuovaCategoria in conversionData && 
+          Array.isArray(conversionData[nuovaCategoria]) && 
+          conversionData[nuovaCategoria].length > 0) {
+        const primoAlimento = conversionData[nuovaCategoria][0];
+        if (primoAlimento && typeof primoAlimento === 'object' && 'alimento' in primoAlimento) {
+          setAlimento(primoAlimento.alimento);
+        }
+      }
+    } catch (error) {
+      console.error('Errore nel cambio categoria:', error);
     }
   };
 
@@ -381,17 +405,30 @@ const NeoBrutalismCrudoCotto = () => {
     
     // Simula un breve ritardo per l'effetto di calcolo
     setTimeout(() => {
-      const q = parseFloat(quantita);
-      let result;
+      try {
+        const q = parseFloat(quantita);
+        if (isNaN(q)) {
+          setRisultato('0.0');
+          setIsCalcolando(false);
+          return;
+        }
 
-      if (direzione === 'crudoCotto') {
-        result = q * fattore;
-      } else {
-        result = q / fattore;
+        let result;
+        const fattoreNumerico = parseFloat(fattore);
+        
+        if (direzione === 'crudoCotto') {
+          result = q * fattoreNumerico;
+        } else {
+          result = fattoreNumerico !== 0 ? q / fattoreNumerico : 0;
+        }
+
+        setRisultato(result.toFixed(1));
+      } catch (error) {
+        console.error('Errore nel calcolo:', error);
+        setRisultato('0.0');
+      } finally {
+        setIsCalcolando(false);
       }
-
-      setRisultato(result.toFixed(1));
-      setIsCalcolando(false);
     }, 300);
   };
 
@@ -454,7 +491,7 @@ const NeoBrutalismCrudoCotto = () => {
                 onChange={handleCategoriaChange}
                 className="nb-select"
               >
-                {Object.keys(conversionData).map(cat => (
+                {Object.keys(conversionData || {}).map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
@@ -483,9 +520,12 @@ const NeoBrutalismCrudoCotto = () => {
                 onChange={handleAlimentoChange}
                 className="nb-select"
               >
-                {conversionData[categoria] && conversionData[categoria].map(item => (
-                  <option key={item.alimento} value={item.alimento}>{item.alimento}</option>
-                ))}
+                {Array.isArray(conversionData[categoria]) ? 
+                  conversionData[categoria].map(item => (
+                    <option key={item.alimento} value={item.alimento}>{item.alimento}</option>
+                  )) : 
+                  null
+                }
               </select>
               <span className="nb-select-arrow">↓</span>
             </div>
