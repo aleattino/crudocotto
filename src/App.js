@@ -483,7 +483,7 @@ const NeoBrutalismCrudoCotto = () => {
                 onChange={handleAlimentoChange}
                 className="nb-select"
               >
-                {conversionData[categoria].map(item => (
+                {conversionData[categoria] && conversionData[categoria].map(item => (
                   <option key={item.alimento} value={item.alimento}>{item.alimento}</option>
                 ))}
               </select>
