@@ -54,6 +54,7 @@
   margin-bottom: 2rem;
   width: 100%;
   max-width: 600px;
+  padding-right: 6px;
 }
 
 .nb-logo {
@@ -81,6 +82,8 @@
   cursor: pointer;
   transition: transform 0.2s;
   flex-shrink: 0;
+  position: relative;
+  right: 0;
 }
 
 .nb-theme-toggle:hover {
@@ -100,6 +103,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-right: 0;
 }
 
 .nb-card {
@@ -109,6 +113,7 @@
   padding: 2rem;
   width: 100%;
   position: relative;
+  margin-right: 0;
 }
 
 .nb-main-card {
@@ -439,6 +444,7 @@
     
     .nb-header {
       margin-bottom: 1.5rem;
+      padding-right: 5px;
     }
     
     .nb-logo h1 {
@@ -474,6 +480,10 @@
   }
   
   @media (max-width: 400px) {
+    .nb-header {
+      padding-right: 4px;
+    }
+    
     .nb-logo h1 {
       font-size: 1.75rem;
     }
