@@ -54,7 +54,7 @@
   margin-bottom: 2rem;
   width: 100%;
   max-width: 600px;
-  padding-right: 6px;
+  padding-right: 0;
 }
 
 .nb-logo {
@@ -83,7 +83,7 @@
   transition: transform 0.2s;
   flex-shrink: 0;
   position: relative;
-  right: 0;
+  right: -3px;
 }
 
 .nb-theme-toggle:hover {
@@ -114,6 +114,7 @@
   width: 100%;
   position: relative;
   margin-right: 0;
+  box-sizing: border-box;
 }
 
 .nb-main-card {
@@ -444,7 +445,7 @@
     
     .nb-header {
       margin-bottom: 1.5rem;
-      padding-right: 5px;
+      padding-right: 0;
     }
     
     .nb-logo h1 {
@@ -454,6 +455,7 @@
     .nb-theme-toggle {
       width: 3rem;
       height: 3rem;
+      right: -3px;
     }
     
     .nb-card {
@@ -481,7 +483,11 @@
   
   @media (max-width: 400px) {
     .nb-header {
-      padding-right: 4px;
+      padding-right: 0;
+    }
+    
+    .nb-theme-toggle {
+      right: -2px;
     }
     
     .nb-logo h1 {
