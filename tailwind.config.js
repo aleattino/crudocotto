@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       backdropBlur: {
         xs: '2px',
@@ -14,18 +14,16 @@ module.exports = {
         md: '8px',
         lg: '12px',
         xl: '20px',
-        '2xl': '24px',
       },
-      backgroundOpacity: {
-        '15': '0.15',
-        '35': '0.35',
-        '65': '0.65',
-        '85': '0.85',
+      animation: {
+        'fade-in': 'fade-in 0.4s ease-out',
       },
-      boxShadow: {
-        glass: '0 8px 32px 0 rgba(31, 38, 135, 0.2)',
-        'glass-sm': '0 2px 12px 0 rgba(31, 38, 135, 0.15)',
-      }
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
     },
   },
   plugins: [],

@@ -4,6 +4,132 @@ import './styles.css';
 const NeoBrutalismCrudoCotto = () => {
   // Dati delle tabelle di conversione
   const conversionData = {
+    "Carne": [
+      { 
+        alimento: "Bovino adulto magro", 
+        fattore: 0.65,
+        info: "Durante la cottura, la carne bovina perde circa il 35% del suo peso a causa dell'evaporazione dell'acqua e della contrazione delle fibre muscolari dovuta alla denaturazione delle proteine. La perdita di peso è influenzata dal contenuto di grasso e dal metodo di cottura.",
+        tip: "Per mantenere la succulenza della carne bovina, lasciarla riposare per 5-10 minuti dopo la cottura. Questo permette ai succhi di ridistribuirsi nelle fibre muscolari invece di fuoriuscire al taglio."
+      },
+      { 
+        alimento: "Pollo (petto)", 
+        fattore: 0.90,
+        info: "Il petto di pollo ha una perdita di peso relativamente limitata durante la cottura (circa 10%) grazie al basso contenuto di grasso e alla struttura compatta delle fibre muscolari che trattengono meglio l'umidità.",
+        tip: "Per un petto di pollo perfettamente cotto, utilizzare la tecnica della doratura seguita da cottura a fuoco medio-basso. Interrompere la cottura quando la temperatura interna raggiunge 73°C per evitare che diventi secco."
+      },
+      { 
+        alimento: "Pollo (coscio)", 
+        fattore: 0.76,
+        info: "Il coscio di pollo perde circa il 24% del suo peso durante la cottura. La maggiore perdita rispetto al petto è dovuta al più elevato contenuto di grasso e collagene che si sciolgono con il calore.",
+        tip: "La cottura lenta e a temperatura moderata (150-160°C) permette al collagene di trasformarsi in gelatina, rendendo il coscio di pollo tenero e succoso. Ideale la cottura con pelle per mantenere l'umidità."
+      },
+      { 
+        alimento: "Tacchino (petto)", 
+        fattore: 1.00,
+        info: "Il petto di tacchino ha una composizione proteica e un contenuto di umidità che porta a una minima perdita di peso durante la cottura. Il fattore di conversione 1:1 indica che il peso rimane sostanzialmente invariato.",
+        tip: "Per evitare che il petto di tacchino diventi secco, considerare la marinatura con olio e acidi (limone, yogurt) per almeno 2 ore prima della cottura. Questo aiuta a denaturare parzialmente le proteine, migliorando la ritenzione di umidità."
+      },
+      { 
+        alimento: "Tacchino (coscio)", 
+        fattore: 0.70,
+        info: "Il coscio di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure della carne.",
+        tip: "La cottura a bassa temperatura (140-150°C) per tempi prolungati permette al collagene di trasformarsi in gelatina senza eccessiva perdita di umidità. Spennellare periodicamente con i succhi di cottura per mantenere la superficie idratata."
+      }
+    ],
+    "Pesce fresco": [
+      { 
+        alimento: "Alici", 
+        fattore: 0.85,
+        info: "Le alici fresche perdono circa il 15% del loro peso durante la cottura. La loro struttura proteica subisce una rapida denaturazione, causando il restringimento delle fibre muscolari e la conseguente perdita di acqua.",
+        tip: "Le alici richiedono cotture brevissime (1-2 minuti per lato) per mantenere la loro texture delicata. La cottura eccessiva porta a una consistenza gommosa e a una maggiore perdita di nutrienti essenziali."
+      },
+      { 
+        alimento: "Cefalo", 
+        fattore: 0.85,
+        info: "Il cefalo mantiene l'85% del peso originale dopo la cottura. La perdita di peso è dovuta principalmente alla contrazione delle proteine muscolari che espellono parte dell'acqua contenuta nei tessuti.",
+        tip: "Il cefalo ha una carne che tende a seccarsi rapidamente. La cottura al cartoccio o al vapore aiuta a preservare l'umidità naturale e i sapori. La presenza di pelle durante la cottura funge da barriera contro l'eccessiva perdita di liquidi."
+      },
+      { 
+        alimento: "Cernia", 
+        fattore: 0.85,
+        info: "La cernia fresca perde circa il 15% del peso durante la cottura. La sua carne compatta e a basso contenuto di grasso subisce una moderata contrazione, con conseguente rilascio di umidità.",
+        tip: "Per una cottura ottimale della cernia, prediligere metodi delicati come la cottura al vapore o al forno a bassa temperatura (160°C). La cottura rapida ad alta temperatura causa maggiore contrazione e perdita di umidità."
+      },
+      { 
+        alimento: "Dentice", 
+        fattore: 0.85,
+        info: "Il dentice mantiene l'85% del suo peso durante la cottura. La sua carne, ricca di proteine e con moderato contenuto di grasso, subisce una denaturazione proteica che causa una modesta perdita di liquidi.",
+        tip: "La cottura ideale del dentice prevede temperature moderate (170-180°C) per preservare la succulenza. La presalatura 30 minuti prima della cottura migliora la ritenzione dell'umidità, creando una barriera proteica sulla superficie."
+      },
+      { 
+        alimento: "Merluzzo", 
+        fattore: 0.85,
+        info: "Il merluzzo fresco perde circa il 15% del peso durante la cottura. La sua carne magra e a elevato contenuto d'acqua rilascia umidità quando le proteine si contraggono per effetto del calore.",
+        tip: "Il merluzzo ha fibre muscolari delicate che si separano facilmente con la sovracottura. Interrompere la cottura quando la carne inizia appena a sfaldarsi (circa 60°C al cuore) per massima succulenza e texture ideale."
+      },
+      { 
+        alimento: "Orata", 
+        fattore: 0.85,
+        info: "L'orata mantiene l'85% del peso originale dopo la cottura. La moderata perdita di peso è dovuta alla contrazione delle fibre muscolari e alla fuoriuscita di parte dell'acqua tissutale.",
+        tip: "La cottura dell'orata intera, con pelle e possibilmente squame, crea una barriera naturale che riduce la perdita di umidità. L'aggiunta di erbe aromatiche nella cavità addominale migliora il sapore e mantiene l'umidità della carne."
+      },
+      { 
+        alimento: "Sgombro", 
+        fattore: 0.65,
+        info: "Lo sgombro perde circa il 35% del suo peso durante la cottura, una percentuale maggiore rispetto ad altri pesci. Questo è dovuto all'alto contenuto di grassi che si sciolgono durante la cottura, oltre alla normale perdita di acqua.",
+        tip: "Per lo sgombro, le cotture brevi e intense (grigliatura, scottatura) sono ideali per preservare gli acidi grassi omega-3 benefici. La marinatura preventiva con acidi (limone, aceto) aiuta a stabilizzare le proteine, riducendo la perdita di nutrienti."
+      },
+      { 
+        alimento: "Sogliola o rombo", 
+        fattore: 0.80,
+        info: "La sogliola e il rombo perdono circa il 20% del loro peso durante la cottura. La loro carne delicata subisce una moderata contrazione delle fibre muscolari con conseguente rilascio di umidità.",
+        tip: "Per pesci piatti come sogliola e rombo, la cottura a temperatura moderata (160-170°C) preserva la delicata texture. La cottura eccessiva causa rapidamente secchezza; considerare ultimata la cottura quando la carne si stacca facilmente dalla lisca centrale."
+      },
+      { 
+        alimento: "Spigola", 
+        fattore: 0.85,
+        info: "La spigola mantiene l'85% del suo peso iniziale dopo la cottura. La perdita del 15% è dovuta principalmente alla contrazione delle proteine muscolari che espellono parte dell'acqua intracellulare.",
+        tip: "La cottura della spigola al sale (completamente ricoperta di sale grosso) crea un guscio che mantiene l'umidità all'interno, preservando sapore e consistenza. La temperatura interna ideale è di 58-60°C per una texture perfetta."
+      },
+      { 
+        alimento: "Tonno fresco o pesce spada", 
+        fattore: 0.80,
+        info: "Il tonno fresco e il pesce spada perdono circa il 20% del loro peso durante la cottura. La loro carne densa e con moderato contenuto di grasso subisce una contrazione che causa la fuoriuscita di liquidi.",
+        tip: "Per tonno e pesce spada, la cottura al sangue o media (45-50°C al cuore) preserva la morbidezza e i nutrienti. Questi pesci continuano a cuocere anche dopo essere stati rimossi dalla fonte di calore, quindi terminare la cottura leggermente prima del punto desiderato."
+      }
+    ],
+    "Pesce surgelato": [
+      { 
+        alimento: "Cernia", 
+        fattore: 0.80,
+        info: "La cernia surgelata perde circa il 20% del peso durante la cottura. Il processo di congelamento forma cristalli di ghiaccio che danneggiano le membrane cellulari, causando una maggiore perdita di liquidi durante la successiva cottura rispetto al pesce fresco.",
+        tip: "Per la cernia surgelata, lo scongelamento lento in frigorifero (12-24 ore) minimizza la perdita di umidità. La cottura senza scongelamento completo può ridurre ulteriormente la perdita di liquidi, specialmente con metodi come la cottura al vapore."
+      },
+      { 
+        alimento: "Dentice", 
+        fattore: 0.80,
+        info: "Il dentice surgelato mantiene l'80% del suo peso dopo la cottura. La perdita del 20% è dovuta sia alla rottura cellulare causata dal congelamento che alla normale contrazione proteica durante la cottura.",
+        tip: "Per il dentice surgelato, l'aggiunta di un sottile strato di olio prima della cottura crea una barriera che riduce la perdita di umidità. Le temperature moderate (170°C) e tempi più brevi rispetto al pesce fresco migliorano la texture finale."
+      },
+      { 
+        alimento: "Filetti di platessa", 
+        fattore: 0.70,
+        info: "I filetti di platessa surgelati perdono circa il 30% del loro peso durante la cottura. La loro struttura delicata e sottile subisce un maggiore danneggiamento durante il congelamento, risultando in una significativa perdita di liquidi in cottura.",
+        tip: "Per i filetti di platessa surgelati, la cottura avvolta in carta da forno o alluminio crea un ambiente umido che riduce la perdita di liquidi. Aggiungere un filo d'olio e aromi a contatto con il pesce migliora il gusto e mantiene la texture."
+      },
+      { 
+        alimento: "Merluzzo", 
+        fattore: 0.80,
+        info: "Il merluzzo surgelato perde il 20% del peso durante la cottura. Il processo di congelamento altera la struttura delle proteine muscolari, aumentando leggermente la perdita di liquidi rispetto al prodotto fresco.",
+        tip: "Per il merluzzo surgelato, la panatura leggera crea una barriera che trattiene l'umidità durante la cottura. La cottura al forno a temperatura moderata (180°C) in un ambiente umido (aggiungendo un po' d'acqua nella teglia) riduce la perdita di liquidi."
+      },
+      { 
+        alimento: "Spigola oppure orata", 
+        fattore: 0.80,
+        info: "La spigola e l'orata surgelate mantengono l'80% del loro peso dopo la cottura. La perdita del 20% è causata dalla combinazione del danneggiamento cellulare durante il congelamento e dalla normale contrazione proteica in cottura.",
+        tip: "Per spigola e orata surgelate, la cottura con pelle mantiene meglio l'umidità. La tecnica della cottura en papillote (in cartoccio) con l'aggiunta di liquidi aromatici crea un ambiente umido che preserva la morbidezza della carne."
+      }
+    ],
     "Cereali e derivati": [
       { 
         alimento: "Pasta di semola corta", 
