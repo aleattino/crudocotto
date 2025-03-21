@@ -4,6 +4,7 @@ const InstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   // Funzione per verificare se è un dispositivo mobile
   const checkMobile = () => {
@@ -12,9 +13,47 @@ const InstallPrompt = () => {
     return mobileRegex.test(userAgent);
   };
 
+  // Funzione per verificare se l'app è già in modalità standalone (installata)
+  const checkStandalone = () => {
+    return (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone || // Per iOS
+      document.referrer.includes('android-app://') ||
+      localStorage.getItem('appInstalled') === 'true'
+    );
+  };
+
   useEffect(() => {
-    // Setta lo stato mobile all'avvio
+    // Setta gli stati all'avvio
     setIsMobile(checkMobile());
+    setIsStandalone(checkStandalone());
+
+    // Aggiungi listener per rilevare i cambiamenti nella modalità di visualizzazione
+    const handleDisplayModeChange = (evt) => {
+      if (evt.matches) {
+        // L'app è stata aperta in modalità standalone
+        setIsStandalone(true);
+        localStorage.setItem('appInstalled', 'true');
+      }
+    };
+
+    try {
+      // Listener per il matchMedia
+      const mediaQuery = window.matchMedia('(display-mode: standalone)');
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleDisplayModeChange);
+      } else {
+        // Compatibilità con versioni precedenti
+        mediaQuery.addListener(handleDisplayModeChange);
+      }
+
+      // Se l'app è già installata, imposta il flag
+      if (checkStandalone()) {
+        localStorage.setItem('appInstalled', 'true');
+      }
+    } catch (e) {
+      console.error('Error setting up display mode listener:', e);
+    }
     
     // Intercetta l'evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e) => {
@@ -23,15 +62,23 @@ const InstallPrompt = () => {
       e.preventDefault();
       // Salva l'evento per usarlo più tardi
       setDeferredPrompt(e);
-      // Mostra il prompt personalizzato
-      setShowPrompt(true);
+      // Mostra il prompt solo se non è già in modalità standalone
+      if (!checkStandalone()) {
+        setShowPrompt(true);
+      }
     };
 
     // Aggiungi l'event listener
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // Se siamo su iOS, mostriamo un prompt manuale dopo 3 secondi
-    if (checkMobile() && /iPhone|iPad|iPod/i.test(navigator.userAgent) && !localStorage.getItem('pwaPromptDismissed')) {
+    // Se siamo su iOS, non in standalone e non è stato dismesso
+    const shouldShowIOSPrompt = 
+      checkMobile() && 
+      /iPhone|iPad|iPod/i.test(navigator.userAgent) && 
+      !checkStandalone() && 
+      !localStorage.getItem('pwaPromptDismissed');
+      
+    if (shouldShowIOSPrompt) {
       const timer = setTimeout(() => {
         setShowPrompt(true);
       }, 3000);
@@ -41,6 +88,17 @@ const InstallPrompt = () => {
     // Pulisci event listener quando il componente viene smontato
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      
+      try {
+        if (mediaQuery.removeEventListener) {
+          mediaQuery.removeEventListener('change', handleDisplayModeChange);
+        } else {
+          // Compatibilità con versioni precedenti
+          mediaQuery.removeListener(handleDisplayModeChange);
+        }
+      } catch (e) {
+        console.error('Error removing display mode listener:', e);
+      }
     };
   }, []);
 
@@ -53,6 +111,8 @@ const InstallPrompt = () => {
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('Utente ha accettato il prompt di installazione');
+          // Imposta il flag che l'app è stata installata
+          localStorage.setItem('appInstalled', 'true');
         } else {
           console.log('Utente ha rifiutato il prompt di installazione');
         }
@@ -64,6 +124,8 @@ const InstallPrompt = () => {
     // Per iOS, mostra un alert con istruzioni
     else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       alert('Per installare questa app:\n1. Tocca il pulsante "Condividi" nella barra in basso\n2. Scorri verso il basso e seleziona "Aggiungi alla schermata Home"');
+      // Imposta un flag per non mostrare più il prompt
+      localStorage.setItem('pwaPromptDismissed', Date.now().toString());
       setShowPrompt(false);
     }
   };
@@ -75,8 +137,8 @@ const InstallPrompt = () => {
     localStorage.setItem('pwaPromptDismissed', Date.now().toString());
   };
 
-  // Non mostrare se non è mobile o se non deve essere mostrato
-  if (!isMobile || !showPrompt) return null;
+  // Non mostrare se non è mobile, è già installata come app, o se non deve essere mostrato
+  if (!isMobile || isStandalone || !showPrompt) return null;
 
   return (
     <div className="pwa-install-prompt">
