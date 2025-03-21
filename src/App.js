@@ -267,8 +267,8 @@ const NeoBrutalismCrudoCotto = () => {
       { 
         alimento: "Pollo (coscia)", 
         fattore: 0.76,
-        info: "Il coscia di pollo perde circa il 24% del suo peso durante la cottura. La maggiore perdita rispetto al petto è dovuta al più elevato contenuto di grasso e collagene che si sciolgono con il calore.",
-        tip: "La cottura lenta e a temperatura moderata (150-160°C) permette al collagene di trasformarsi in gelatina, rendendo il coscia di pollo tenero e succoso. Ideale la cottura con pelle per mantenere l'umidità."
+        info: "La coscia di pollo perde circa il 24% del suo peso durante la cottura. La maggiore perdita rispetto al petto è dovuta al più elevato contenuto di grasso e collagene che si sciolgono con il calore.",
+        tip: "La cottura lenta e a temperatura moderata (150-160°C) permette al collagene di trasformarsi in gelatina, rendendo la coscia di pollo tenera e succosa. Ideale la cottura con pelle per mantenere l'umidità."
       },
       { 
         alimento: "Tacchino (petto)", 
@@ -279,8 +279,8 @@ const NeoBrutalismCrudoCotto = () => {
       { 
         alimento: "Tacchino (coscia)", 
         fattore: 0.70,
-        info: "Il coscia di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure della carne.",
-        tip: "La cottura a bassa temperatura (140-150°C) per tempi prolungati permette al collagene di trasformarsi in gelatina senza eccessiva perdita di umidità. Spennellare periodicamente con i succhi di cottura per mantenere la superficie idratata."
+        info: "La coscia di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure come la coscia.",
+        tip: "Per mantenere la coscia di tacchino succosa, cucinala a temperature moderate (160°C) fino a una temperatura interna di 74°C. Il riposo di 10 minuti post-cottura permette una ridistribuzione dei succhi."
       }
     ],
     "Pesce fresco": [

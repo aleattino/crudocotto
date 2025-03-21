@@ -5,55 +5,67 @@ const InstallPrompt = () => {
   const [showPrompt, setShowPrompt] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Funzione per verificare se è un dispositivo mobile
+  const checkMobile = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return mobileRegex.test(userAgent);
+  };
+
   useEffect(() => {
-    // Verifica se è un dispositivo mobile
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-      setIsMobile(mobileRegex.test(userAgent));
-    };
-
-    checkMobile();
-
+    // Setta lo stato mobile all'avvio
+    setIsMobile(checkMobile());
+    
     // Intercetta l'evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e) => {
+      console.log('beforeinstallprompt event fired');
       // Previeni il comportamento predefinito del browser
       e.preventDefault();
       // Salva l'evento per usarlo più tardi
       setDeferredPrompt(e);
-      // Mostra il prompt personalizzato solo se è un dispositivo mobile
-      if (isMobile) {
-        setShowPrompt(true);
-      }
+      // Mostra il prompt personalizzato
+      setShowPrompt(true);
     };
 
     // Aggiungi l'event listener
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
+    // Se siamo su iOS, mostriamo un prompt manuale dopo 3 secondi
+    if (checkMobile() && /iPhone|iPad|iPod/i.test(navigator.userAgent) && !localStorage.getItem('pwaPromptDismissed')) {
+      const timer = setTimeout(() => {
+        setShowPrompt(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+
     // Pulisci event listener quando il componente viene smontato
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
-  }, [isMobile]);
+  }, []);
 
   // Funzione per gestire il click sul pulsante di installazione
   const handleInstallClick = () => {
-    if (!deferredPrompt) return;
-
-    // Mostra il prompt di installazione nativo
-    deferredPrompt.prompt();
-
-    // Attendi che l'utente risponda al prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('Utente ha accettato il prompt di installazione');
-      } else {
-        console.log('Utente ha rifiutato il prompt di installazione');
-      }
-      // Resetta la variabile deferredPrompt - può essere usata solo una volta
-      setDeferredPrompt(null);
+    // Se abbiamo l'evento prompt, lo mostriamo
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Utente ha accettato il prompt di installazione');
+        } else {
+          console.log('Utente ha rifiutato il prompt di installazione');
+        }
+        // Resetta la variabile deferredPrompt - può essere usata solo una volta
+        setDeferredPrompt(null);
+        setShowPrompt(false);
+      });
+    } 
+    // Per iOS, mostra un alert con istruzioni
+    else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      alert('Per installare questa app:\n1. Tocca il pulsante "Condividi" nella barra in basso\n2. Scorri verso il basso e seleziona "Aggiungi alla schermata Home"');
       setShowPrompt(false);
-    });
+    }
   };
 
   // Funzione per gestire la dismissione del prompt
@@ -63,8 +75,8 @@ const InstallPrompt = () => {
     localStorage.setItem('pwaPromptDismissed', Date.now().toString());
   };
 
-  // Non mostrare il prompt se non siamo su un dispositivo mobile o se non deve essere mostrato
-  if (!showPrompt || !isMobile) return null;
+  // Non mostrare se non è mobile o se non deve essere mostrato
+  if (!isMobile || !showPrompt) return null;
 
   return (
     <div className="pwa-install-prompt">
