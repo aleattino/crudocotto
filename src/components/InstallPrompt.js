@@ -28,6 +28,9 @@ const InstallPrompt = () => {
     setIsMobile(checkMobile());
     setIsStandalone(checkStandalone());
 
+    // Variabile per tenere traccia del mediaQuery (accessibile anche nella cleanup function)
+    let mediaQuery = null;
+
     // Aggiungi listener per rilevare i cambiamenti nella modalità di visualizzazione
     const handleDisplayModeChange = (evt) => {
       if (evt.matches) {
@@ -39,7 +42,7 @@ const InstallPrompt = () => {
 
     try {
       // Listener per il matchMedia
-      const mediaQuery = window.matchMedia('(display-mode: standalone)');
+      mediaQuery = window.matchMedia('(display-mode: standalone)');
       if (mediaQuery.addEventListener) {
         mediaQuery.addEventListener('change', handleDisplayModeChange);
       } else {
@@ -90,11 +93,13 @@ const InstallPrompt = () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       
       try {
-        if (mediaQuery.removeEventListener) {
-          mediaQuery.removeEventListener('change', handleDisplayModeChange);
-        } else {
-          // Compatibilità con versioni precedenti
-          mediaQuery.removeListener(handleDisplayModeChange);
+        if (mediaQuery) {
+          if (mediaQuery.removeEventListener) {
+            mediaQuery.removeEventListener('change', handleDisplayModeChange);
+          } else {
+            // Compatibilità con versioni precedenti
+            mediaQuery.removeListener(handleDisplayModeChange);
+          }
         }
       } catch (e) {
         console.error('Error removing display mode listener:', e);
