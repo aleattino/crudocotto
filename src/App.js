@@ -280,7 +280,7 @@ const NeoBrutalismCrudoCotto = () => {
         alimento: "Tacchino (coscia)", 
         fattore: 0.70,
         info: "La coscia di tacchino perde circa il 30% del suo peso durante la cottura. La perdita è causata principalmente dalla fuoriuscita di grasso e umidità dalle fibre muscolari, più pronunciata nelle parti scure come la coscia.",
-        tip: "Per mantenere la coscia di tacchino succosa, cucinala a temperature moderate (160°C) fino a una temperatura interna di 74°C. Il riposo di 10 minuti post-cottura permette una ridistribuzione dei succhi."
+        tip: "Per mantenere la coscia di tacchino succosa, cucinala a temperatures moderate (160°C) fino a una temperatura interna di 74°C. Il riposo di 10 minuti post-cottura permette una ridistribuzione dei succhi."
       }
     ],
     "Pesce fresco": [
@@ -618,6 +618,39 @@ const NeoBrutalismCrudoCotto = () => {
   const resetForm = () => {
     setRisultato(null);
   };
+
+  // Salva i dati di conversione in localStorage per l'accesso offline
+  useEffect(() => {
+    try {
+      // Salva l'oggetto conversionData in localStorage
+      if (conversionData) {
+        localStorage.setItem('conversionData', JSON.stringify(conversionData));
+        console.log('Dati salvati in localStorage per accesso offline');
+      }
+    } catch (error) {
+      console.error('Errore durante il salvataggio dei dati in localStorage:', error);
+    }
+  }, []);
+
+  // Aggiunta logica per supporto offline
+  useEffect(() => {
+    // Rileva il cambio di stato della connessione
+    const handleOnlineStatusChange = () => {
+      console.log(`App è ${navigator.onLine ? 'online' : 'offline'}`);
+    };
+
+    // Registra i listener per il cambio di stato della connessione
+    window.addEventListener('online', handleOnlineStatusChange);
+    window.addEventListener('offline', handleOnlineStatusChange);
+
+    // Verifica stato iniziale
+    handleOnlineStatusChange();
+
+    return () => {
+      window.removeEventListener('online', handleOnlineStatusChange);
+      window.removeEventListener('offline', handleOnlineStatusChange);
+    };
+  }, []);
 
   return (
     <>
