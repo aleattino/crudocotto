@@ -14,28 +14,9 @@
     <!-- Colore per PWA dark mode -->
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#D65656" />
     
-    <!-- Icone per iOS -->
+    <!-- Icone -->
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/logo152.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/logo180.png" />
-    <link rel="apple-touch-icon" sizes="167x167" href="%PUBLIC_URL%/logo167.png" />
-    
-    <!-- Splash images per iOS con lo stesso background FF6B6B -->
-    <!-- iPhone X (1125px x 2436px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="%PUBLIC_URL%/splashes/splash-iphonex.png" />
-    <!-- iPhone 8, 7, 6s, 6 (750px x 1334px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splashes/splash-iphone8.png" />
-    <!-- iPhone 8 Plus, 7 Plus, 6s Plus, 6 Plus (1242px x 2208px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" href="%PUBLIC_URL%/splashes/splash-iphone8plus.png" />
-    <!-- iPhone 5 (640px x 1136px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splashes/splash-iphone5.png" />
-    <!-- iPad Mini, Air (1536px x 2048px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splashes/splash-ipad.png" />
-    <!-- iPad Pro 10.5" (1668px x 2224px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splashes/splash-ipadpro10.png" />
-    <!-- iPad Pro 12.9" (2048px x 2732px) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splashes/splash-ipadpro12.png" />
     
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,13 +24,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>CrudoCotto - Conversione Pesi Alimenti</title>
     <style>
-      /* Impostazioni di base */
-      html, body {
-        margin: 0;
-        padding: 0;
-        background-color: #FF6B6B;
-      }
-      
       /* Blur per la barra di stato */
       .status-bar-blur {
         position: fixed;
@@ -68,60 +42,6 @@
       body {
         padding-top: env(safe-area-inset-top, 0);
       }
-      
-      /* Splash screen mobile unica */
-      @media (max-width: 768px) {
-        #splash-screen {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: #FF6B6B;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 9999;
-          transition: opacity 0.5s ease-out;
-        }
-        
-        #splash-screen.hidden {
-          opacity: 0;
-          pointer-events: none;
-        }
-        
-        .splash-logo {
-          width: 120px;
-          height: 120px;
-          animation: pulse 1.5s ease-in-out;
-        }
-        
-        @keyframes pulse {
-          0% { transform: scale(0.8); opacity: 0; }
-          50% { transform: scale(1.1); opacity: 1; }
-          100% { transform: scale(1); opacity: 1; }
-        }
-        
-        @media (prefers-color-scheme: dark) {
-          #splash-screen {
-            background-color: #D65656;
-          }
-        }
-      }
-      
-      /* Nascondi la splash screen su desktop */
-      @media (min-width: 769px) {
-        #splash-screen {
-          display: none;
-        }
-      }
-      
-      /* Stile per il contenitore principale - sfondo bianco quando il contenuto è caricato */
-      #root {
-        background-color: white;
-        min-height: 100vh;
-      }
     </style>
   </head>
   <body>
@@ -129,45 +49,9 @@
     <!-- Barra con effetto blur -->
     <div class="status-bar-blur"></div>
     
-    <!-- Splash screen unificata -->
-    <div id="splash-screen">
-      <img src="%PUBLIC_URL%/logo192.png" alt="CrudoCotto Logo" class="splash-logo" />
-    </div>
-    
     <div id="root"></div>
     
     <script>
-      // Imposta immediatamente lo sfondo del documento
-      document.documentElement.style.backgroundColor = "#FF6B6B";
-      document.body.style.backgroundColor = "#FF6B6B";
-    
-      // Controlla se è un'app standalone (PWA installata)
-      const isInStandaloneMode = () => 
-        (window.navigator.standalone) || 
-        (window.matchMedia('(display-mode: standalone)').matches);
-    
-      // Gestisce la splash screen (solo su mobile)
-      window.addEventListener('load', function() {
-        // Per tutti i dispositivi mobili
-        if (window.innerWidth <= 768) {
-          setTimeout(function() {
-            const splash = document.getElementById('splash-screen');
-            const rootElem = document.getElementById('root');
-            
-            if (splash) {
-              splash.classList.add('hidden');
-              
-              // Quando la transizione è completata, nascondi completamente
-              setTimeout(function() {
-                splash.style.display = 'none';
-                // Assicurati che il root abbia lo sfondo bianco
-                if (rootElem) rootElem.style.backgroundColor = "white";
-              }, 500);
-            }
-          }, 1500);
-        }
-      });
-      
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/service-worker.js')
