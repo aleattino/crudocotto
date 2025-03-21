@@ -116,6 +116,18 @@
         }
       });
       
+      // Rimuovo il vecchio splash screen nativo di iOS
+      if (navigator.standalone) {
+        document.documentElement.style.background = "#FF6B6B";
+        
+        // Quando il contenuto è caricato, imposta il background del body normalmente
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            document.documentElement.style.background = "";
+          }, 1500);
+        });
+      }
+      
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/service-worker.js')
