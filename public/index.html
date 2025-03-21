@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#F18F01" />
+    <meta name="theme-color" content="#FF6B6B" />
     <meta name="description" content="CrudoCotto - Converti i pesi degli alimenti da crudi a cotti e viceversa" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="msapplication-TileColor" content="#F18F01" />
-    <meta name="msapplication-navbutton-color" content="#F18F01" />
+    <meta name="msapplication-TileColor" content="#FF6B6B" />
+    <meta name="msapplication-navbutton-color" content="#FF6B6B" />
     <!-- Colore per PWA dark mode -->
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#D46C00" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#D65656" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -20,54 +20,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>CrudoCotto - Conversione Pesi Alimenti</title>
     <style>
-      /* Singola splash screen migliorata */
+      /* Splash screen solo per mobile */
       .splash-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #F18F01;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.5s ease-out;
+        display: none; /* Nascosta di default */
       }
+      
+      /* Mostra splash screen solo su dispositivi mobili */
+      @media (max-width: 768px) {
+        .splash-screen {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #FF6B6B;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          transition: opacity 0.5s ease-out;
+        }
+      }
+      
       .splash-screen.hidden {
         opacity: 0;
         pointer-events: none;
       }
+      
       .splash-logo {
         width: 120px;
         height: 120px;
         animation: pulse 1.5s ease-in-out;
       }
+      
       @keyframes pulse {
         0% { transform: scale(0.8); opacity: 0; }
         50% { transform: scale(1.1); opacity: 1; }
         100% { transform: scale(1); opacity: 1; }
       }
       
-      /* Barra superiore blur per iOS */
+      /* Barra superiore con SOLO BLUR (senza colore di background) */
       .status-bar-blur {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         height: env(safe-area-inset-top, 44px);
-        background-color: rgba(241, 143, 1, 0.75);
         z-index: 9998;
         pointer-events: none;
-      }
-      
-      /* Supporto esplicito per webkit (Safari) */
-      @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
-        .status-bar-blur {
-          -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
-        }
+        background-color: transparent;
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        backdrop-filter: blur(15px) saturate(180%);
       }
       
       /* Padding per non sovrapporre contenuto alla barra di stato */
@@ -76,20 +80,19 @@
       }
       
       @media (prefers-color-scheme: dark) {
-        .splash-screen {
-          background-color: #D46C00;
-        }
-        .status-bar-blur {
-          background-color: rgba(212, 108, 0, 0.75);
+        @media (max-width: 768px) {
+          .splash-screen {
+            background-color: #D65656;
+          }
         }
       }
     </style>
   </head>
   <body>
     <noscript>È necessario abilitare JavaScript per eseguire questa app.</noscript>
-    <!-- Barra con effetto blur -->
+    <!-- Barra con SOLO effetto blur -->
     <div class="status-bar-blur"></div>
-    <!-- Singola splash screen -->
+    <!-- Splash screen (solo mobile) -->
     <div class="splash-screen" id="splash">
       <img src="%PUBLIC_URL%/logo192.png" alt="CrudoCotto Logo" class="splash-logo" />
     </div>
@@ -97,15 +100,18 @@
     <script>
       // Gestisce la splash screen
       window.addEventListener('load', function() {
-        setTimeout(function() {
-          const splash = document.getElementById('splash');
-          if (splash) {
-            splash.classList.add('hidden');
-            setTimeout(function() {
-              splash.style.display = 'none';
-            }, 500);
-          }
-        }, 1500);
+        // Controlla se è un dispositivo mobile basandosi sulla larghezza della finestra
+        if (window.innerWidth <= 768) {
+          setTimeout(function() {
+            const splash = document.getElementById('splash');
+            if (splash) {
+              splash.classList.add('hidden');
+              setTimeout(function() {
+                splash.style.display = 'none';
+              }, 500);
+            }
+          }, 1500);
+        }
       });
       
       if ('serviceWorker' in navigator) {
