@@ -1,0 +1,11 @@
+npm verbose cli /Users/alessandroattino/.nvm/versions/node/v18.20.7/bin/node /Users/alessandroattino/.nvm/versions/node/v18.20.7/bin/npm
+npm info using npm@10.8.2
+npm info using node@v18.20.7
+npm verbose title npm start
+npm verbose argv "start" "--loglevel" "verbose"
+npm verbose logfile logs-max:10 dir:/Users/alessandroattino/.npm/_logs/2025-03-20T08_55_04_051Z-
+npm verbose logfile /Users/alessandroattino/.npm/_logs/2025-03-20T08_55_04_051Z-debug-0.log
+
+> crudocotto-neobrutal@0.1.0 start
+> react-scripts start
+
