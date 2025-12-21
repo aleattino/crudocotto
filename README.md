@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# CrudoCotto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Applicazione web per la conversione dei pesi degli alimenti da crudi a cotti e viceversa.
 
-## Available Scripts
+## Descrizione
 
-In the project directory, you can run:
+CrudoCotto è un'applicazione web progressiva (PWA) che permette di convertire facilmente i pesi degli alimenti tra lo stato crudo e cotto. Ideale per cuochi, nutrizionisti e appassionati di cucina che necessitano di calcolare le quantità precise degli ingredienti.
 
-### `npm start`
+### Caratteristiche principali
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Conversione bidirezionale tra alimenti crudi e cotti
+- Database completo con diverse categorie di alimenti
+- Informazioni nutrizionali e consigli di cottura per ogni alimento
+- Interfaccia utente in stile neobrutalista
+- Tema chiaro e scuro
+- Funzionalità offline (PWA)
+- Design responsive ottimizzato per dispositivi mobili
+- Installabile come app nativa
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Categorie di alimenti
 
-### `npm test`
+L'applicazione include fattori di conversione per le seguenti categorie:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Cereali e derivati (pasta, riso, tortellini)
+- Verdure e ortaggi
+- Legumi freschi
+- Legumi secchi
+- Carne (bovino, pollo, tacchino)
+- Pesce fresco
+- Pesce surgelato
 
-### `npm run build`
+## Installazione e utilizzo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisiti
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js (versione 14 o superiore)
+- npm o yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installazione locale
 
-### `npm run eject`
+```bash
+# Clona il repository
+git clone https://github.com/aleattino/crudocotto.git
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Entra nella directory del progetto
+cd crudocotto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Installa le dipendenze
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Avvia l'applicazione in modalità sviluppo
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+L'applicazione sarà disponibile all'indirizzo [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+### Build per la produzione
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+# Crea una build ottimizzata per la produzione
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+I file ottimizzati saranno generati nella cartella `build`.
 
-### Code Splitting
+## Tecnologie utilizzate
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- React - libreria JavaScript per la costruzione dell'interfaccia utente
+- CSS personalizzato con design neobrutalista
+- Service Worker per funzionalità offline
+- LocalStorage per la persistenza dei dati
+- Progressive Web App (PWA)
 
-### Analyzing the Bundle Size
+## Come funziona
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Seleziona la categoria dell'alimento
+2. Scegli l'alimento specifico dalla lista
+3. Seleziona la direzione di conversione (da crudo a cotto o viceversa)
+4. Inserisci la quantità in grammi
+5. Premi il pulsante "Calcola" per ottenere il risultato
 
-### Making a Progressive Web App
+Ogni alimento include informazioni dettagliate sul processo di cottura e consigli pratici accessibili tramite il pulsante informazioni.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Funzionalità PWA
 
-### Advanced Configuration
+L'applicazione può essere installata come app nativa su dispositivi mobili e desktop:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Funzionamento offline completo
+- Icone personalizzate per diverse piattaforme
+- Notifiche di stato della connessione
+- Prompt di installazione automatico
 
-### Deployment
+## Struttura del progetto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
+crudocotto/
+├── public/              # File statici pubblici
+├── src/
+│   ├── components/      # Componenti React
+│   ├── App.js          # Componente principale
+│   ├── styles.css      # Stili CSS
+│   └── index.js        # Entry point
+├── package.json         # Dipendenze del progetto
+└── README.md           # Questo file
+```
 
-### `npm run build` fails to minify
+## Contribuire
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+I contributi sono benvenuti. Per favore:
+
+1. Fai un fork del progetto
+2. Crea un branch per la tua feature (`git checkout -b feature/nuova-funzionalita`)
+3. Committa le tue modifiche (`git commit -m 'Aggiunta nuova funzionalità'`)
+4. Pusha sul branch (`git push origin feature/nuova-funzionalita`)
+5. Apri una pull request
+
+## Licenza
+
+Questo progetto è distribuito sotto licenza MIT.
+
+## Autore
+
+**Alessandro Attino**
+
+- GitHub: [@aleattino](https://github.com/aleattino)
+
+## Crediti
+
+I fattori di conversione sono basati su dati nutrizionali standardizzati e tabelle di composizione degli alimenti.
+
+---
+
+CrudoCotto © 2025 - Creato con ❤️ da Alessandro Attino
