@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
 import OfflineNotice from './components/OfflineNotice';
 import InstallPrompt from './components/InstallPrompt';
-import SplashScreen from './components/SplashScreen';
 
 // Versione semplificata del componente per il debug
 const NeoBrutalismCrudoCotto = () => {
@@ -654,9 +653,6 @@ const NeoBrutalismCrudoCotto = () => {
 
   return (
     <>
-      {/* Schermata di splash */}
-      <SplashScreen />
-      
       <div className="nb-app">
         <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
           <div className="nb-noise-overlay"></div>
@@ -840,10 +836,15 @@ const NeoBrutalismCrudoCotto = () => {
           </main>
           
           <footer className="nb-footer">
-            CrudoCotto &copy; {new Date().getFullYear()} | 
-            <a href="https://github.com/aleattino" className="nb-link">
-              aleattino
-            </a>
+            <div className="nb-about">
+              <p className="nb-about-title">About</p>
+              <p className="nb-about-text">
+                Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
+              </p>
+            </div>
+            <div className="nb-copyright">
+              CrudoCotto &copy; {new Date().getFullYear()}
+            </div>
           </footer>
           
           {/* Notifica offline */}
