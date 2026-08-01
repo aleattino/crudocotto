@@ -652,209 +652,202 @@ const NeoBrutalismCrudoCotto = () => {
   }, []);
 
   return (
-    <>
-      <div className="nb-app">
-        <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
-          <div className="nb-noise-overlay"></div>
-          
-          <header className="nb-header">
-            <div className="nb-logo">
-              <h1>CrudoCotto</h1>
-            </div>
-            
-            <button 
-              onClick={toggleTema}
-              className="nb-theme-toggle" 
-              aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
+    <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
+      <div className="nb-noise-overlay"></div>
+
+      <header className="nb-header">
+        <div className="nb-logo">
+          <h1>CrudoCotto</h1>
+        </div>
+
+        <button
+          onClick={toggleTema}
+          className="nb-theme-toggle"
+          aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
+        >
+          {isDark ? '☀️' : '🌙'}
+        </button>
+      </header>
+
+      <main className="nb-main">
+        <div className="nb-card nb-main-card">
+          {/* Direzione della conversione */}
+          <div className="nb-toggle-track">
+            <button
+              onClick={() => handleDirezioneChange('crudoCotto')}
+              className={`nb-toggle-option ${direzione === 'crudoCotto' ? 'active' : ''}`}
             >
-              {isDark ? '☀️' : '🌙'}
+              Da crudo a cotto
             </button>
-          </header>
-          
-          <main className="nb-main">
-            <div className="nb-card nb-main-card">
-              {/* Toggle direction conversion */}
-              <div className="nb-toggle-container">
-                <div className="nb-toggle-track">
-                  <button 
-                    onClick={() => handleDirezioneChange('crudoCotto')}
-                    className={`nb-toggle-option ${direzione === 'crudoCotto' ? 'active' : ''}`}
-                  >
-                    Da crudo a cotto
-                  </button>
-                  <button 
-                    onClick={() => handleDirezioneChange('cottoCrudo')}
-                    className={`nb-toggle-option ${direzione === 'cottoCrudo' ? 'active' : ''}`}
-                  >
-                    Da cotto a crudo
-                  </button>
-                </div>
-              </div>
-              
-              {/* Category Selection */}
-              <div className="nb-field">
-                <label className="nb-label">
-                  Categoria
-                </label>
-                <div className="nb-select-wrapper">
-                  <select 
-                    value={categoria}
-                    onChange={handleCategoriaChange}
-                    className="nb-select"
-                  >
-                    {/* Accesso sicuro alle chiavi */}
-                    {Object.keys(conversionData || {}).map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                  <span className="nb-select-arrow">↓</span>
-                </div>
-              </div>
-              
-              {/* Food Selection with Info Button */}
-              <div className="nb-field">
-                <div className="nb-label-row">
-                  <label className="nb-label">
-                    Alimento
-                  </label>
-                  <button 
-                    ref={infoButtonRef}
-                    onClick={showInfo}
-                    className="nb-info-btn"
-                    aria-label="Informazioni sull'alimento"
-                  >
-                    i
-                  </button>
-                </div>
-                <div className="nb-select-wrapper">
-                  <select 
-                    value={alimento}
-                    onChange={handleAlimentoChange}
-                    className="nb-select"
-                  >
-                    {/* Sicurezza nel mappare gli alimenti */}
-                    {conversionData && categoria && conversionData[categoria] && 
-                     Array.isArray(conversionData[categoria]) 
-                      ? conversionData[categoria].map(item => (
-                        <option key={item.alimento} value={item.alimento}>
-                          {item.alimento}
-                        </option>
-                      )) 
-                      : null
-                    }
-                  </select>
-                  <span className="nb-select-arrow">↓</span>
-                </div>
-                
-                {/* Info Tooltip */}
-                {infoVisible && (
-                  <div ref={infoRef} className="nb-info-tooltip">
-                    <button 
-                      onClick={() => setInfoVisible(false)}
-                      className="nb-tooltip-close-btn"
-                      aria-label="Chiudi informazioni"
-                    >
-                      ✕
-                    </button>
-                    
-                    <h4 className="nb-tooltip-title">{alimento}</h4>
-                    <p className="nb-tooltip-content">{infoText}</p>
-                  </div>
-                )}
-              </div>
-              
-              {/* Quantity Input */}
-              <div className="nb-field">
-                <label className="nb-label">
-                  Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
-                </label>
-                <div className="nb-input-wrapper">
-                  <input 
-                    ref={inputRef}
-                    type="text" 
-                    inputMode="decimal"
-                    value={quantita}
-                    onChange={handleQuantitaChange}
-                    placeholder="Inserisci la quantità in grammi" 
-                    className="nb-input"
-                  />
-                  <span className="nb-input-suffix">g</span>
-                </div>
-              </div>
-              
-              {/* Action Button */}
-              <button 
-                onClick={calcolaRisultato}
-                disabled={!quantita || isCalcolando}
-                className={!quantita || isCalcolando ? 'nb-button disabled' : 'nb-button'}
+            <button
+              onClick={() => handleDirezioneChange('cottoCrudo')}
+              className={`nb-toggle-option ${direzione === 'cottoCrudo' ? 'active' : ''}`}
+            >
+              Da cotto a crudo
+            </button>
+          </div>
+
+          {/* Selezione della categoria */}
+          <div className="nb-field">
+            <label className="nb-label">
+              Categoria
+            </label>
+            <div className="nb-select-wrapper">
+              <select
+                value={categoria}
+                onChange={handleCategoriaChange}
+                className="nb-select"
               >
-                {isCalcolando ? 'Calcolando...' : 'Calcola'}
+                {/* Accesso sicuro alle chiavi */}
+                {Object.keys(conversionData || {}).map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <span className="nb-select-arrow">↓</span>
+            </div>
+          </div>
+
+          {/* Selezione dell'alimento con pulsante info */}
+          <div className="nb-field">
+            <div className="nb-label-row">
+              <label className="nb-label">
+                Alimento
+              </label>
+              <button
+                ref={infoButtonRef}
+                onClick={showInfo}
+                className="nb-info-btn"
+                aria-label="Informazioni sull'alimento"
+              >
+                i
               </button>
             </div>
-            
-            {/* Result Card */}
-            {risultato && (
-              <div 
-                ref={risultatoRef}
-                className="nb-card nb-result-card"
+            <div className="nb-select-wrapper">
+              <select
+                value={alimento}
+                onChange={handleAlimentoChange}
+                className="nb-select"
               >
-                {/* Close button */}
-                <button 
-                  onClick={resetForm}
-                  className="nb-close-btn"
-                  aria-label="Chiudi risultato"
+                {/* Sicurezza nel mappare gli alimenti */}
+                {conversionData && categoria && conversionData[categoria] &&
+                 Array.isArray(conversionData[categoria])
+                  ? conversionData[categoria].map(item => (
+                    <option key={item.alimento} value={item.alimento}>
+                      {item.alimento}
+                    </option>
+                  ))
+                  : null
+                }
+              </select>
+              <span className="nb-select-arrow">↓</span>
+            </div>
+
+            {/* Riquadro informativo */}
+            {infoVisible && (
+              <div ref={infoRef} className="nb-info-tooltip">
+                <button
+                  onClick={() => setInfoVisible(false)}
+                  className="nb-tooltip-close-btn"
+                  aria-label="Chiudi informazioni"
                 >
                   ✕
                 </button>
-                
-                <h3 className="nb-card-title">
-                  Risultato della conversione
-                </h3>
-                
-                <div className="nb-result">
-                  <div className="nb-result-value">
-                    {risultato} g
-                  </div>
-                  <div className="nb-result-unit">
-                    {direzione === 'crudoCotto' ? 'cotto' : 'crudo'}
-                  </div>
-                </div>
-                
-                <div className="nb-factor-badge">
-                  Fattore di conversione: {fattore.toFixed(2)}
-                </div>
-                
-                {/* Cooking Tip */}
-                {tipText && (
-                  <div className="nb-cooking-tip">
-                    <div className="nb-tip-icon">💡</div>
-                    <p className="nb-tip-text">{tipText}</p>
-                  </div>
-                )}
+
+                <h4 className="nb-tooltip-title">{alimento}</h4>
+                <p className="nb-tooltip-content">{infoText}</p>
               </div>
             )}
-          </main>
-          
-          <footer className="nb-footer">
-            <div className="nb-about">
-              <p className="nb-about-title">About</p>
-              <p className="nb-about-text">
-                Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
-              </p>
+          </div>
+
+          {/* Quantità */}
+          <div className="nb-field">
+            <label className="nb-label">
+              Quantità in grammi ({direzione === 'crudoCotto' ? 'crudo' : 'cotto'})
+            </label>
+            <div className="nb-input-wrapper">
+              <input
+                ref={inputRef}
+                type="text"
+                inputMode="decimal"
+                value={quantita}
+                onChange={handleQuantitaChange}
+                placeholder="Inserisci la quantità in grammi"
+                className="nb-input"
+              />
+              <span className="nb-input-suffix">g</span>
             </div>
-            <div className="nb-copyright">
-              CrudoCotto &copy; {new Date().getFullYear()}
-            </div>
-          </footer>
-          
-          {/* Notifica offline */}
-          <OfflineNotice />
-          
-          {/* Prompt di installazione */}
-          <InstallPrompt />
+          </div>
+
+          {/* Pulsante di calcolo */}
+          <button
+            onClick={calcolaRisultato}
+            disabled={!quantita || isCalcolando}
+            className={!quantita || isCalcolando ? 'nb-button disabled' : 'nb-button'}
+          >
+            {isCalcolando ? 'Calcolando...' : 'Calcola'}
+          </button>
         </div>
-      </div>
-    </>
+
+        {/* Risultato */}
+        {risultato && (
+          <div
+            ref={risultatoRef}
+            className="nb-card nb-result-card"
+          >
+            <button
+              onClick={resetForm}
+              className="nb-close-btn"
+              aria-label="Chiudi risultato"
+            >
+              ✕
+            </button>
+
+            <h3 className="nb-card-title">
+              Risultato della conversione
+            </h3>
+
+            <div className="nb-result">
+              <div className="nb-result-value">
+                {risultato} g
+              </div>
+              <div className="nb-result-unit">
+                {direzione === 'crudoCotto' ? 'cotto' : 'crudo'}
+              </div>
+            </div>
+
+            <div className="nb-factor-badge">
+              Fattore di conversione: {fattore.toFixed(2)}
+            </div>
+
+            {/* Consiglio di cottura */}
+            {tipText && (
+              <div className="nb-cooking-tip">
+                <div className="nb-tip-icon">💡</div>
+                <p className="nb-tip-text">{tipText}</p>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
+
+      <footer className="nb-footer">
+        <div className="nb-about">
+          <h2 className="nb-about-title">About</h2>
+          <p className="nb-about-text">
+            Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
+          </p>
+        </div>
+        <div className="nb-copyright">
+          CrudoCotto &copy; {new Date().getFullYear()}
+        </div>
+      </footer>
+
+      {/* Notifica offline */}
+      <OfflineNotice />
+
+      {/* Prompt di installazione */}
+      <InstallPrompt />
+    </div>
   );
 };
 

@@ -1,7 +1,25 @@
-/* Stili e animazioni specifici per la PWA */
+/* Stili specifici per la PWA, allineati al linguaggio neobrutalista */
 
-/* Animazione per la notifica offline */
-@keyframes slideUp {
+/* Notifica di modalità offline */
+.pwa-offline-notice {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  max-width: calc(100% - 2rem);
+  background-color: var(--nb-accent, #ffe66d);
+  color: #1a1a1a;
+  border: 3px solid #1a1a1a;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  z-index: 1000;
+  animation: pwa-slide-up 0.3s ease-out forwards;
+}
+
+@keyframes pwa-slide-up {
   from {
     opacity: 0;
     transform: translate(-50%, 20px);
@@ -12,41 +30,67 @@
   }
 }
 
-/* Stile per l'installazione dell'app */
+/* Banner di installazione */
 .pwa-install-prompt {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #333;
-  color: white;
-  padding: 15px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-top: 3px solid #1a1a1a;
+  font-family: 'Space Grotesk', sans-serif;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  gap: 1rem;
   z-index: 1000;
-  animation: slideUpFull 0.3s forwards;
+  animation: pwa-slide-up-full 0.3s ease-out forwards;
+}
+
+.pwa-install-prompt-text {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.pwa-install-prompt-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .pwa-install-prompt button {
-  background-color: #4F46E5;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  background-color: #ff6b6b;
+  color: #ffffff;
+  border: 3px solid #1a1a1a;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.625rem 1rem;
   cursor: pointer;
-  margin-left: 10px;
-  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pwa-install-prompt button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8);
+}
+
+.pwa-install-prompt button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
 }
 
 .pwa-install-prompt button.dismiss {
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
+  background-color: #ffffff;
+  color: #1a1a1a;
 }
 
-@keyframes slideUpFull {
+@keyframes pwa-slide-up-full {
   from {
     transform: translateY(100%);
   }
@@ -55,29 +99,14 @@
   }
 }
 
-/* Stile per la schermata di splash all'avvio */
-.pwa-splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+@media (max-width: 480px) {
+  .pwa-install-prompt {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
 
-.pwa-splash-screen img {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
+  .pwa-install-prompt-actions {
+    justify-content: center;
+  }
 }
-
-.pwa-splash-screen h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
-} 

@@ -147,10 +147,10 @@ const InstallPrompt = () => {
 
   return (
     <div className="pwa-install-prompt">
-      <div>
-        Aggiungi CrudoCotto alla schermata Home per un accesso rapido e offline!
+      <div className="pwa-install-prompt-text">
+        Aggiungi CrudoCotto alla schermata Home per un accesso rapido e offline
       </div>
-      <div>
+      <div className="pwa-install-prompt-actions">
         <button className="dismiss" onClick={handleDismissClick}>
           Non ora
         </button>

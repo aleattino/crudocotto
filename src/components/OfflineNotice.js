@@ -1,28 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Stile per la notifica offline
-const offlineNoticeStyle = {
-  position: 'fixed',
-  bottom: '20px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  backgroundColor: '#333',
-  color: 'white',
-  padding: '10px 20px',
-  borderRadius: '5px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  zIndex: 1000,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  maxWidth: '90%',
-  textAlign: 'center',
-  fontSize: '14px',
-  animationName: 'slideUp',
-  animationDuration: '0.3s',
-  animationFillMode: 'forwards',
-};
-
 const OfflineNotice = () => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
@@ -49,8 +26,8 @@ const OfflineNotice = () => {
   }
 
   return (
-    <div style={offlineNoticeStyle}>
-      <span>📴 Modalità offline - I dati sono disponibili localmente</span>
+    <div className="pwa-offline-notice" role="status">
+      Modalità offline &mdash; i dati sono disponibili localmente
     </div>
   );
 };

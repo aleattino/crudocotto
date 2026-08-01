@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+/* Il font Space Grotesk viene caricato in public/index.html */
 
 /* Base Styles */
 /* Regola universale di box-sizing */
@@ -14,9 +14,13 @@
   --nb-bg: #ffffff;
   --nb-card: #ffffff;
   --nb-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8);
+  --nb-shadow-lg: 8px 8px 0px rgba(0, 0, 0, 0.8);
+  --nb-shadow-sm: 4px 4px 0px rgba(0, 0, 0, 0.8);
   --nb-border: 3px solid #1a1a1a;
   --nb-radius: 0px;
-  
+  --nb-on-accent: #1a1a1a;
+  --nb-content-width: 600px;
+
   font-family: 'Space Grotesk', sans-serif;
   background-color: var(--nb-bg);
   color: var(--nb-text);
@@ -36,6 +40,8 @@
   --nb-bg: #1a1a1a;
   --nb-card: #2d2d2d;
   --nb-shadow: 6px 6px 0px rgba(255, 255, 255, 0.8);
+  --nb-shadow-lg: 8px 8px 0px rgba(255, 255, 255, 0.8);
+  --nb-shadow-sm: 4px 4px 0px rgba(255, 255, 255, 0.8);
   --nb-border: 3px solid #ffffff;
 }
 
@@ -58,8 +64,7 @@
   align-items: center;
   margin-bottom: 2rem;
   width: 100%;
-  max-width: 600px;
-  padding-right: 0;
+  max-width: var(--nb-content-width);
 }
 
 .nb-logo {
@@ -85,30 +90,27 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   flex-shrink: 0;
-  position: relative;
-  right: -3px;
 }
 
 .nb-theme-toggle:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--nb-shadow-lg);
 }
 
 .nb-theme-toggle:active {
   transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--nb-shadow-sm);
 }
 
 /* Main Content Styles */
 .nb-main {
   width: 100%;
-  max-width: 600px;
+  max-width: var(--nb-content-width);
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-right: 0;
 }
 
 .nb-card {
@@ -118,7 +120,6 @@
   padding: 2rem;
   width: 100%;
   position: relative;
-  margin-right: 0;
 }
 
 .nb-main-card {
@@ -128,15 +129,12 @@
 }
 
 /* Toggle Direction Styles */
-.nb-toggle-container {
-  margin-bottom: 0.5rem;
-}
-
 .nb-toggle-track {
   display: flex;
   width: 100%;
   background-color: var(--nb-card);
   border: var(--nb-border);
+  box-shadow: var(--nb-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -167,7 +165,6 @@
 
 /* Form Fields Styles */
 .nb-field {
-  margin-bottom: 1.5rem;
   position: relative;
 }
 
@@ -184,11 +181,17 @@
   display: block;
 }
 
+/* Dentro la riga con il pulsante info la spaziatura la gestisce .nb-label-row */
+.nb-label-row .nb-label {
+  margin-bottom: 0;
+}
+
 .nb-info-btn {
   width: 1.5rem;
   height: 1.5rem;
   background-color: var(--nb-accent);
   border: 2px solid var(--nb-text);
+  color: var(--nb-on-accent);
   border-radius: 50%;
   margin-left: 0.5rem;
   display: flex;
@@ -215,27 +218,19 @@
 
 .nb-select-wrapper:hover, .nb-input-wrapper:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
-}
-
-.dark .nb-select-wrapper:hover, .dark .nb-input-wrapper:hover {
-  box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.8);
+  box-shadow: var(--nb-shadow-lg);
 }
 
 .nb-select-wrapper:active, .nb-input-wrapper:active,
 .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within {
   transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
-}
-
-.dark .nb-select-wrapper:active, .dark .nb-input-wrapper:active,
-.dark .nb-select-wrapper:focus-within, .dark .nb-input-wrapper:focus-within {
-  box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.8);
+  box-shadow: var(--nb-shadow-sm);
 }
 
 .nb-select, .nb-input {
   width: 100%;
   padding: 1rem;
+  padding-right: 2.75rem;
   border: none;
   background: transparent;
   color: var(--nb-text);
@@ -288,12 +283,12 @@
 
 .nb-button:hover:not(.disabled) {
   transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--nb-shadow-lg);
 }
 
 .nb-button:active:not(.disabled) {
   transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--nb-shadow-sm);
 }
 
 .nb-button.disabled {
@@ -322,8 +317,8 @@
   animation: nb-pop 0.3s ease-out forwards;
 }
 
-.dark .nb-info-tooltip {
-  color: #000000;
+.nb-info-tooltip {
+  color: var(--nb-on-accent);
 }
 
 @keyframes nb-pop {
@@ -338,13 +333,18 @@
   width: 1.5rem;
   height: 1.5rem;
   background-color: var(--nb-primary);
-  border: 2px solid var(--nb-text);
+  border: 2px solid var(--nb-on-accent);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.nb-tooltip-close-btn:hover {
+  transform: scale(1.1);
 }
 
 .nb-tooltip-title {
@@ -418,26 +418,25 @@
 .nb-factor-badge {
   background-color: var(--nb-secondary);
   border: var(--nb-border);
+  box-shadow: var(--nb-shadow-sm);
+  color: var(--nb-on-accent);
   padding: 0.5rem 1rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 1.5rem;
 }
 
 .nb-cooking-tip {
   display: flex;
   background-color: var(--nb-accent);
   border: var(--nb-border);
+  box-shadow: var(--nb-shadow-sm);
+  color: var(--nb-on-accent);
   padding: 1rem;
   gap: 1rem;
+  margin-top: 1.5rem;
   animation: nb-fade-in 0.5s ease-out forwards;
   animation-delay: 0.3s;
   opacity: 0;
-}
-
-.dark .nb-cooking-tip {
-  background-color: var(--nb-accent);
-  color: #000000;
 }
 
 @keyframes nb-fade-in {
@@ -454,29 +453,24 @@
   font-size: 0.9375rem;
   line-height: 1.5;
   margin: 0;
-}
-
-.dark .nb-tip-text {
-  color: #000000;
-  font-weight: 500;
+  color: inherit;
 }
 
 /* Footer Styles */
 .nb-footer {
   margin-top: 2rem;
+  width: 100%;
+  max-width: var(--nb-content-width);
   text-align: center;
   font-size: 0.875rem;
 }
 
 .nb-about {
-  margin-bottom: 1.5rem;
-  padding: 1.5rem;
+  padding: 2rem;
   background-color: var(--nb-card);
   border: var(--nb-border);
   box-shadow: var(--nb-shadow);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: left;
 }
 
 .nb-about-title {
@@ -494,7 +488,7 @@
 }
 
 .nb-copyright {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   opacity: 0.7;
 }
 
@@ -507,7 +501,6 @@
 
 .nb-link:hover {
   text-decoration: underline;
-  transform: translateY(-1px);
 }
 
 /* Responsive Styles */
@@ -515,29 +508,31 @@
     .neobrutal-app {
       padding: 1rem;
       --nb-shadow: 5px 5px 0px rgba(0, 0, 0, 0.8);
+      --nb-shadow-lg: 6px 6px 0px rgba(0, 0, 0, 0.8);
+      --nb-shadow-sm: 3px 3px 0px rgba(0, 0, 0, 0.8);
       --nb-border: 2.5px solid #1a1a1a;
     }
-    
+
     .dark.neobrutal-app {
       --nb-shadow: 5px 5px 0px rgba(255, 255, 255, 0.8);
+      --nb-shadow-lg: 6px 6px 0px rgba(255, 255, 255, 0.8);
+      --nb-shadow-sm: 3px 3px 0px rgba(255, 255, 255, 0.8);
       --nb-border: 2.5px solid #ffffff;
     }
-    
+
     .nb-header {
       margin-bottom: 1.5rem;
-      padding-right: 0;
     }
-    
+
     .nb-logo h1 {
       font-size: 2rem;
     }
-    
+
     .nb-theme-toggle {
       width: 3rem;
       height: 3rem;
-      right: -3px;
     }
-    
+
     .nb-card {
       padding: 1.5rem;
     }
@@ -584,28 +579,17 @@
       height: 2rem;
     }
     
-    .nb-select-wrapper, .nb-input-wrapper {
-      box-shadow: var(--nb-shadow);
-    }
-    
-    .nb-select-wrapper:hover, .nb-input-wrapper:hover {
+    .nb-select-wrapper:hover, .nb-input-wrapper:hover,
+    .nb-button:hover:not(.disabled),
+    .nb-theme-toggle:hover {
       transform: translate(-1px, -1px);
-      box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8);
     }
-    
-    .dark .nb-select-wrapper:hover, .dark .nb-input-wrapper:hover {
-      box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.8);
-    }
-    
+
     .nb-select-wrapper:active, .nb-input-wrapper:active,
-    .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within {
+    .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within,
+    .nb-button:active:not(.disabled),
+    .nb-theme-toggle:active {
       transform: translate(1px, 1px);
-      box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
-    }
-    
-    .dark .nb-select-wrapper:active, .dark .nb-input-wrapper:active,
-    .dark .nb-select-wrapper:focus-within, .dark .nb-input-wrapper:focus-within {
-      box-shadow: 3px 3px 0px rgba(255, 255, 255, 0.8);
     }
 }
   
@@ -613,25 +597,27 @@
     .neobrutal-app {
       padding: 0.75rem;
       --nb-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+      --nb-shadow-lg: 5px 5px 0px rgba(0, 0, 0, 0.8);
+      --nb-shadow-sm: 2px 2px 0px rgba(0, 0, 0, 0.8);
       --nb-border: 2px solid #1a1a1a;
     }
-    
+
     .dark.neobrutal-app {
       --nb-shadow: 4px 4px 0px rgba(255, 255, 255, 0.8);
+      --nb-shadow-lg: 5px 5px 0px rgba(255, 255, 255, 0.8);
+      --nb-shadow-sm: 2px 2px 0px rgba(255, 255, 255, 0.8);
       --nb-border: 2px solid #ffffff;
     }
-    
+
     .nb-header {
-      padding-right: 0;
       margin-bottom: 1rem;
     }
-    
+
     .nb-theme-toggle {
-      right: -2px;
       width: 2.75rem;
       height: 2.75rem;
     }
-    
+
     .nb-logo h1 {
       font-size: 1.75rem;
     }
@@ -647,9 +633,10 @@
     
     .nb-select, .nb-input {
       padding: 0.75rem;
+      padding-right: 2.5rem;
       font-size: 0.9375rem;
     }
-    
+
     .nb-button {
       padding: 0.75rem;
       font-size: 1rem;
@@ -690,29 +677,9 @@
     .nb-tooltip-content {
       font-size: 0.875rem;
     }
-    
-    .nb-select-wrapper, .nb-input-wrapper {
-      box-shadow: var(--nb-shadow);
-    }
-    
-    .nb-select-wrapper:hover, .nb-input-wrapper:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.8);
-    }
-    
-    .dark .nb-select-wrapper:hover, .dark .nb-input-wrapper:hover {
-      box-shadow: 5px 5px 0px rgba(255, 255, 255, 0.8);
-    }
-    
-    .nb-select-wrapper:active, .nb-input-wrapper:active,
-    .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within {
-      transform: translate(1px, 1px);
-      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
-    }
-    
-    .dark .nb-select-wrapper:active, .dark .nb-input-wrapper:active,
-    .dark .nb-select-wrapper:focus-within, .dark .nb-input-wrapper:focus-within {
-      box-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+
+    .nb-about {
+      padding: 1.25rem;
     }
 }
   
@@ -720,11 +687,15 @@
   .neobrutal-app {
     padding: 0.5rem;
     --nb-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+    --nb-shadow-lg: 4px 4px 0px rgba(0, 0, 0, 0.8);
+    --nb-shadow-sm: 2px 2px 0px rgba(0, 0, 0, 0.8);
     --nb-border: 2px solid #1a1a1a;
   }
-  
+
   .dark.neobrutal-app {
     --nb-shadow: 3px 3px 0px rgba(255, 255, 255, 0.8);
+    --nb-shadow-lg: 4px 4px 0px rgba(255, 255, 255, 0.8);
+    --nb-shadow-sm: 2px 2px 0px rgba(255, 255, 255, 0.8);
     --nb-border: 2px solid #ffffff;
   }
   
@@ -751,16 +722,13 @@
     font-size: 0.8125rem;
   }
   
-  .nb-field {
-    margin-bottom: 1rem;
-  }
-  
   .nb-label {
     font-size: 0.875rem;
   }
-  
+
   .nb-select, .nb-input {
     padding: 0.625rem;
+    padding-right: 2.25rem;
     font-size: 0.875rem;
   }
   
@@ -802,34 +770,20 @@
     font-size: 0.8125rem;
   }
   
-  .nb-select-wrapper, .nb-input-wrapper {
-    box-shadow: var(--nb-shadow);
-  }
-  
-  .nb-select-wrapper:hover, .nb-input-wrapper:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
-  }
-  
-  .dark .nb-select-wrapper:hover, .dark .nb-input-wrapper:hover {
-    box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.8);
-  }
-  
-  .nb-select-wrapper:active, .nb-input-wrapper:active,
-  .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within {
-    transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
-  }
-  
-  .dark .nb-select-wrapper:active, .dark .nb-input-wrapper:active,
-  .dark .nb-select-wrapper:focus-within, .dark .nb-input-wrapper:focus-within {
-    box-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+  .nb-about {
+    padding: 1rem;
   }
 }
   
 /* Animations */
 .nb-card, .nb-button, .nb-toggle-option {
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+/* Focus visibile e coerente per la navigazione da tastiera */
+.neobrutal-app :focus-visible {
+  outline: 3px solid var(--nb-primary);
+  outline-offset: 2px;
 }
   
 /* Fix iOS button appearance */
