@@ -402,6 +402,7 @@ const NeoBrutalismCrudoCotto = () => {
   const [tema, setTema] = useState('light'); // 'light', 'dark'
   const [isCalcolando, setIsCalcolando] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
+  const [aboutVisible, setAboutVisible] = useState(false);
   const [infoText, setInfoText] = useState(firstFoodItem.info || '');
   const [tipText, setTipText] = useState(firstFoodItem.tip || '');
   
@@ -524,6 +525,22 @@ const NeoBrutalismCrudoCotto = () => {
       console.error('Errore nell\'aggiunta del listener per il click outside:', error);
     }
   }, []);
+
+  // Chiudi il pannello About con il tasto Esc
+  useEffect(() => {
+    if (!aboutVisible) return;
+
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        setAboutVisible(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [aboutVisible]);
 
   // Gestisce il cambio di categoria
   const handleCategoriaChange = (e) => {
@@ -660,14 +677,56 @@ const NeoBrutalismCrudoCotto = () => {
           <h1>CrudoCotto</h1>
         </div>
 
-        <button
-          onClick={toggleTema}
-          className="nb-theme-toggle"
-          aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
-        >
-          {isDark ? '☀️' : '🌙'}
-        </button>
+        <div className="nb-header-actions">
+          <button
+            onClick={() => setAboutVisible(true)}
+            className="nb-about-btn"
+            aria-label="Informazioni sull'applicazione"
+          >
+            ?
+          </button>
+
+          <button
+            onClick={toggleTema}
+            className="nb-theme-toggle"
+            aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
+          >
+            {isDark ? '☀️' : '🌙'}
+          </button>
+        </div>
       </header>
+
+      {/* Pannello About */}
+      {aboutVisible && (
+        <div
+          className="nb-modal-overlay"
+          onClick={() => setAboutVisible(false)}
+        >
+          <div
+            className="nb-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="nb-about-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setAboutVisible(false)}
+              className="nb-close-btn"
+              aria-label="Chiudi"
+            >
+              ✕
+            </button>
+
+            <h2 id="nb-about-title" className="nb-about-title">About</h2>
+            <p className="nb-about-text">
+              CrudoCotto converte i pesi degli alimenti da crudi a cotti e viceversa.
+            </p>
+            <p className="nb-about-text">
+              Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
+            </p>
+          </div>
+        </div>
+      )}
 
       <main className="nb-main">
         <div className="nb-card nb-main-card">
@@ -831,15 +890,7 @@ const NeoBrutalismCrudoCotto = () => {
       </main>
 
       <footer className="nb-footer">
-        <div className="nb-about">
-          <h2 className="nb-about-title">About</h2>
-          <p className="nb-about-text">
-            Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
-          </p>
-        </div>
-        <div className="nb-copyright">
-          CrudoCotto &copy; {new Date().getFullYear()}
-        </div>
+        CrudoCotto &copy; {new Date().getFullYear()}
       </footer>
 
       {/* Notifica offline */}
