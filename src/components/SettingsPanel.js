@@ -111,6 +111,16 @@ const SettingsPanel = ({ impostazioni, onChange, onReset, onClose }) => {
         >
           Ripristina i valori predefiniti
         </button>
+
+        <div className="nb-about">
+          <h3 className="nb-about-title">About</h3>
+          <p className="nb-about-text">
+            CrudoCotto converte i pesi degli alimenti da crudi a cotti e viceversa.
+          </p>
+          <p className="nb-about-text">
+            Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
+          </p>
+        </div>
       </div>
     </div>
   );

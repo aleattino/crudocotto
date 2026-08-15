@@ -89,7 +89,6 @@
 }
 
 .nb-theme-toggle,
-.nb-about-btn,
 .nb-settings-btn {
   width: 3.5rem;
   height: 3.5rem;
@@ -111,11 +110,6 @@
   color: var(--nb-on-accent);
 }
 
-.nb-about-btn {
-  background-color: var(--nb-accent);
-  color: var(--nb-on-accent);
-}
-
 .nb-settings-btn {
   background-color: var(--nb-card);
   color: var(--nb-text);
@@ -133,14 +127,12 @@
 }
 
 .nb-theme-toggle:hover,
-.nb-about-btn:hover,
 .nb-settings-btn:hover {
   transform: translate(-2px, -2px);
   box-shadow: var(--nb-shadow-lg);
 }
 
 .nb-theme-toggle:active,
-.nb-about-btn:active,
 .nb-settings-btn:active {
   transform: translate(2px, 2px);
   box-shadow: var(--nb-shadow-sm);
@@ -530,19 +522,25 @@
   animation: nb-pop 0.3s ease-out forwards;
 }
 
+.nb-about {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: var(--nb-border);
+}
+
 .nb-about-title {
-  font-size: 1.25rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin: 0 0 1rem 0;
-  padding-right: 2.5rem;
+  margin: 0 0 0.5rem 0;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
 }
 
 .nb-about-text {
-  margin: 0 0 0.75rem 0;
-  font-size: 1rem;
-  line-height: 1.6;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .nb-about-text:last-child {
@@ -716,7 +714,6 @@
     }
 
     .nb-theme-toggle,
-    .nb-about-btn,
     .nb-settings-btn {
       width: 3rem;
       height: 3rem;
@@ -771,7 +768,6 @@
     .nb-select-wrapper:hover, .nb-input-wrapper:hover,
     .nb-button:hover:not(.disabled),
     .nb-theme-toggle:hover,
-    .nb-about-btn:hover,
     .nb-settings-btn:hover {
       transform: translate(-1px, -1px);
     }
@@ -780,7 +776,6 @@
     .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within,
     .nb-button:active:not(.disabled),
     .nb-theme-toggle:active,
-    .nb-about-btn:active,
     .nb-settings-btn:active {
       transform: translate(1px, 1px);
     }
@@ -802,7 +797,6 @@
     }
 
     .nb-theme-toggle,
-    .nb-about-btn,
     .nb-settings-btn {
       width: 2.75rem;
       height: 2.75rem;
@@ -893,7 +887,6 @@
   }
   
   .nb-theme-toggle,
-  .nb-about-btn,
   .nb-settings-btn {
     width: 2.25rem;
     height: 2.25rem;

@@ -414,7 +414,6 @@ const NeoBrutalismCrudoCotto = () => {
   const [fattore, setFattore] = useState(firstFoodItem.fattore || 1);
   const [isCalcolando, setIsCalcolando] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
-  const [aboutVisible, setAboutVisible] = useState(false);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [infoText, setInfoText] = useState(firstFoodItem.info || '');
   const [tipText, setTipText] = useState(firstFoodItem.tip || '');
@@ -600,13 +599,12 @@ const NeoBrutalismCrudoCotto = () => {
     }
   }, []);
 
-  // Chiudi i pannelli con il tasto Esc
+  // Chiudi il pannello con il tasto Esc
   useEffect(() => {
-    if (!aboutVisible && !settingsVisible) return;
+    if (!settingsVisible) return;
 
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
-        setAboutVisible(false);
         setSettingsVisible(false);
       }
     };
@@ -615,7 +613,7 @@ const NeoBrutalismCrudoCotto = () => {
     return () => {
       document.removeEventListener('keydown', handleEsc);
     };
-  }, [aboutVisible, settingsVisible]);
+  }, [settingsVisible]);
 
   // Gestisce il cambio di categoria
   const handleCategoriaChange = (e) => {
@@ -790,14 +788,6 @@ const NeoBrutalismCrudoCotto = () => {
 
         <div className="nb-header-actions">
           <button
-            onClick={() => setAboutVisible(true)}
-            className="nb-about-btn"
-            aria-label="Informazioni sull'applicazione"
-          >
-            ?
-          </button>
-
-          <button
             onClick={() => setSettingsVisible(true)}
             className="nb-settings-btn"
             aria-label="Impostazioni"
@@ -823,38 +813,6 @@ const NeoBrutalismCrudoCotto = () => {
           onReset={() => setImpostazioni({ ...PREDEFINITE })}
           onClose={() => setSettingsVisible(false)}
         />
-      )}
-
-      {/* Pannello About */}
-      {aboutVisible && (
-        <div
-          className="nb-modal-overlay"
-          onClick={() => setAboutVisible(false)}
-        >
-          <div
-            className="nb-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="nb-about-title"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setAboutVisible(false)}
-              className="nb-close-btn"
-              aria-label="Chiudi"
-            >
-              <IconaChiudi />
-            </button>
-
-            <h2 id="nb-about-title" className="nb-about-title">About</h2>
-            <p className="nb-about-text">
-              CrudoCotto converte i pesi degli alimenti da crudi a cotti e viceversa.
-            </p>
-            <p className="nb-about-text">
-              Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
-            </p>
-          </div>
-        </div>
       )}
 
       <main className="nb-main">
