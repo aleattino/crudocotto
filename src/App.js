@@ -2,6 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
 import OfflineNotice from './components/OfflineNotice';
 import InstallPrompt from './components/InstallPrompt';
+import SettingsPanel from './components/SettingsPanel';
+import {
+  PREDEFINITE,
+  DIMENSIONI,
+  caricaImpostazioni,
+  salvaImpostazioni,
+  caricaRecenti,
+  salvaRecenti,
+  aggiungiRecente,
+  caricaFont,
+  variabiliCss,
+} from './settings';
 
 // Versione semplificata del componente per il debug
 const NeoBrutalismCrudoCotto = () => {
@@ -399,19 +411,80 @@ const NeoBrutalismCrudoCotto = () => {
   const [direzione, setDirezione] = useState('crudoCotto'); // 'crudoCotto' o 'cottoCrudo'
   const [risultato, setRisultato] = useState(null);
   const [fattore, setFattore] = useState(firstFoodItem.fattore || 1);
-  const [tema, setTema] = useState('light'); // 'light', 'dark'
   const [isCalcolando, setIsCalcolando] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
   const [aboutVisible, setAboutVisible] = useState(false);
+  const [settingsVisible, setSettingsVisible] = useState(false);
   const [infoText, setInfoText] = useState(firstFoodItem.info || '');
   const [tipText, setTipText] = useState(firstFoodItem.tip || '');
-  
-  const isDark = tema === 'dark';
-  
+  const [impostazioni, setImpostazioni] = useState(caricaImpostazioni);
+  const [recenti, setRecenti] = useState(caricaRecenti);
+
+  // Preferenza di sistema, usata quando il tema è impostato su "sistema"
+  const [sistemaScuro, setSistemaScuro] = useState(() => {
+    try {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch (error) {
+      return false;
+    }
+  });
+
+  const isDark =
+    impostazioni.tema === 'scuro' ||
+    (impostazioni.tema === 'sistema' && sistemaScuro);
+
   const risultatoRef = useRef(null);
   const inputRef = useRef(null);
   const infoRef = useRef(null);
   const infoButtonRef = useRef(null);
+
+  // Segue la preferenza di tema del sistema operativo
+  useEffect(() => {
+    let mediaQuery = null;
+    const onChange = (evento) => setSistemaScuro(evento.matches);
+
+    try {
+      mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', onChange);
+      } else {
+        mediaQuery.addListener(onChange);
+      }
+    } catch (error) {
+      console.error('Impossibile seguire il tema di sistema:', error);
+    }
+
+    return () => {
+      try {
+        if (!mediaQuery) return;
+        if (mediaQuery.removeEventListener) {
+          mediaQuery.removeEventListener('change', onChange);
+        } else {
+          mediaQuery.removeListener(onChange);
+        }
+      } catch (error) {
+        console.error('Errore nella rimozione del listener del tema:', error);
+      }
+    };
+  }, []);
+
+  // Salva le preferenze, applica la dimensione e carica il carattere scelto
+  useEffect(() => {
+    salvaImpostazioni(impostazioni);
+    caricaFont(impostazioni.carattere);
+
+    const dimensione = DIMENSIONI[impostazioni.dimensione] || DIMENSIONI[PREDEFINITE.dimensione];
+    try {
+      document.documentElement.style.fontSize = `${dimensione.px}px`;
+    } catch (error) {
+      console.error('Impossibile applicare la dimensione:', error);
+    }
+  }, [impostazioni]);
+
+  // Salva gli alimenti usati di recente
+  useEffect(() => {
+    salvaRecenti(recenti);
+  }, [recenti]);
 
   // Previene lo zoom su iOS quando si fa focus sull'input
   useEffect(() => {
@@ -526,13 +599,14 @@ const NeoBrutalismCrudoCotto = () => {
     }
   }, []);
 
-  // Chiudi il pannello About con il tasto Esc
+  // Chiudi i pannelli con il tasto Esc
   useEffect(() => {
-    if (!aboutVisible) return;
+    if (!aboutVisible && !settingsVisible) return;
 
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
         setAboutVisible(false);
+        setSettingsVisible(false);
       }
     };
 
@@ -540,7 +614,7 @@ const NeoBrutalismCrudoCotto = () => {
     return () => {
       document.removeEventListener('keydown', handleEsc);
     };
-  }, [aboutVisible]);
+  }, [aboutVisible, settingsVisible]);
 
   // Gestisce il cambio di categoria
   const handleCategoriaChange = (e) => {
@@ -564,9 +638,25 @@ const NeoBrutalismCrudoCotto = () => {
     }
   };
 
-  // Gestisce il cambio di alimento
+  // Gestisce il cambio di alimento. Le voci recenti portano con sé la propria
+  // categoria, perché un alimento con lo stesso nome può esistere in due
+  // categorie diverse (per esempio la cernia, fresca e surgelata).
   const handleAlimentoChange = (e) => {
-    setAlimento(e.target.value);
+    const valore = e.target.value;
+
+    if (valore.startsWith('recente:')) {
+      const separatore = valore.indexOf('|');
+      const suaCategoria = valore.slice('recente:'.length, separatore);
+      const suoAlimento = valore.slice(separatore + 1);
+
+      if (suaCategoria !== categoria) {
+        setCategoria(suaCategoria);
+      }
+      setAlimento(suoAlimento);
+      return;
+    }
+
+    setAlimento(valore);
   };
 
   // Gestisce il cambio di quantità
@@ -574,6 +664,14 @@ const NeoBrutalismCrudoCotto = () => {
     const val = e.target.value;
     if (val === '' || /^\d*\.?\d*$/.test(val)) {
       setQuantita(val);
+    }
+  };
+
+  // Invio nel campo della quantità avvia il calcolo
+  const handleQuantitaKeyDown = (e) => {
+    if (e.key === 'Enter' && quantita && !isCalcolando) {
+      e.preventDefault();
+      calcolaRisultato();
     }
   };
 
@@ -616,6 +714,7 @@ const NeoBrutalismCrudoCotto = () => {
         }
 
         setRisultato(result.toFixed(1));
+        setRecenti((precedenti) => aggiungiRecente(precedenti, categoria, alimento));
       } catch (error) {
         console.error('Errore nel calcolo:', error);
         setRisultato('0.0');
@@ -625,10 +724,18 @@ const NeoBrutalismCrudoCotto = () => {
     }, 300);
   };
 
-  // Cambia il tema
+  // Il pulsante nell'header alterna chiaro e scuro, fissando una scelta esplicita
   const toggleTema = () => {
-    setTema(isDark ? 'light' : 'dark');
+    setImpostazioni((precedenti) => ({
+      ...precedenti,
+      tema: isDark ? 'chiaro' : 'scuro',
+    }));
   };
+
+  // Le voci recenti diverse dall'alimento attualmente selezionato
+  const recentiDaMostrare = recenti.filter(
+    (voce) => !(voce.categoria === categoria && voce.alimento === alimento)
+  );
 
   // Reset del form
   const resetForm = () => {
@@ -669,7 +776,10 @@ const NeoBrutalismCrudoCotto = () => {
   }, []);
 
   return (
-    <div className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}>
+    <div
+      className={`neobrutal-app ${isDark ? 'dark' : 'light'}`}
+      style={variabiliCss(impostazioni)}
+    >
       <div className="nb-noise-overlay"></div>
 
       <header className="nb-header">
@@ -687,6 +797,14 @@ const NeoBrutalismCrudoCotto = () => {
           </button>
 
           <button
+            onClick={() => setSettingsVisible(true)}
+            className="nb-settings-btn"
+            aria-label="Impostazioni"
+          >
+            ⚙
+          </button>
+
+          <button
             onClick={toggleTema}
             className="nb-theme-toggle"
             aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
@@ -695,6 +813,16 @@ const NeoBrutalismCrudoCotto = () => {
           </button>
         </div>
       </header>
+
+      {/* Pannello impostazioni */}
+      {settingsVisible && (
+        <SettingsPanel
+          impostazioni={impostazioni}
+          onChange={setImpostazioni}
+          onReset={() => setImpostazioni({ ...PREDEFINITE })}
+          onClose={() => setSettingsVisible(false)}
+        />
+      )}
 
       {/* Pannello About */}
       {aboutVisible && (
@@ -787,6 +915,19 @@ const NeoBrutalismCrudoCotto = () => {
                 onChange={handleAlimentoChange}
                 className="nb-select"
               >
+                {recentiDaMostrare.length > 0 && (
+                  <optgroup label="Recenti">
+                    {recentiDaMostrare.map(voce => (
+                      <option
+                        key={`recente:${voce.categoria}|${voce.alimento}`}
+                        value={`recente:${voce.categoria}|${voce.alimento}`}
+                      >
+                        {voce.alimento}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+
                 {/* Sicurezza nel mappare gli alimenti */}
                 {conversionData && categoria && conversionData[categoria] &&
                  Array.isArray(conversionData[categoria])
@@ -830,6 +971,7 @@ const NeoBrutalismCrudoCotto = () => {
                 inputMode="decimal"
                 value={quantita}
                 onChange={handleQuantitaChange}
+                onKeyDown={handleQuantitaKeyDown}
                 placeholder="Inserisci la quantità in grammi"
                 className="nb-input"
               />

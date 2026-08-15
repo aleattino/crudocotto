@@ -12,10 +12,23 @@ CrudoCotto è un'applicazione web progressiva (PWA) che permette di convertire f
 - Database completo con diverse categorie di alimenti
 - Informazioni nutrizionali e consigli di cottura per ogni alimento
 - Interfaccia utente in stile neobrutalista
-- Tema chiaro e scuro
+- Aspetto personalizzabile: tema, colori, dimensione, carattere e ombre
+- Alimenti usati di recente in cima al menu
 - Funzionalità offline (PWA)
 - Design responsive ottimizzato per dispositivi mobili
 - Installabile come app nativa
+
+### Personalizzazione
+
+Il pulsante con l'ingranaggio nell'intestazione apre il pannello delle impostazioni:
+
+- **Tema**: chiaro, scuro oppure allineato alla preferenza del sistema operativo
+- **Colori**: quattro palette coordinate (corallo, oceano, bosco, neon)
+- **Dimensione**: compatta, normale o grande, con l'intera interfaccia che scala in proporzione
+- **Carattere**: Space Grotesk, Space Mono o Archivo, caricati solo quando vengono scelti
+- **Ombre**: piatta, normale o marcata
+
+Le preferenze vengono salvate nel browser e restano attive ai riavvii successivi.
 
 ## Categorie di alimenti
 
