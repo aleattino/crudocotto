@@ -3,6 +3,7 @@ import './styles.css';
 import OfflineNotice from './components/OfflineNotice';
 import InstallPrompt from './components/InstallPrompt';
 import SettingsPanel from './components/SettingsPanel';
+import { IconaSole, IconaLuna, IconaImpostazioni, IconaChiudi, IconaFreccia } from './components/Icons';
 import {
   PREDEFINITE,
   DIMENSIONI,
@@ -801,7 +802,7 @@ const NeoBrutalismCrudoCotto = () => {
             className="nb-settings-btn"
             aria-label="Impostazioni"
           >
-            ⚙
+            <IconaImpostazioni />
           </button>
 
           <button
@@ -809,7 +810,7 @@ const NeoBrutalismCrudoCotto = () => {
             className="nb-theme-toggle"
             aria-label={isDark ? "Passa al tema chiaro" : "Passa al tema scuro"}
           >
-            {isDark ? '☀️' : '🌙'}
+            {isDark ? <IconaSole /> : <IconaLuna />}
           </button>
         </div>
       </header>
@@ -842,7 +843,7 @@ const NeoBrutalismCrudoCotto = () => {
               className="nb-close-btn"
               aria-label="Chiudi"
             >
-              ✕
+              <IconaChiudi />
             </button>
 
             <h2 id="nb-about-title" className="nb-about-title">About</h2>
@@ -890,7 +891,7 @@ const NeoBrutalismCrudoCotto = () => {
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
-              <span className="nb-select-arrow">↓</span>
+              <span className="nb-select-arrow"><IconaFreccia /></span>
             </div>
           </div>
 
@@ -939,7 +940,7 @@ const NeoBrutalismCrudoCotto = () => {
                   : null
                 }
               </select>
-              <span className="nb-select-arrow">↓</span>
+              <span className="nb-select-arrow"><IconaFreccia /></span>
             </div>
 
             {/* Riquadro informativo */}
@@ -950,7 +951,7 @@ const NeoBrutalismCrudoCotto = () => {
                   className="nb-tooltip-close-btn"
                   aria-label="Chiudi informazioni"
                 >
-                  ✕
+                  <IconaChiudi />
                 </button>
 
                 <h4 className="nb-tooltip-title">{alimento}</h4>
@@ -1000,7 +1001,7 @@ const NeoBrutalismCrudoCotto = () => {
               className="nb-close-btn"
               aria-label="Chiudi risultato"
             >
-              ✕
+              <IconaChiudi />
             </button>
 
             <h3 className="nb-card-title">
@@ -1023,7 +1024,7 @@ const NeoBrutalismCrudoCotto = () => {
             {/* Consiglio di cottura */}
             {tipText && (
               <div className="nb-cooking-tip">
-                <div className="nb-tip-icon">💡</div>
+                <span className="nb-tip-label">Consiglio</span>
                 <p className="nb-tip-text">{tipText}</p>
               </div>
             )}

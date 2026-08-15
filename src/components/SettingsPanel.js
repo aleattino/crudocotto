@@ -7,6 +7,7 @@ import {
   TEMI,
   PREDEFINITE,
 } from '../settings';
+import { IconaChiudi } from './Icons';
 
 // Gruppo di pulsanti mutuamente esclusivi, in stile neobrutalista.
 const Scelta = ({ etichetta, opzioni, valore, onChange }) => (
@@ -45,7 +46,7 @@ const SettingsPanel = ({ impostazioni, onChange, onReset, onClose }) => {
           className="nb-close-btn"
           aria-label="Chiudi le impostazioni"
         >
-          ✕
+          <IconaChiudi />
         </button>
 
         <h2 id="nb-settings-title" className="nb-modal-title">Impostazioni</h2>

@@ -140,7 +140,3 @@ Questo progetto è distribuito sotto licenza MIT.
 ## Crediti
 
 I fattori di conversione sono basati su dati nutrizionali standardizzati e tabelle di composizione degli alimenti.
-
----
-
-CrudoCotto © 2025 - Creato con ❤️ da Alessandro Attino
