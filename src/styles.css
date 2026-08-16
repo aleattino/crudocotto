@@ -550,17 +550,40 @@
 }
 
 /* Pannello impostazioni */
+/* Intestazione ferma e corpo scorrevole: il pulsante di chiusura
+   deve restare raggiungibile comunque si sia scorso il pannello. */
 .nb-modal-wide {
   max-width: 32rem;
   max-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.nb-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+  padding: 2rem 2rem 1rem;
+  border-bottom: var(--nb-border);
+}
+
+.nb-modal-header .nb-close-btn {
+  position: static;
+  flex-shrink: 0;
+}
+
+.nb-modal-body {
   overflow-y: auto;
+  padding: 1.5rem 2rem 2rem;
 }
 
 .nb-modal-title {
   font-size: 1.25rem;
   font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  padding-right: 2.5rem;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -867,6 +890,18 @@
     .nb-modal {
       padding: 1.5rem;
     }
+
+    .nb-modal-wide {
+      padding: 0;
+    }
+
+    .nb-modal-header {
+      padding: 1.5rem 1.5rem 0.75rem;
+    }
+
+    .nb-modal-body {
+      padding: 1rem 1.5rem 1.5rem;
+    }
 }
   
 @media (max-width: 320px) {
@@ -954,6 +989,18 @@
   
   .nb-modal {
     padding: 1.25rem;
+  }
+
+  .nb-modal-wide {
+    padding: 0;
+  }
+
+  .nb-modal-header {
+    padding: 1.25rem 1.25rem 0.75rem;
+  }
+
+  .nb-modal-body {
+    padding: 1rem 1.25rem 1.25rem;
   }
 }
   

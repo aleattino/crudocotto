@@ -41,16 +41,18 @@ const SettingsPanel = ({ impostazioni, onChange, onReset, onClose }) => {
         aria-labelledby="nb-settings-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="nb-close-btn"
-          aria-label="Chiudi le impostazioni"
-        >
-          <IconaChiudi />
-        </button>
+        <div className="nb-modal-header">
+          <h2 id="nb-settings-title" className="nb-modal-title">Impostazioni</h2>
+          <button
+            onClick={onClose}
+            className="nb-close-btn"
+            aria-label="Chiudi le impostazioni"
+          >
+            <IconaChiudi />
+          </button>
+        </div>
 
-        <h2 id="nb-settings-title" className="nb-modal-title">Impostazioni</h2>
-
+        <div className="nb-modal-body">
         <Scelta
           etichetta="Tema"
           opzioni={TEMI}
@@ -120,6 +122,7 @@ const SettingsPanel = ({ impostazioni, onChange, onReset, onClose }) => {
           <p className="nb-about-text">
             Creato da <a href="https://github.com/aleattino" className="nb-link" target="_blank" rel="noopener noreferrer">Alessandro Attino</a>
           </p>
+        </div>
         </div>
       </div>
     </div>
