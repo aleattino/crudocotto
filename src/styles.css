@@ -1,5 +1,10 @@
 /* Il font Space Grotesk viene caricato in public/index.html */
 
+/* L'ombra netta segnala due cose e nient'altro: una superficie su un piano
+   proprio (card, modale, riquadro info) oppure un controllo che si preme
+   (Calcola, campi, pulsanti dell'intestazione). Gli elementi passivi dentro
+   una card restano piatti, definiti dal solo bordo. */
+
 /* Base Styles */
 /* Regola universale di box-sizing */
 *, *::before, *::after {
@@ -168,7 +173,6 @@
   width: 100%;
   background-color: var(--nb-card);
   border: var(--nb-border);
-  box-shadow: var(--nb-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -452,7 +456,6 @@
 .nb-factor-badge {
   background-color: var(--nb-secondary);
   border: var(--nb-border);
-  box-shadow: var(--nb-shadow-sm);
   color: var(--nb-on-accent);
   padding: 0.5rem 1rem;
   font-weight: 600;
@@ -464,7 +467,6 @@
   flex-direction: column;
   background-color: var(--nb-accent);
   border: var(--nb-border);
-  box-shadow: var(--nb-shadow-sm);
   color: var(--nb-on-accent);
   padding: 1rem;
   gap: 1rem;
