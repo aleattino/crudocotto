@@ -107,14 +107,20 @@ alimento con altri metodi, li elenca accanto per confronto. Dove disponibili,
 il pulsante informazioni mostra il comportamento dell'alimento in cottura e un
 consiglio pratico.
 
-## Funzionalità PWA
+## Uso da telefono
 
-L'applicazione può essere installata come app nativa su dispositivi mobili e desktop:
+L'applicazione è pensata per essere installata e usata come un'app di sistema:
 
-- Funzionamento offline completo
-- Icone personalizzate per diverse piattaforme
-- Notifiche di stato della connessione
-- Prompt di installazione automatico
+- Funzionamento offline completo, calcolo compreso
+- Rispetto delle safe area: il contenuto non finisce sotto il notch né sopra la barra dei gesti
+- Bersagli tattili di almeno 44px e campi a 16px, la soglia sotto la quale iOS ingrandisce la pagina al fuoco
+- Pannello impostazioni come foglio che sale dal basso, dove arriva il pollice, con presa in cima
+- Il tasto indietro del telefono chiude il pannello invece di uscire dall'app
+- Niente trascina-per-ricaricare né rimbalzo elastico, che in standalone sembrano un guasto
+- Nessun lampo azzurro al tocco: il riscontro è quello dei comandi stessi
+- Colore della barra di stato allineato al tema scelto
+- Icona mascherabile per le schermate Home di Android
+- Prompt di installazione automatico e notifica di stato della connessione
 
 ## Struttura del progetto
 

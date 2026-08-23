@@ -132,17 +132,29 @@ const CrudoCotto = () => {
     salvaRecenti(recenti);
   }, [recenti]);
 
-  // Previene lo zoom su iOS quando si fa focus sull'input
+  // Il colore della barra di stato segue tema e palette scelti: in standalone
+  // resterebbe altrimenti il corallo fisso anche con la palette blu o in scuro.
   useEffect(() => {
     try {
-      if (document && document.documentElement) {
-        document.documentElement.style.touchAction = 'manipulation';
-        document.documentElement.style.webkitTextSizeAdjust = '100%';
-      }
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', isDark ? '#1a1a1a' : '#ffffff');
     } catch (error) {
-      console.error('Errore durante la prevenzione dello zoom:', error);
+      console.error('Impossibile aggiornare il colore della barra:', error);
     }
-  }, []);
+  }, [isDark]);
+
+  // In standalone il gesto indietro non esiste: Esc a parte, il pannello si
+  // chiude anche con il tasto indietro del telefono.
+  useEffect(() => {
+    if (!settingsVisible) return;
+    window.history.pushState({ pannello: true }, '');
+    const indietro = () => setSettingsVisible(false);
+    window.addEventListener('popstate', indietro);
+    return () => {
+      window.removeEventListener('popstate', indietro);
+      if (window.history.state && window.history.state.pannello) window.history.back();
+    };
+  }, [settingsVisible]);
 
   useEffect(() => {
     if (risultato && risultatoRef.current) {
@@ -393,6 +405,8 @@ const CrudoCotto = () => {
                 ref={inputRef}
                 type="text"
                 inputMode="decimal"
+                enterKeyHint="go"
+                autoComplete="off"
                 value={quantita}
                 onChange={handleQuantitaChange}
                 onKeyDown={handleQuantitaKeyDown}

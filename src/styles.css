@@ -30,6 +30,7 @@
   --nb-radius: 0px;
   --nb-on-accent: #1a1a1a;
   --nb-content-width: 600px;
+  --nb-pad: 2rem;
 
   font-family: var(--nb-font);
   background-color: var(--nb-bg);
@@ -38,8 +39,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
   position: relative;
+
+  /* Le safe area si sommano al padding: con viewport-fit=cover il contenuto
+     arriverebbe sotto il notch e sopra la barra gesti. */
+  padding: calc(var(--nb-pad) + env(safe-area-inset-top)) calc(var(--nb-pad) + env(safe-area-inset-right)) calc(var(--nb-pad) + env(safe-area-inset-bottom)) calc(var(--nb-pad) + env(safe-area-inset-left));
 }
 
 .neobrutal-app.dark {
@@ -758,7 +762,7 @@
 /* Responsive Styles */
 @media (max-width: 650px) {
     .neobrutal-app {
-      padding: 1rem;
+      --nb-pad: 1rem;
       --nb-shadow-unit: 5px;
       --nb-border: 2.5px solid #1a1a1a;
     }
@@ -882,7 +886,7 @@
   
 @media (max-width: 400px) {
     .neobrutal-app {
-      padding: 0.75rem;
+      --nb-pad: 0.75rem;
       --nb-shadow-unit: 4px;
       --nb-border: 2px solid #1a1a1a;
     }
@@ -980,7 +984,7 @@
   
 @media (max-width: 320px) {
   .neobrutal-app {
-    padding: 0.5rem;
+    --nb-pad: 0.5rem;
     --nb-shadow-unit: 3px;
     --nb-border: 2px solid #1a1a1a;
   }
@@ -1158,4 +1162,145 @@ html {
 input[type="text"],
 input[type="number"] {
   line-height: normal;
+}
+
+/* ============================================================
+   Comportamenti tattili
+   Regole legate al dito, non alla larghezza: un desktop stretto
+   non ha gli stessi problemi di un telefono largo.
+   ============================================================ */
+
+html {
+  /* Niente rimbalzo elastico né trascina-per-ricaricare: in standalone
+     un pull-to-refresh riavvia l'app e sembra un guasto. */
+  overscroll-behavior-y: none;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+.neobrutal-app {
+  /* Il lampo azzurro predefinito al tocco denuncia la pagina web;
+     il riscontro lo diamo noi con :active. */
+  -webkit-tap-highlight-color: transparent;
+  /* Toglie il ritardo di 300ms sul doppio tocco */
+  touch-action: manipulation;
+}
+
+/* I comandi non si selezionano a lungo tocco, come in un'app nativa.
+   Il contenuto che si vuole copiare resta selezionabile. */
+.nb-header, .nb-label, .nb-toggle-option, .nb-button, .nb-segment,
+.nb-palette, .nb-reset-btn, .nb-altri-label, .nb-tip-label, .nb-footer {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.nb-result-value, .nb-tip-text, .nb-tooltip-content, .nb-about-text, .nb-factor-badge {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+@media (pointer: coarse) {
+  /* 16px è la soglia sotto la quale iOS ingrandisce la pagina al fuoco
+     del campo. Vale qualunque dimensione sia stata scelta nelle impostazioni. */
+  .nb-select, .nb-input {
+    font-size: max(1rem, 16px);
+    min-height: 3rem;
+  }
+
+  /* Bersagli tattili: 44px è il minimo delle linee guida Apple */
+  .nb-toggle-option {
+    min-height: 2.75rem;
+  }
+
+  .nb-button {
+    min-height: 3.25rem;
+  }
+
+  .nb-close-btn, .nb-tooltip-close-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .nb-info-btn {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .nb-segment {
+    min-height: 2.75rem;
+  }
+
+  /* Su schermo tattile l'effetto passaggio del mouse resta incollato
+     dopo il tocco: lo teniamo solo dove un mouse c'è davvero. */
+  .nb-select-wrapper:hover, .nb-input-wrapper:hover,
+  .nb-button:hover:not(.disabled), .nb-theme-toggle:hover, .nb-settings-btn:hover {
+    transform: none;
+    box-shadow: var(--nb-shadow);
+  }
+
+  .nb-select-wrapper:active, .nb-input-wrapper:active,
+  .nb-select-wrapper:focus-within, .nb-input-wrapper:focus-within,
+  .nb-button:active:not(.disabled), .nb-theme-toggle:active, .nb-settings-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--nb-shadow-sm);
+  }
+}
+
+/* ============================================================
+   Il pannello impostazioni come foglio dal basso
+   Su un telefono la finestra centrata è un modo desktop: il pollice
+   sta in basso, ed è da lì che i pannelli nativi salgono.
+   ============================================================ */
+
+@media (max-width: 650px) {
+  .nb-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .nb-modal-wide {
+    max-width: 100%;
+    max-height: 88vh;
+    max-height: 88dvh;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    box-shadow: none;
+    animation: nb-sale-dal-basso 0.28s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  }
+
+  .nb-modal-header {
+    padding-top: 1rem;
+  }
+
+  /* Presa visiva in cima al foglio, come nei pannelli di sistema */
+  .nb-modal-wide::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    background-color: var(--nb-text);
+    opacity: 0.35;
+    margin: 0.6rem auto 0;
+    flex-shrink: 0;
+  }
+
+  .nb-modal-body {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+@keyframes nb-sale-dal-basso {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-modal-wide, .nb-modal, .nb-modal-overlay,
+  .nb-card, .nb-button, .nb-toggle-option, .nb-cooking-tip {
+    animation: none !important;
+    transition: none !important;
+  }
 }
