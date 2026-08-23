@@ -34,21 +34,12 @@ const categoriePerMetodo = (metodo) => {
 const alimentiPer = (metodo, categoria) =>
   perMetodo(metodo).filter((a) => a.categoria === categoria);
 
-// Riporta la selezione dentro ciò che il metodo scelto offre davvero.
-const selezioneValida = (metodo, categoria, nome) => {
-  const categorie = categoriePerMetodo(metodo);
-  const cat = categorie.includes(categoria) ? categoria : categorie[0];
-  const voci = alimentiPer(metodo, cat);
-  const scelto = voci.find((a) => a.nome === nome) || voci[0];
-  return { categoria: cat, nome: scelto ? scelto.nome : '' };
-};
-
 const CrudoCotto = () => {
-  const iniziale = selezioneValida('bollitura', 'Cereali e derivati', null);
-
   const [metodo, setMetodo] = useState('bollitura');
-  const [categoria, setCategoria] = useState(iniziale.categoria);
-  const [alimento, setAlimento] = useState(iniziale.nome);
+  const [categoria, setCategoria] = useState('Cereali e derivati');
+  const [alimento, setAlimento] = useState(
+    (alimentiPer('bollitura', 'Cereali e derivati')[0] || {}).nome || ''
+  );
   const [quantita, setQuantita] = useState('');
   const [direzione, setDirezione] = useState('crudoCotto');
   const [risultato, setRisultato] = useState(null);
@@ -76,11 +67,22 @@ const CrudoCotto = () => {
   const infoButtonRef = useRef(null);
 
   const categorie = useMemo(() => categoriePerMetodo(metodo), [metodo]);
-  const voci = useMemo(() => alimentiPer(metodo, categoria), [metodo, categoria]);
+
+  // categoria e alimento sono la scelta dell'utente, che resta memorizzata
+  // anche quando il metodo corrente non la copre. Quel che si mostra è la
+  // selezione effettiva: se il metodo non ha quella categoria si ripiega,
+  // ma il ripiego è temporaneo e la scelta torna appena il metodo la
+  // rende di nuovo disponibile.
+  const categoriaEffettiva = categorie.includes(categoria) ? categoria : categorie[0];
+  const voci = useMemo(
+    () => alimentiPer(metodo, categoriaEffettiva),
+    [metodo, categoriaEffettiva]
+  );
   const voce = useMemo(
     () => voci.find((a) => a.nome === alimento) || voci[0] || null,
     [voci, alimento]
   );
+  const alimentoEffettivo = voce ? voce.nome : '';
 
   const fattore = voce ? voce.fattori[metodo] : 1;
   const infoText = voce && voce.info ? voce.info : '';
@@ -199,24 +201,30 @@ const CrudoCotto = () => {
     }
   }, []);
 
-  const applicaSelezione = (nuovoMetodo, nuovaCategoria, nuovoAlimento) => {
-    const v = selezioneValida(nuovoMetodo, nuovaCategoria, nuovoAlimento);
-    setMetodo(nuovoMetodo);
-    setCategoria(v.categoria);
-    setAlimento(v.nome);
+  // Cambiare metodo non tocca la scelta di categoria e alimento: al massimo
+  // la lascia temporaneamente inapplicabile.
+  const handleMetodoChange = (e) => {
+    setMetodo(e.target.value);
     setRisultato(null);
   };
 
-  const handleMetodoChange = (e) => applicaSelezione(e.target.value, categoria, alimento);
-
-  const handleCategoriaChange = (e) => applicaSelezione(metodo, e.target.value, null);
+  const handleCategoriaChange = (e) => {
+    const nuova = e.target.value;
+    const prima = alimentiPer(metodo, nuova)[0];
+    setCategoria(nuova);
+    setAlimento(prima ? prima.nome : '');
+    setRisultato(null);
+  };
 
   const handleAlimentoChange = (e) => {
     const valore = e.target.value;
     if (valore.startsWith('recente:')) {
       const [, resto] = valore.split('recente:');
       const [suoMetodo, suaCategoria, suoAlimento] = resto.split('|');
-      applicaSelezione(suoMetodo, suaCategoria, suoAlimento);
+      setMetodo(suoMetodo);
+      setCategoria(suaCategoria);
+      setAlimento(suoAlimento);
+      setRisultato(null);
       return;
     }
     setAlimento(valore);
@@ -240,7 +248,7 @@ const CrudoCotto = () => {
         const f = parseFloat(fattore);
         const r = direzione === 'crudoCotto' ? q * f : (f !== 0 ? q / f : 0);
         setRisultato(r.toFixed(1));
-        setRecenti((prec) => aggiungiRecente(prec, metodo, categoria, voce.nome));
+        setRecenti((prec) => aggiungiRecente(prec, metodo, categoriaEffettiva, voce.nome));
       } catch (error) {
         console.error('Errore nel calcolo:', error);
         setRisultato('0.0');
@@ -261,7 +269,7 @@ const CrudoCotto = () => {
     setImpostazioni((p) => ({ ...p, tema: isDark ? 'chiaro' : 'scuro' }));
 
   const recentiDaMostrare = recenti.filter(
-    (r) => !(r.metodo === metodo && r.categoria === categoria && r.nome === alimento)
+    (r) => !(r.metodo === metodo && r.categoria === categoriaEffettiva && r.nome === alimentoEffettivo)
   );
 
   return (
@@ -336,7 +344,7 @@ const CrudoCotto = () => {
           <div className="nb-field">
             <label className="nb-label" htmlFor="nb-categoria">Categoria</label>
             <div className="nb-select-wrapper">
-              <select id="nb-categoria" value={categoria} onChange={handleCategoriaChange} className="nb-select">
+              <select id="nb-categoria" value={categoriaEffettiva} onChange={handleCategoriaChange} className="nb-select">
                 {categorie.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
@@ -360,7 +368,7 @@ const CrudoCotto = () => {
               )}
             </div>
             <div className="nb-select-wrapper">
-              <select id="nb-alimento" value={alimento} onChange={handleAlimentoChange} className="nb-select">
+              <select id="nb-alimento" value={alimentoEffettivo} onChange={handleAlimentoChange} className="nb-select">
                 {recentiDaMostrare.length > 0 && (
                   <optgroup label="Recenti">
                     {recentiDaMostrare.map((r) => (
@@ -389,7 +397,7 @@ const CrudoCotto = () => {
                 >
                   <IconaChiudi />
                 </button>
-                <h4 className="nb-tooltip-title">{alimento}</h4>
+                <h4 className="nb-tooltip-title">{alimentoEffettivo}</h4>
                 <p className="nb-tooltip-content">{infoText}</p>
               </div>
             )}
