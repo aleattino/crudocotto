@@ -230,28 +230,30 @@ const CrudoCotto = () => {
     setAlimento(valore);
   };
 
+  // La virgola è il tasto decimale di una tastiera italiana. Rifiutandola,
+  // "100,5" diventava "1005": non un errore visibile, ma un fattore dieci
+  // silenzioso sul risultato.
   const handleQuantitaChange = (e) => {
     const val = e.target.value;
-    if (val === '' || /^\d*\.?\d*$/.test(val)) setQuantita(val);
+    if (val === '' || /^\d*[.,]?\d*$/.test(val)) setQuantita(val);
   };
 
+  const quantitaNumerica = parseFloat(String(quantita).replace(',', '.'));
+  const quantitaValida = !isNaN(quantitaNumerica);
+
   const calcolaRisultato = () => {
-    if (!quantita || !voce) return;
+    if (!quantitaValida || !voce) return;
     setIsCalcolando(true);
     setTimeout(() => {
       try {
-        const q = parseFloat(quantita);
-        if (isNaN(q)) {
-          setRisultato('0.0');
-          return;
-        }
+        const q = quantitaNumerica;
         const f = parseFloat(fattore);
         const r = direzione === 'crudoCotto' ? q * f : (f !== 0 ? q / f : 0);
-        setRisultato(r.toFixed(1));
+        setRisultato(r.toFixed(1).replace('.', ','));
         setRecenti((prec) => aggiungiRecente(prec, metodo, categoriaEffettiva, voce.nome));
       } catch (error) {
         console.error('Errore nel calcolo:', error);
-        setRisultato('0.0');
+        setRisultato(null);
       } finally {
         setIsCalcolando(false);
       }
@@ -259,7 +261,7 @@ const CrudoCotto = () => {
   };
 
   const handleQuantitaKeyDown = (e) => {
-    if (e.key === 'Enter' && quantita && !isCalcolando) {
+    if (e.key === 'Enter' && quantitaValida && !isCalcolando) {
       e.preventDefault();
       calcolaRisultato();
     }
@@ -427,8 +429,8 @@ const CrudoCotto = () => {
 
           <button
             onClick={calcolaRisultato}
-            disabled={!quantita || isCalcolando}
-            className={!quantita || isCalcolando ? 'nb-button disabled' : 'nb-button'}
+            disabled={!quantitaValida || isCalcolando}
+            className={!quantitaValida || isCalcolando ? 'nb-button disabled' : 'nb-button'}
           >
             {isCalcolando ? 'Calcolando...' : 'Calcola'}
           </button>
