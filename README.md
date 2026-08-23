@@ -9,8 +9,10 @@ CrudoCotto è un'applicazione web progressiva (PWA) che permette di convertire f
 ### Caratteristiche principali
 
 - Conversione bidirezionale tra alimenti crudi e cotti
-- Database completo con diverse categorie di alimenti
-- Informazioni nutrizionali e consigli di cottura per ogni alimento
+- Fattori distinti per metodo di cottura: bollitura, frittura, griglia, forno e microonde
+- 84 alimenti per 114 combinazioni alimento-metodo
+- Confronto immediato con gli altri metodi disponibili per lo stesso alimento
+- Informazioni e consigli di cottura per gli alimenti che ne hanno
 - Interfaccia utente in stile neobrutalista
 - Aspetto personalizzabile: tema, colori, dimensione, carattere e ombre
 - Alimenti usati di recente in cima al menu
@@ -30,17 +32,26 @@ Il pulsante con l'ingranaggio nell'intestazione apre il pannello delle impostazi
 
 Le preferenze vengono salvate nel browser e restano attive ai riavvii successivi.
 
+## Il metodo di cottura conta
+
+Lo stesso alimento rende in modo molto diverso secondo come lo si cuoce, e la
+differenza non è trascurabile: il petto di pollo passa da 0,90 bollito a 0,67
+in forno, il petto di tacchino da 0,98 a 0,69. Su una porzione da 150 grammi
+sono quasi cinquanta grammi di scarto.
+
+Per questo il metodo è una scelta esplicita e non un'assunzione implicita.
+Le categorie disponibili cambiano di conseguenza: la frittura porta con sé
+frattaglie e uova, il microonde copre le sole carni.
+
 ## Categorie di alimenti
 
-L'applicazione include fattori di conversione per le seguenti categorie:
-
-- Cereali e derivati (pasta, riso, tortellini)
+- Cereali e derivati (pasta, riso, tortellini, gnocchi, polenta)
 - Verdure e ortaggi
-- Legumi freschi
-- Legumi secchi
-- Carne (bovino, pollo, tacchino)
-- Pesce fresco
-- Pesce surgelato
+- Legumi freschi e legumi secchi
+- Carne
+- Frattaglie
+- Pesce fresco e pesce surgelato
+- Uova
 
 ## Installazione e utilizzo
 
@@ -86,13 +97,15 @@ I file ottimizzati saranno generati nella cartella `build`.
 
 ## Come funziona
 
-1. Seleziona la categoria dell'alimento
-2. Scegli l'alimento specifico dalla lista
-3. Seleziona la direzione di conversione (da crudo a cotto o viceversa)
-4. Inserisci la quantità in grammi
-5. Premi il pulsante "Calcola" per ottenere il risultato
+1. Scegli la direzione di conversione, da crudo a cotto o viceversa
+2. Seleziona il metodo di cottura
+3. Scegli categoria e alimento fra quelli che quel metodo copre
+4. Inserisci la quantità in grammi e premi Invio, oppure il pulsante "Calcola"
 
-Ogni alimento include informazioni dettagliate sul processo di cottura e consigli pratici accessibili tramite il pulsante informazioni.
+Il risultato riporta il fattore applicato e, quando la fonte copre lo stesso
+alimento con altri metodi, li elenca accanto per confronto. Dove disponibili,
+il pulsante informazioni mostra il comportamento dell'alimento in cottura e un
+consiglio pratico.
 
 ## Funzionalità PWA
 
@@ -110,9 +123,11 @@ crudocotto/
 ├── public/              # File statici pubblici
 ├── src/
 │   ├── components/      # Componenti React
-│   ├── App.js          # Componente principale
-│   ├── styles.css      # Stili CSS
-│   └── index.js        # Entry point
+│   ├── App.js           # Componente principale
+│   ├── dati.js          # Fattori di conversione per metodo
+│   ├── settings.js      # Preferenze di aspetto e persistenza
+│   ├── styles.css       # Stili CSS
+│   └── index.js         # Entry point
 ├── package.json         # Dipendenze del progetto
 └── README.md           # Questo file
 ```
@@ -137,6 +152,22 @@ Questo progetto è distribuito sotto licenza MIT.
 
 - GitHub: [@aleattino](https://github.com/aleattino)
 
-## Crediti
+## Fonte dei dati
 
-I fattori di conversione sono basati su dati nutrizionali standardizzati e tabelle di composizione degli alimenti.
+I fattori provengono dalla tabella **"Variazioni in peso degli alimenti con la
+cottura — peso cotto corrispondente a 100 g di alimento crudo, parte edibile"**
+(ultimo aggiornamento 14 marzo 2011), di filiera INRAN/CREA, integrata per
+alcune voci di cereali con la tabella grammature di un Servizio Igiene Alimenti
+e della Nutrizione.
+
+I 114 fattori sono stati trascritti dalla fonte e verificati uno per uno contro
+il documento originale.
+
+Restano medie indicative: la resa reale dipende da taglio, pezzatura, durata e
+temperatura, e la fonte stessa li presenta come valori medi. L'applicazione
+mostra due decimali perché così sono pubblicati, non perché la precisione
+arrivi al centesimo.
+
+Per approfondire, il riferimento istituzionale italiano è il CREA, con le
+tabelle di composizione degli alimenti liberamente consultabili su
+[alimentinutrizione.it](https://www.alimentinutrizione.it/sezioni/tabelle-nutrizionali).

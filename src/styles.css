@@ -462,6 +462,43 @@
   text-align: center;
 }
 
+/* Lo stesso alimento con gli altri metodi coperti dalla fonte */
+.nb-altri-metodi {
+  border: var(--nb-border);
+  padding: 0.75rem 1rem 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.nb-altri-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.nb-altri-metodi ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nb-altri-metodi li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.22rem 0;
+  font-size: 0.9375rem;
+}
+
+.nb-altri-metodi b {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
 .nb-cooking-tip {
   display: flex;
   flex-direction: column;
@@ -762,7 +799,44 @@
       font-size: 0.9375rem;
     }
     
-    .nb-cooking-tip {
+    /* Lo stesso alimento con gli altri metodi coperti dalla fonte */
+.nb-altri-metodi {
+  border: var(--nb-border);
+  padding: 0.75rem 1rem 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.nb-altri-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.nb-altri-metodi ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nb-altri-metodi li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.22rem 0;
+  font-size: 0.9375rem;
+}
+
+.nb-altri-metodi b {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.nb-cooking-tip {
       padding: 0.75rem;
       gap: 0.375rem;
     }
@@ -962,7 +1036,44 @@
     font-size: 2rem;
   }
   
-  .nb-cooking-tip {
+  /* Lo stesso alimento con gli altri metodi coperti dalla fonte */
+.nb-altri-metodi {
+  border: var(--nb-border);
+  padding: 0.75rem 1rem 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.nb-altri-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.nb-altri-metodi ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nb-altri-metodi li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.22rem 0;
+  font-size: 0.9375rem;
+}
+
+.nb-altri-metodi b {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.nb-cooking-tip {
     padding: 0.625rem;
     gap: 0.25rem;
   }

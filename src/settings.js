@@ -127,7 +127,12 @@ export function caricaRecenti() {
     if (!Array.isArray(salvati)) return [];
 
     return salvati
-      .filter((voce) => voce && typeof voce.categoria === 'string' && typeof voce.alimento === 'string')
+      .filter((voce) =>
+        voce &&
+        typeof voce.metodo === 'string' &&
+        typeof voce.categoria === 'string' &&
+        typeof voce.nome === 'string'
+      )
       .slice(0, MAX_RECENTI);
   } catch (error) {
     console.error('Recenti non leggibili:', error);
@@ -143,11 +148,13 @@ export function salvaRecenti(recenti) {
   }
 }
 
-export function aggiungiRecente(recenti, categoria, alimento) {
+// Un recente porta con sé anche il metodo: lo stesso alimento ha fattori
+// diversi bollito o al forno, quindi senza il metodo non è ricostruibile.
+export function aggiungiRecente(recenti, metodo, categoria, nome) {
   const senzaDuplicato = recenti.filter(
-    (voce) => !(voce.categoria === categoria && voce.alimento === alimento)
+    (voce) => !(voce.metodo === metodo && voce.categoria === categoria && voce.nome === nome)
   );
-  return [{ categoria, alimento }, ...senzaDuplicato].slice(0, MAX_RECENTI);
+  return [{ metodo, categoria, nome }, ...senzaDuplicato].slice(0, MAX_RECENTI);
 }
 
 // Il carattere viene richiesto solo quando serve: caricarli tutti all'avvio
